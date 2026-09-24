@@ -56,6 +56,16 @@ export const Croix = ({ t = 19 }) => (
   <svg {...base(t)} strokeWidth="1.8"><path d="M18 6L6 18M6 6l12 12" /></svg>
 );
 
+// Revision espacee : deux fleches en boucle.
+export const Boucle = ({ t = 19 }) => (
+  <svg {...base(t)}>
+    <path d="M4 9a8 8 0 0 1 13.7-4.3L20 7" />
+    <path d="M20 4v3.2h-3.2" />
+    <path d="M20 15a8 8 0 0 1-13.7 4.3L4 17" />
+    <path d="M4 20v-3.2h3.2" />
+  </svg>
+);
+
 export const Hamburger = ({ t = 19 }) => (
   <svg {...base(t)} strokeWidth="1.7"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
 );

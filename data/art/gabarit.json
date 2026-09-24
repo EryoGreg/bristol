@@ -1,0 +1,30 @@
+{
+  "cle": "histoire-art",
+  "nom": "Histoire de l'art",
+  "champs": [
+    { "cle": "image", "libelle": "Œuvre", "type": "image", "ordre": 1,
+      "masquable": true, "evocateur": true },
+
+    { "cle": "artiste", "libelle": "Artiste", "type": "texte_court", "ordre": 2,
+      "role": "sous_titre",
+      "masquable": true, "evocateur": false, "evoc_si_unique": true,
+      "verif_fuite": true, "fuite_min_mots": 1 },
+
+    { "cle": "titre", "libelle": "Titre", "type": "texte_court", "ordre": 3,
+      "role": "titre",
+      "masquable": true, "evocateur": true,
+      "verif_fuite": true, "fuite_min_mots": 2 },
+
+    { "cle": "date", "libelle": "Date", "type": "texte_court", "ordre": 4,
+      "toujours_cache": true },
+
+    { "cle": "lieu", "libelle": "Lieu de conservation", "type": "texte_court", "ordre": 5,
+      "masquable": true, "evocateur": false },
+
+    { "cle": "description", "libelle": "Description", "type": "texte_long", "ordre": 6,
+      "masquable": true, "evocateur": true, "evoc_min": 60 },
+
+    { "cle": "tags", "libelle": "Catégories", "type": "liste", "ordre": 7,
+      "masquable": true, "evocateur": false, "role": "categories" }
+  ]
+}

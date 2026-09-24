@@ -17,7 +17,7 @@ const path = require('path');
 const fs = require('fs');
 const { execFile } = require('child_process');
 
-const NOM = 'Tuiles & Toiles';
+const NOM = 'Bristol';
 const WIN = process.platform === 'win32';
 
 function cible() {
@@ -67,8 +67,8 @@ function ecrire(type) {
     target: exe,
     icon: exe,
     iconIndex: 0,
-    appUserModelId: 'fr.tuilesettoiles.app',
-    description: 'Entraînement mémoriel — histoire de l’art'
+    appUserModelId: 'fr.bristol.app',
+    description: 'Fiches de révision à masques auto-générés'
   });
 }
 

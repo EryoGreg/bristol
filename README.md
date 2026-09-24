@@ -1,103 +1,106 @@
-# Tuiles & Toiles
+# Bristol
 
-Entraînement mémoriel en histoire de l'art. 431 œuvres tirées d'un Google Doc,
-présentées comme des tuiles dont une partie des informations est masquée.
+Application de bureau de **fiches de révision**, tous sujets. À partir d'une
+fiche unique, le moteur génère automatiquement *N* angles de quiz (masques) au
+lieu d'un recto/verso figé.
 
-## Démarrer
+Electron + React + SQLite. Windows, mono-utilisateur. Fork de *Tuiles & Toiles*
+(schéma désormais piloté par gabarit).
+
+## Pour les testeurs
+
+Lancer `Bristol-<version>.exe` (portable, aucune installation). Au premier
+démarrage l'app crée ses données dans `%APPDATA%\Bristol\` et copie le deck
+livré (**Anatomie — Tête et cou**, 205 fiches).
+
+À vérifier pendant le test :
+
+- **contenu des fiches** : erreurs anatomiques, coquilles, formulations. Chaque
+  fiche = une structure ; les textes sont une synthèse originale à relire.
+- **images** : 36 fiches portent une 2ᵉ vignette « rendu 3D » (BodyParts3D) à
+  côté de la gravure Gray 1918 — dire laquelle est la meilleure, signaler les
+  rendus ratés (cadrage, structure méconnaissable).
+- **jeu** : les tirages sont-ils trop faciles / la réponse fuite-t-elle dans un
+  champ visible / une fiche revient-elle toujours avec le même masque.
+- **la synchro Google Drive est optionnelle** : l'app tourne identique sans
+  compte. Le bouton n'apparaît utile qu'aux testeurs ajoutés au projet OAuth.
+
+Remonter les bugs : *(à compléter — canal de retour)*
+
+## Développement
 
 ```bash
 npm install
-npm run import      # manifest.csv -> data/tuiles.db (à faire une fois)
-npm run dev         # Vite + Electron
+npm run import -- anatomie   # data/anatomie/ -> data/packs/anatomie.db
+npm run dev                  # Vite (port 5500) + Electron, rechargement à chaud
 ```
 
 | Commande | Effet |
 |---|---|
-| `npm run dev` | serveur Vite puis Electron, rechargement à chaud du rendu |
+| `npm run dev` | serveur Vite puis Electron |
 | `npm run build` | compile le rendu dans `dist/` |
-| `npm run import` | (re)construit la base depuis `data/manifest.csv` |
-| `npm run dist` | installateur Windows via electron-builder |
+| `npm run import -- <deck>` | (re)construit `data/packs/<deck>.db` depuis `data/<deck>/` |
+| `npm run dist` | build portable Windows (`release/Bristol-<version>.exe`) |
+
+`npm run dist` : `stage-release.js` reconstruit `data/pack.db` en mode
+`--release` (deck actif = `data/deck-actif.json`), copie `images/libre/` à plat
+dans `data/images/`, puis electron-builder empaquette. Les images `ebook`
+(planches Netter sous licence) ne sont **jamais** embarquées.
 
 ## Structure
 
 ```
 src/main/          processus principal Electron (Node)
-  index.js         fenêtre, protocole tuile://, canaux IPC
-  preload.js       pont vers le rendu, seule surface exposée
-  db.js            SQLite : schéma et requêtes
-  masques.js       moteur de masques (le cœur du jeu)
+  index.js         fenêtre, protocole fiche://, canaux IPC
+  db.js            SQLite : utilisateur.db + ATTACH pack.db
+  masques.js       moteur de masques, sujet-agnostique
   jeu.js           tirage en sac sans remise
-  import.js        manifest.csv -> base
-
-src/renderer/      interface (React)
-  App.jsx          menu, jeu, coquille avec barre latérale
-  icones.jsx       icônes SVG
-  styles.css       jetons visuels issus des maquettes
-
-scripts/           outils de build, indépendants des shims npm
-data/              431 JPEG + manifest.csv + tuiles.db
-design/            les 9 maquettes .dc.html
-tools/             extraction et tests côté Google Docs
+  import.js        data/<deck>/ -> pack.db (piloté par gabarit.json)
+  decks.js         multi-deck (bascule ATTACH/DETACH)
+  drive.js         sauvegarde Google Drive (optionnelle, non bloquante)
+src/renderer/      interface (React) — App.jsx, champs.jsx (rendu par gabarit)
+scripts/           outils de build + pipeline images anatomie
+data/<deck>/       gabarit.json + contenu.csv (TSV) + images/ + credits-libre.json
 ```
+
+## Le gabarit
+
+Chaque deck définit ses champs dans `data/<deck>/gabarit.json` : type
+(`texte_court` / `texte_long` / `image` / `date` / `liste` / `nombre` /
+`occlusion`), et des drapeaux qui pilotent le moteur de masques (`masquable`,
+`toujours_cache`, `evocateur`, `verif_fuite`, `role`…). Les bitmasks de
+`fiches.masques` sont indexés sur l'ordre des champs masquables du gabarit : ils
+n'ont de sens qu'avec ce gabarit, qui voyage dans `pack.db`.
 
 ## Le moteur de masques
 
-Une tuile montre certains champs et en cache d'autres. Un masque n'est retenu
-pour une œuvre que s'il respecte quatre règles, vérifiées à l'import sur les
-431 œuvres :
+Un masque = l'ensemble des champs visibles. Retenu pour une fiche s'il est
+**discriminant** (ne désigne qu'elle), **évocateur** (au moins un indice
+reliable par un humain), **sans fuite** (aucun champ visible ne trahit un champ
+caché) et **incomplet**. Un champ `toujours_cache` n'est jamais visible ni
+indice — l'analogue générique de la « date » de T&T.
 
-1. **discriminant** — les champs visibles ne désignent qu'une seule œuvre
-2. **évocateur** — au moins un indice qu'un humain peut relier à l'œuvre
-   (image, titre, description d'au moins 60 caractères, ou artiste quand il
-   n'a qu'une œuvre au corpus)
-3. **sans fuite** — aucun champ visible ne contient la réponse d'un champ caché
-   (22 descriptions citent le nom de l'artiste ou le titre)
-4. **incomplet** — au moins un champ caché
+## Images du deck anatomie
 
-**La date n'est jamais révélée**, ni comme champ visible ni comme indice :
-c'est ce que l'entraînement vise à faire mémoriser. Mesuré : chaque œuvre
-conserve au minimum 45 masques valides sans elle.
+- `scripts/telecharger-libre.py` — 1 image libre par fiche (Wikipédia FR +
+  Commons, licences PD/CC0/CC-BY/CC-BY-SA), `dict OVERRIDE` pour forcer une
+  planche. Remplit `credits-libre.json`.
+- `scripts/extraire-netter.py` — planches du PDF Netter (`images/ebook/`,
+  usage perso, jamais diffusé).
+- `scripts/apparier-bp3d.py` + `scripts/rendre-anatomie.py` — rendus 3D
+  BodyParts3D (pyrender). `--ecrire` ajoute `<id>-3d.jpg` comme vignette
+  supplémentaire. `bp3d.json` = config (36 fiches). CC-BY-SA 2.1 Japan.
+- `import.js` refuse de bâtir si une image `libre` n'est pas créditée dans
+  `credits-libre.json`. `ATTRIBUTIONS.md` est généré, embarqué à côté de `pack.db`.
 
-## Le document source n'est jamais modifié
+## Pièges de l'environnement
 
-Le Google Doc appartient à un tiers et sert de source unique. L'application
-le lira en `documents.readonly` : elle en est techniquement incapable de le
-modifier. Les corrections proposées par l'utilisateur restent en base et
-s'exportent en CSV.
-
-## Synchronisation (à implémenter)
-
-Mesuré sur le document réel : remplacer une image ne change **rien** dans la
-structure renvoyée par l'API Docs — ni `inlineObjectId`, ni dimensions. Seuls
-le `revisionId` et le `contentUri` bougent. D'où :
-
-1. `revisionId` inchangé → rien à faire
-2. sinon lire le document
-3. diff **texte** → ajouts, suppressions, corrections
-4. diff **contentUri** → sous-ensemble d'images à vérifier
-5. `Range: bytes=0-0` sur ce sous-ensemble → ne retélécharger que les écarts
-
-Les étapes 3 et 4 sont **indépendantes** : un diff texte concluant n'autorise
-pas à sauter la vérification des images, sinon une modification simultanée
-texte + image passerait inaperçue.
-
-## Attention au chemin du projet
-
-Le dossier contient une espace et un `&`. Sous Windows, les raccourcis
-`node_modules/.bin/*.cmd` générés par npm passent par cmd, où `&` sépare deux
-commandes : ils échouent. Les scripts de ce dépôt appellent donc chaque outil
-par son chemin JS (`node node_modules/vite/bin/vite.js`) au lieu du raccourci.
-
-`electron-builder` n'a pas été testé dans ces conditions et échouera
-probablement. **Renommer le dossier en `tuiles-et-toiles` réglerait le sujet
-définitivement.**
-
-## Port du serveur de développement
-
-Vite écoute sur **5500**, pas sur le 5173 habituel : cette machine réserve
-plusieurs plages de ports (Hyper-V / WinNAT) dont 5173 et 4173 font partie.
-Un `listen EACCES` sur un port libre en apparence vient de là. La liste :
-
-```bash
-netsh interface ipv4 show excludedportrange protocol=tcp
-```
+- **Port 5500** : cette machine réserve des plages (Hyper-V / WinNAT) dont 5173
+  et 4173. `netsh interface ipv4 show excludedportrange protocol=tcp`.
+- **better-sqlite3** compilé pour l'ABI Electron → le Node système plante
+  (`NODE_MODULE_VERSION`). Passer par `node scripts/lancer-node.js <fichier>`.
+- **`ffmpeg.dll` en quarantaine Defender** (faux positif Electron non signé) :
+  si l'exe portable refuse de démarrer, exclure le dossier d'extraction
+  `%LOCALAPPDATA%\Temp\Bristol-<version>\` ou signer l'exe.
+- **pyrender** (rendus 3D) : besoin d'un contexte OpenGL → tourne sur un poste
+  avec écran + GPU, pas en CI headless.

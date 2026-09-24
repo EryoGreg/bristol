@@ -3,10 +3,27 @@ dist/
 release/
 *.log
 
-# Base locale et images : regenerees par l'import, inutile de les versionner
-data/tuiles.db
-data/tuiles.db-wal
-data/tuiles.db-shm
+# Regeneres : base runtime, pack construit, images stagees pour l'empaquetage
+data/utilisateur.db
+data/utilisateur.db-wal
+data/utilisateur.db-shm
+data/pack.db
+data/pack.db-wal
+data/pack.db-shm
+data/packs/
+data/deck-actif.json
+data/images/
+data/logs/
+
+# Banc d'essai du rendu (dev uniquement)
+src/renderer/_fixture.json
+
+# Planches Netter extraites (sous licence Elsevier — usage perso, jamais versionné)
+data/*/images/ebook/
+
+# BodyParts3D : cache STL téléchargé + rendus de relecture (prototype)
+data/*/_bp3d-cache/
+data/*/_bp3d-rendu/
 
 # Jetons OAuth : ne doivent jamais partir dans un depot
 .credentials/
@@ -16,7 +33,6 @@ client_secret*.json
 # Client OAuth Google (embarque dans l exe, pas dans le depot)
 src/main/oauth-client.json
 
-# Fichiers temporaires SQLite et journaux d'execution
-*.db-wal
-*.db-shm
-data/logs/
+# Remerciements : generes par import.js depuis credits-libre.json (lui, versionne)
+data/ATTRIBUTIONS.md
+data/*/ATTRIBUTIONS.md

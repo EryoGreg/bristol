@@ -1,0 +1,152 @@
+pl;groupe;titre;page_pdf;n_legendes
+pl001;Anatomie de surface;Tête et cou : anatomie de surface;18;25
+pl002;Anatomie de surface;Nerfs cutanés de la tête et du cou;19;29
+pl003;Régions superficielles de la tête et du cou;Artères et veines superficielles de la face et du cuir chevelu;20;37
+pl004;Régions superficielles de la tête et du cou;Tête osseuse : vue antérieure;21;40
+pl005;Os et ligaments;Tête osseuse : radiographie de face (antéro-postérieure);22;12
+pl006;Os et ligaments;Tête osseuse : vue latérale;23;46
+pl007;Os et ligaments;Tête osseuse : radiographie de profil (latérale);24;12
+pl008;Os et ligaments;Crâne : coupe sagittale médiane;25;53
+pl009;Os et ligaments;Calvaria;26;20
+pl010;Os et ligaments;Base externe du crâne;27;50
+pl011;Os et ligaments;Base interne du crâne;28;41
+pl012;Os et ligaments;Foramens et canaux de la base du crâne : vue inférieure;29;45
+pl013;Os et ligaments;Foramens et canaux de la base du crâne : vue supérieure;30;59
+pl014;Os et ligaments;Crâne du nouveau-né;31;36
+pl015;Os et ligaments;Squelette osseux de la tête et du cou;32;25
+pl016;Os et ligaments;Fosse ptérygoïdienne : vues postérieure et inféro-latérale;33;30
+pl017;Os et ligaments;Mandibule;34;28
+pl018;Os et ligaments;Articulation temporo-mandibulaire;35;21
+pl019;Os et ligaments;Vertèbres cervicales : atlas et axis;36;34
+pl020;Os et ligaments;Vertèbres cervicales (suite);37;40
+pl021;Os et ligaments;Vertèbres cervicales : articulations uncovertébrales;38;30
+pl022;Os et ligaments;Ligaments cranio-vertébraux externes;39;27
+pl023;Os et ligaments;Ligaments cranio-vertébraux internes;40;30
+pl024;Os et ligaments;Branches du nerf facial et glande parotide;41;18
+pl025;Régions superficielles de la face;Muscles de la mimique : vue latérale;42;34
+pl026;Régions superficielles de la face;Fascias du cou;43;40
+pl027;Cou;Muscles du cou : vue antérieure;44;33
+pl028;Cou;Muscles infra-hyoïdiens et supra-hyoïdiens;45;24
+pl029;Cou;Muscles du cou : vue latérale;46;34
+pl030;Cou;Muscles scalènes et prévertébraux;47;28
+pl031;Cou;Veines superficielles et nerfs cutanés du cou;48;39
+pl032;Cou;Nerfs et vaisseaux du cou;49;31
+pl033;Cou;Nerfs et vaisseaux du cou (suite);50;42
+pl034;Cou;Artères carotides;51;39
+pl035;Région du nez;Nez;52;35
+pl036;Région du nez;Paroi latérale de la cavité nasale;54;44
+pl037;Région du nez;Paroi latérale de la cavité nasale (suite);54;44
+pl038;Région du nez;Paroi médiale de la cavité nasale (septum nasal);55;39
+pl039;Région du nez;Nerfs de la cavité nasale;56;29
+pl040;Région du nez;Artères de la cavité nasale : septum nasal relevé;57;19
+pl041;Région du nez;Nerfs de la cavité nasale : septum nasal relevé;58;20
+pl042;Région du nez;Nez et sinus maxillaire : coupe transversale;59;26
+pl043;Région du nez;Sinus paranasaux;60;34
+pl044;Région du nez;Sinus paranasaux (suite);61;18
+pl045;Région du nez;Sinus paranasaux : variations avec l’âge;62;36
+pl046;Région du nez;Glandes salivaires;63;31
+pl047;Région du nez;Langue et glandes salivaires : coupes;64;46
+pl048;Région du nez;Muscles de la mastication;65;15
+pl049;Région du nez;Muscles de la mastication (suite);66;30
+pl050;Région du nez;Nerf mandibulaire (V3);67;45
+pl051;Région du nez;Artère maxillaire;68;57
+pl052;Région du nez;Nerf ophtalmique (V1) et maxillaire (V2);69;31
+pl053;Région du nez;Innervation autonome de la cavité nasale;70;26
+pl054;Région du nez;Fosse ptérygo-palatine;71;32
+pl055;Région du nez;Trajet des nerfs et des vaisseaux de la base du crâne;72;44
+pl056;Région du nez;Examen de la cavité orale;73;16
+pl057;Région de la bouche;Voûte de la cavité orale;74;36
+pl058;Région de la bouche;Plancher de la cavité orale;75;30
+pl059;Région de la bouche;Langue;76;41
+pl060;Région de la bouche;Langue (suite);77;31
+pl061;Région de la bouche;Innervation afférente de la cavité orale et du pharynx;78;28
+pl062;Région de la bouche;Dents;79;35
+pl063;Région de la bouche;Dents (suite);80;28
+pl064;Région de la bouche;Pharynx : coupe médiane;81;43
+pl065;Pharynx;Muscles du pharynx : coupe sagittale;82;40
+pl066;Pharynx;Pharynx ouvert : vue postérieure;83;32
+pl067;Pharynx;Muscles du pharynx ouvert partiellement : vue postérieure;84;39
+pl068;Pharynx;Gosier;85;46
+pl069;Pharynx;Jonction pharyngo-œsophagienne;86;29
+pl070;Pharynx;Muscles du pharynx : vue latérale;87;32
+pl071;Pharynx;Nerfs des régions orale et pharyngienne;88;51
+pl072;Pharynx;Artères des régions orale et pharyngienne;89;50
+pl073;Pharynx;Veines des régions orale et pharyngienne;90;47
+pl074;Pharynx;Vaisseaux et nœuds lymphatiques de la tête et du cou;91;31
+pl075;Pharynx;Vaisseaux et nœuds lymphatiques du pharynx et de la langue;92;24
+pl076;Pharynx;Glande thyroïde : vue antérieure;93;47
+pl077;Glande thyroïde et larynx;Glande thyroïde et pharynx : vue postérieure;94;40
+pl078;Glande thyroïde et larynx;Glandes parathyroïdes;95;42
+pl079;Glande thyroïde et larynx;Cartilages du larynx;96;34
+pl080;Glande thyroïde et larynx;Muscles intrinsèques du larynx;97;39
+pl081;Glande thyroïde et larynx;Action des muscles intrinsèques du larynx;98;13
+pl082;Glande thyroïde et larynx;Nerfs du larynx;99;41
+pl083;Orbite et son contenu;Paupières;100;40
+pl084;Orbite et son contenu;Appareil lacrymal;101;18
+pl085;Orbite et son contenu;Fascias de l’orbite et de l’œil;102;50
+pl086;Orbite et son contenu;Muscles extrinsèques de l’œil;103;26
+pl087;Orbite et son contenu;Artères et veines de l’orbite et des paupières;104;35
+pl088;Orbite et son contenu;Nerfs de l’orbite;105;51
+pl089;Orbite et son contenu;Bulbe oculaire;106;33
+pl090;Orbite et son contenu;Chambres antérieure et postérieure de l’œil;107;30
+pl091;Orbite et son contenu;Cristallin et structures de maintien;108;24
+pl092;Orbite et son contenu;Artères et veines intrinsèques de l’œil;109;33
+pl093;Orbite et son contenu;Vascularisation de l’œil;110;30
+pl094;Orbite et son contenu;Trajet des sons perçus;111;32
+pl095;Oreille;Oreille externe et cavité tympanique;112;52
+pl096;Oreille;Cavité tympanique;113;42
+pl097;Oreille;Labyrinthe osseux et labyrinthe membraneux;114;38
+pl098;Oreille;Labyrinthe osseux et labyrinthe membraneux (suite);115;43
+pl099;Oreille;Orientation du labyrinthe dans le crâne;116;29
+pl100;Oreille;Trompe auditive;117;16
+pl101;Méninges et cerveau;Méninges et veines diploïques;118;24
+pl102;Méninges et cerveau;Artères méningées;119;25
+pl103;Méninges et cerveau;Méninges et veines cérébrales superficielles;163;39
+pl104;Méninges et cerveau;Sinus veineux de la dure-mère;121;17
+pl105;Méninges et cerveau;Sinus veineux de la dure-mère (suite);122;47
+pl106;Méninges et cerveau;Cerveau : vues latérales;123;47
+pl107;Méninges et cerveau;Cerveau : vues médiales;124;67
+pl108;Méninges et cerveau;Encéphale : vue inférieure;125;46
+pl109;Méninges et cerveau;Ventricules de l’encéphale;126;45
+pl110;Méninges et cerveau;Circulation du liquide cérébro-spinal;127;22
+pl111;Méninges et cerveau;Noyaux basaux du cerveau (ganglions);128;46
+pl112;Méninges et cerveau;Thalamus;129;65
+pl113;Méninges et cerveau;Hippocampe et fornix;130;28
+pl114;Méninges et cerveau;Cervelet;133;67
+pl115;Méninges et cerveau;Tronc cérébral;132;47
+pl116;Méninges et cerveau;Quatrième ventricule et cervelet;133;67
+pl117;Nerfs crâniens et cervicaux;Noyaux des nerfs crâniens dans le tronc cérébral;134;37
+pl118;Nerfs crâniens et cervicaux;Noyaux des nerfs crâniens dans le tronc cérébral (suite);135;41
+pl119;Nerfs crâniens et cervicaux;Nerfs crâniens (distribution motrice et sensitive) : schéma;136;35
+pl120;Nerfs crâniens et cervicaux;Nerfs olfactifs (I) : schéma;137;28
+pl121;Nerfs crâniens et cervicaux;Nerf optique (II) (voie visuelle) : schéma;138;25
+pl122;Nerfs crâniens et cervicaux;Nerfs oculo-moteur (III), trochléaire (IV) et abducens (VI) : schéma;139;43
+pl123;Nerfs crâniens et cervicaux;Nerf trijumeau (V) : schéma;140;62
+pl124;Nerfs crâniens et cervicaux;Nerf facial (VII) : schéma;141;56
+pl125;Nerfs crâniens et cervicaux;Nerf vestibulo-cochléaire (VIII) : schéma;142;34
+pl126;Nerfs crâniens et cervicaux;Nerf glosso-pharyngien (IX) : schéma;143;41
+pl127;Nerfs crâniens et cervicaux;Nerf vague (X) : schéma;144;57
+pl128;Nerfs crâniens et cervicaux;Nerf accessoire (XI) : schéma;145;18
+pl129;Nerfs crâniens et cervicaux;Nerf hypoglosse (XII) : schéma;146;30
+pl130;Nerfs crâniens et cervicaux;Plexus cervical : schéma;147;31
+pl131;Nerfs crâniens et cervicaux;Nerfs autonomes du cou;148;30
+pl132;Nerfs crâniens et cervicaux;Nerfs autonomes de la tête;149;49
+pl133;Nerfs crâniens et cervicaux;Ganglion ciliaire : schéma;150;38
+pl134;Nerfs crâniens et cervicaux;Ganglions ptérygo-palatin et submandibulaire : schéma;151;44
+pl135;Nerfs crâniens et cervicaux;Ganglion otique : schéma;152;37
+pl136;Nerfs crâniens et cervicaux;Voies gustatives : schéma;153;37
+pl137;Vascularisation cérébrale;Artères destinées au cerveau et aux méninges;154;39
+pl138;Vascularisation cérébrale;Artère carotide interne dans la partie pétreuse de l’os temporal;155;34
+pl139;Vascularisation cérébrale;Artères destinées au cerveau : schéma;156;44
+pl140;Vascularisation cérébrale;Artères de l’encéphale : vues inférieures;157;36
+pl141;Vascularisation cérébrale;Cercle artériel du cerveau (de Willis);158;41
+pl142;Vascularisation cérébrale;Artères de l’encéphale : vue frontale et coupe;159;50
+pl143;Vascularisation cérébrale;Artères du cerveau : vues latérale et médiale;160;34
+pl144;Vascularisation cérébrale;Artères de la fosse crânienne postérieure;161;51
+pl145;Vascularisation cérébrale;Veines de la fosse crânienne postérieure;162;48
+pl146;Vascularisation cérébrale;Veines profondes du cerveau;163;39
+pl147;Vascularisation cérébrale;Veines sous-épendymaires de l’encéphale;164;31
+pl148;Vascularisation cérébrale;Hypothalamus et hypophyse;165;38
+pl149;Vascularisation cérébrale;Artères et veines de l’hypothalamus et de l’hypophyse;166;19
+pl150;Vascularisation cérébrale;Imagerie crânienne (phlébo-IRM et artério-IRM);167;15
+pl151;Imagerie de l’encéphale;Imagerie crânienne (IRM);168;23

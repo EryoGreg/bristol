@@ -1,0 +1,42 @@
+{
+  "cle": "anatomie",
+  "nom": "Anatomie — Tête et cou",
+  "credits": "Fiches rédigées pour le projet Bristol à partir de sources libres (Wikipédia FR, Gray's Anatomy 1918, Terminologia Anatomica). Le découpage suit la section « Tête et cou » comme trame pédagogique ; les textes sont une synthèse originale.",
+  "licence": "Contenu des fiches CC-BY-SA 4.0. Images : voir la licence indiquée par image ci-dessous (domaine public, CC0 ou CC-BY-SA).",
+  "champs": [
+    { "cle": "image", "libelle": "Planche", "type": "image", "ordre": 1,
+      "masquable": true, "evocateur": true },
+
+    { "cle": "nom_fr", "libelle": "Nom (français)", "type": "texte_court", "ordre": 2,
+      "role": "titre",
+      "masquable": true, "evocateur": true, "verif_fuite": true, "fuite_min_mots": 1 },
+
+    { "cle": "nom_latin", "libelle": "Nom (latin / TA)", "type": "texte_court", "ordre": 3,
+      "role": "sous_titre",
+      "masquable": true, "evocateur": true, "verif_fuite": true, "fuite_min_mots": 1 },
+
+    { "cle": "region", "libelle": "Région", "type": "texte_court", "ordre": 4,
+      "masquable": true, "evocateur": false },
+
+    { "cle": "systeme", "libelle": "Système", "type": "liste", "ordre": 5,
+      "masquable": true, "evocateur": false, "role": "categories" },
+
+    { "cle": "fonction", "libelle": "Fonction / rôle", "type": "texte_long", "ordre": 6,
+      "masquable": true, "evocateur": true, "evoc_min": 40 },
+
+    { "cle": "rapports", "libelle": "Rapports anatomiques", "type": "texte_long", "ordre": 7,
+      "masquable": true, "evocateur": true, "evoc_min": 40 },
+
+    { "cle": "notes_cliniques", "libelle": "Notes cliniques", "type": "texte_long", "ordre": 8,
+      "masquable": true, "evocateur": true, "evoc_min": 40 },
+
+    { "cle": "sources", "libelle": "Sources", "type": "texte_long", "ordre": 9,
+      "masquable": false },
+
+    { "cle": "importance", "libelle": "Importance (/5)", "type": "nombre", "ordre": 10,
+      "masquable": false },
+
+    { "cle": "occlusion", "libelle": "Schéma à légender", "type": "occlusion", "ordre": 11,
+      "masquable": false }
+  ]
+}

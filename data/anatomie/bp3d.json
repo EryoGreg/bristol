@@ -1,0 +1,4312 @@
+{
+ "_licence": "BodyParts3D, (c) The Database Center for Life Science, CC-BY-SA 2.1 Japan — https://lifesciencedb.jp/bp3d/",
+ "_note": "Brouillon généré par apparier-bp3d.py. Relire 'fiches' (vérifier chaque FMA), compléter '_a_trancher' à la main, puis rendre-anatomie.py. contexte = clé de _contextes ou liste de FMA. cam = clé de CAMERAS (rendre-anatomie.py).",
+ "_contextes": {
+  "crane": [
+   52734,
+   52735,
+   52736,
+   9710,
+   52748,
+   52788,
+   52789,
+   52738,
+   52739,
+   52892,
+   52893,
+   53647,
+   53648,
+   53649,
+   53650,
+   53645,
+   53646,
+   53655,
+   53656,
+   54737,
+   54738,
+   52749
+  ],
+  "cervical": [
+   12520,
+   12521,
+   12522,
+   12523,
+   12524
+  ],
+  "crane_cervical": [
+   52734,
+   52735,
+   52736,
+   52748,
+   52788,
+   52789,
+   52738,
+   52739,
+   52749,
+   12519,
+   12520,
+   12521,
+   12522,
+   12523
+  ],
+  "hyoide_cervical": [
+   52749,
+   12519,
+   12520,
+   12521,
+   12522,
+   12523,
+   12524
+  ],
+  "mandibule_hyoide": [
+   52748,
+   52749
+  ]
+ },
+ "fiches": {
+  "os_frontal": {
+   "cible": 52734,
+   "contexte": "crane",
+   "cam": "avant",
+   "_nom": "Frontal bone",
+   "_src": "override"
+  },
+  "os_parietal": {
+   "cible": 52788,
+   "concept": 9613,
+   "contexte": "crane",
+   "cam": "profil",
+   "_nom": "Parietal bone",
+   "_src": "override"
+  },
+  "os_occipital": {
+   "cible": 52735,
+   "contexte": "crane",
+   "cam": "profil",
+   "_nom": "Occipital bone",
+   "_src": "override"
+  },
+  "os_temporal": {
+   "cible": 52738,
+   "concept": 52737,
+   "contexte": "crane",
+   "cam": "profil",
+   "_nom": "Temporal bone",
+   "_src": "override"
+  },
+  "os_sphenoide": {
+   "cible": 52736,
+   "contexte": "crane",
+   "cam": "avant",
+   "_nom": "Sphenoid bone",
+   "_src": "override"
+  },
+  "os_ethmoide": {
+   "cible": 52740,
+   "contexte": "crane",
+   "cam": "avant",
+   "_nom": "Ethmoid",
+   "_src": "override"
+  },
+  "maxillaire": {
+   "cible": 53649,
+   "concept": 9711,
+   "contexte": "crane",
+   "cam": "avant",
+   "_nom": "Maxilla",
+   "_src": "override"
+  },
+  "mandibule": {
+   "cible": 52748,
+   "contexte": "crane",
+   "cam": "trois_quarts",
+   "_nom": "Mandible",
+   "_src": "override"
+  },
+  "os_zygomatique": {
+   "cible": 52892,
+   "concept": 52747,
+   "contexte": "crane",
+   "cam": "trois_quarts",
+   "_nom": "Zygomatic bone",
+   "_src": "override"
+  },
+  "os_nasal": {
+   "cible": 53647,
+   "concept": 52745,
+   "contexte": "crane",
+   "cam": "avant",
+   "_nom": "Nasal bone",
+   "_src": "override"
+  },
+  "os_palatin": {
+   "cible": 53655,
+   "concept": 52746,
+   "contexte": "crane",
+   "cam": "trois_quarts_bas",
+   "_nom": "Palatine bone",
+   "_src": "override"
+  },
+  "vomer": {
+   "cible": 9710,
+   "contexte": "crane",
+   "cam": "avant",
+   "_nom": "Vomer",
+   "_src": "override"
+  },
+  "cornet_nasal_inferieur": {
+   "cible": 54737,
+   "concept": 54736,
+   "contexte": "crane",
+   "cam": "avant",
+   "_nom": "Inferior nasal concha",
+   "_src": "override"
+  },
+  "atlas": {
+   "cible": 12519,
+   "contexte": "cervical",
+   "cam": "trois_quarts",
+   "_nom": "Atlas",
+   "_src": "override"
+  },
+  "axis": {
+   "cible": 12520,
+   "contexte": "cervical",
+   "cam": "trois_quarts",
+   "_nom": "Axis",
+   "_src": "override"
+  },
+  "vertebre_cervicale": {
+   "cible": 12521,
+   "contexte": "cervical",
+   "cam": "trois_quarts",
+   "_nom": "Third cervical vertebra",
+   "_src": "override"
+  },
+  "muscle_orbiculaire_bouche": {
+   "cible": 46841,
+   "contexte": "crane",
+   "cam": "trois_quarts",
+   "_nom": "Orbicularis oris",
+   "_src": "auto",
+   "_score": 1.0
+  },
+  "muscle_buccinateur": {
+   "cible": 46835,
+   "concept": 46834,
+   "contexte": "crane",
+   "cam": "trois_quarts",
+   "_nom": "Buccinator",
+   "_src": "auto",
+   "_score": 1.0
+  },
+  "platysma": {
+   "cible": 45739,
+   "concept": 45738,
+   "contexte": "crane_cervical",
+   "cam": "trois_quarts",
+   "_nom": "Platysma",
+   "_src": "auto",
+   "_score": 1.0
+  },
+  "muscle_temporal": {
+   "cible": 49007,
+   "concept": 49006,
+   "contexte": "crane",
+   "cam": "profil",
+   "_nom": "Temporalis",
+   "_src": "auto",
+   "_score": 1.0
+  },
+  "muscle_pterygoidien_medial": {
+   "cible": 49012,
+   "concept": 49011,
+   "contexte": "crane",
+   "cam": "trois_quarts_bas",
+   "_nom": "Medial pterygoid",
+   "_src": "override"
+  },
+  "muscle_sterno_cleido_mastoidien": {
+   "cible": 13408,
+   "concept": 13407,
+   "contexte": "crane_cervical",
+   "cam": "profil",
+   "_nom": "Sternocleidomastoid",
+   "_src": "auto",
+   "_score": 1.0
+  },
+  "muscle_mylo_hyoidien": {
+   "cible": 46321,
+   "concept": 46320,
+   "contexte": "mandibule_hyoide",
+   "cam": "trois_quarts_bas",
+   "_nom": "Mylohyoid",
+   "_src": "auto",
+   "_score": 1.0
+  },
+  "muscle_genio_hyoidien": {
+   "cible": 46326,
+   "concept": 46325,
+   "contexte": "mandibule_hyoide",
+   "cam": "trois_quarts_bas",
+   "_nom": "Geniohyoid",
+   "_src": "auto",
+   "_score": 1.0
+  },
+  "muscle_stylo_hyoidien": {
+   "cible": 45826,
+   "concept": 9625,
+   "contexte": "mandibule_hyoide",
+   "cam": "trois_quarts",
+   "_nom": "Stylohyoid",
+   "_src": "auto",
+   "_score": 1.0
+  },
+  "muscle_sterno_hyoidien": {
+   "cible": 13346,
+   "concept": 13341,
+   "contexte": "hyoide_cervical",
+   "cam": "trois_quarts",
+   "_nom": "Sternohyoid",
+   "_src": "auto",
+   "_score": 1.0
+  },
+  "muscle_sterno_thyroidien": {
+   "cible": 13350,
+   "concept": 13343,
+   "contexte": "hyoide_cervical",
+   "cam": "trois_quarts",
+   "_nom": "Sternothyroid",
+   "_src": "auto",
+   "_score": 1.0
+  },
+  "muscle_thyro_hyoidien": {
+   "cible": 13352,
+   "concept": 13344,
+   "contexte": "hyoide_cervical",
+   "cam": "trois_quarts",
+   "_nom": "Thyrohyoid",
+   "_src": "auto",
+   "_score": 1.0
+  },
+  "muscle_omo_hyoidien": {
+   "cible": 13348,
+   "concept": 13342,
+   "contexte": "hyoide_cervical",
+   "cam": "trois_quarts",
+   "_nom": "Omohyoid",
+   "_src": "auto",
+   "_score": 1.0
+  },
+  "muscle_scalene_anterieur": {
+   "cible": 13392,
+   "concept": 13385,
+   "contexte": "crane_cervical",
+   "cam": "profil",
+   "_nom": "Scalenus anterior",
+   "_src": "auto",
+   "_score": 0.91
+  },
+  "muscle_scalene_moyen": {
+   "cible": 13390,
+   "concept": 13386,
+   "contexte": "crane_cervical",
+   "cam": "profil",
+   "_nom": "Scalenus medius",
+   "_src": "override"
+  },
+  "muscle_scalene_posterieur": {
+   "cible": 13388,
+   "concept": 13387,
+   "contexte": "crane_cervical",
+   "cam": "profil",
+   "_nom": "Scalenus posterior",
+   "_src": "auto",
+   "_score": 0.91
+  },
+  "muscle_long_de_la_tete": {
+   "cible": 46309,
+   "concept": 46308,
+   "contexte": "crane_cervical",
+   "cam": "profil",
+   "_nom": "Longus capitis",
+   "_src": "auto",
+   "_score": 1.0
+  },
+  "os_hyoide": {
+   "cible": 52749,
+   "contexte": "hyoide_cervical",
+   "cam": "trois_quarts",
+   "_nom": "Hyoid bone",
+   "_src": "override"
+  },
+  "cartilage_thyroide": {
+   "cible": 55099,
+   "contexte": "hyoide_cervical",
+   "cam": "trois_quarts",
+   "_nom": "Thyroid cartilage",
+   "_src": "override"
+  },
+  "globe_oculaire": {
+   "cible": 12513,
+   "contexte": "crane",
+   "cam": "trois_quarts",
+   "_nom": "Eyeball",
+   "_src": "override"
+  }
+ },
+ "_a_trancher": {
+  "foramen_magnum": {
+   "latin": "Foramen magnum",
+   "requete": "foramen magnum",
+   "pistes": [
+    {
+     "fma": 22459,
+     "nom": "Adductor magnus",
+     "score": 0.55
+    },
+    {
+     "fma": 22460,
+     "nom": "Left adductor magnus",
+     "score": 0.53
+    },
+    {
+     "fma": 72689,
+     "nom": "Fusiform gyrus",
+     "score": 0.5
+    },
+    {
+     "fma": 76893,
+     "nom": "Free taenia",
+     "score": 0.48
+    }
+   ]
+  },
+  "canal_optique": {
+   "latin": "Canalis opticus",
+   "requete": "canal optic",
+   "pistes": [
+    {
+     "fma": 67936,
+     "nom": "Left optic tract",
+     "score": 0.52
+    },
+    {
+     "fma": 50878,
+     "nom": "Left optic nerve",
+     "score": 0.52
+    },
+    {
+     "fma": 258847,
+     "nom": "Calcaneal tendon",
+     "score": 0.52
+    },
+    {
+     "fma": 78497,
+     "nom": "Central canal of spinal cord",
+     "score": 0.51
+    }
+   ]
+  },
+  "fissure_orbitaire_superieure": {
+   "latin": "Fissura orbitalis superior",
+   "requete": "fissure orbital superior",
+   "pistes": [
+    {
+     "fma": 46806,
+     "nom": "Levator labii superioris",
+     "score": 0.58
+    },
+    {
+     "fma": 46807,
+     "nom": "Left levator labii superioris",
+     "score": 0.57
+    },
+    {
+     "fma": 46806,
+     "nom": "Right levator labii superioris",
+     "score": 0.56
+    },
+    {
+     "fma": 65018,
+     "nom": "Tibialis posterior",
+     "score": 0.43
+    }
+   ]
+  },
+  "foramen_rond": {
+   "latin": "Foramen rotundum",
+   "requete": "foramen round",
+   "pistes": [
+    {
+     "fma": 72689,
+     "nom": "Fusiform gyrus",
+     "score": 0.52
+    },
+    {
+     "fma": 38479,
+     "nom": "Flexor digitorum profundus",
+     "score": 0.51
+    },
+    {
+     "fma": 19235,
+     "nom": "Deferent duct",
+     "score": 0.46
+    },
+    {
+     "fma": 52738,
+     "nom": "Temporal bone",
+     "score": 0.31
+    }
+   ]
+  },
+  "foramen_ovale": {
+   "latin": "Foramen ovale (cranii)",
+   "requete": "foramen oval",
+   "pistes": [
+    {
+     "fma": 10951,
+     "nom": "Inferior vena cava",
+     "score": 0.53
+    },
+    {
+     "fma": 76893,
+     "nom": "Free taenia",
+     "score": 0.52
+    },
+    {
+     "fma": 7235,
+     "nom": "Mitral valve",
+     "score": 0.5
+    },
+    {
+     "fma": 46826,
+     "nom": "Mentalis",
+     "score": 0.5
+    }
+   ]
+  },
+  "foramen_epineux": {
+   "latin": "Foramen spinosum",
+   "requete": "foramen spinous",
+   "pistes": [
+    {
+     "fma": 32547,
+     "nom": "Infraspinatus",
+     "score": 0.64
+    },
+    {
+     "fma": 4706,
+     "nom": "Coronary sinus",
+     "score": 0.62
+    },
+    {
+     "fma": 32544,
+     "nom": "Supraspinatus",
+     "score": 0.57
+    },
+    {
+     "fma": 22358,
+     "nom": "Semitendinosus",
+     "score": 0.55
+    }
+   ]
+  },
+  "foramen_dechire": {
+   "latin": "Foramen lacerum",
+   "requete": "foramen lacerate",
+   "pistes": [
+    {
+     "fma": 14765,
+     "nom": "Common iliac artery",
+     "score": 0.51
+    },
+    {
+     "fma": 14752,
+     "nom": "Renal artery",
+     "score": 0.5
+    },
+    {
+     "fma": 12522,
+     "nom": "Fourth cervical vertebra",
+     "score": 0.5
+    },
+    {
+     "fma": 13075,
+     "nom": "Fourth lumbar vertebra",
+     "score": 0.21
+    }
+   ]
+  },
+  "foramen_jugulaire": {
+   "latin": "Foramen jugulare",
+   "requete": "foramen jugular",
+   "pistes": [
+    {
+     "fma": 4754,
+     "nom": "Internal jugular vein",
+     "score": 0.56
+    },
+    {
+     "fma": 62032,
+     "nom": "Habenula",
+     "score": 0.52
+    },
+    {
+     "fma": 72669,
+     "nom": "Angular gyrus",
+     "score": 0.5
+    },
+    {
+     "fma": 15629,
+     "nom": "Adrenal gland",
+     "score": 0.5
+    }
+   ]
+  },
+  "canal_carotidien": {
+   "latin": "Canalis caroticus",
+   "requete": "canal caroticus",
+   "pistes": [
+    {
+     "fma": 22781,
+     "nom": "Spinalis cervicis",
+     "score": 0.56
+    },
+    {
+     "fma": 22355,
+     "nom": "Left sartorius",
+     "score": 0.55
+    },
+    {
+     "fma": 71704,
+     "nom": "Set of nasal cartilages",
+     "score": 0.53
+    },
+    {
+     "fma": 10419,
+     "nom": "Pancreatic duct",
+     "score": 0.47
+    }
+   ]
+  },
+  "canal_hypoglosse": {
+   "latin": "Canalis nervi hypoglossi",
+   "requete": "canal nervi hypoglossi",
+   "pistes": [
+    {
+     "fma": 22781,
+     "nom": "Spinalis cervicis",
+     "score": 0.46
+    },
+    {
+     "fma": 46285,
+     "nom": "Vertical intermediate part of right longus colli",
+     "score": 0.4
+    },
+    {
+     "fma": 13388,
+     "nom": "Scalenus posterior",
+     "score": 0.4
+    },
+    {
+     "fma": 49012,
+     "nom": "Medial pterygoid",
+     "score": 0.32
+    }
+   ]
+  },
+  "meat_acoustique_interne": {
+   "latin": "Meatus acusticus internus",
+   "requete": "meatus acusticus internus",
+   "pistes": [
+    {
+     "fma": 38934,
+     "nom": "Vastus intermedius",
+     "score": 0.6
+    },
+    {
+     "fma": 38935,
+     "nom": "Left vastus intermedius",
+     "score": 0.58
+    },
+    {
+     "fma": 38934,
+     "nom": "Right vastus intermedius",
+     "score": 0.53
+    },
+    {
+     "fma": 22324,
+     "nom": "Obturator internus",
+     "score": 0.51
+    }
+   ]
+  },
+  "lame_criblee": {
+   "latin": "Lamina cribrosa",
+   "requete": "lamina cribrosa",
+   "pistes": [
+    {
+     "fma": 61975,
+     "nom": "Lamina terminalis",
+     "score": 0.62
+    },
+    {
+     "fma": 22560,
+     "nom": "Plantaris",
+     "score": 0.58
+    },
+    {
+     "fma": 22781,
+     "nom": "Spinalis cervicis",
+     "score": 0.5
+    },
+    {
+     "fma": 22874,
+     "nom": "Semispinalis cervicis",
+     "score": 0.5
+    }
+   ]
+  },
+  "articulation_uncovertebrale": {
+   "latin": "Articulatio uncovertebralis",
+   "requete": "joint uncovertebralis",
+   "pistes": [
+    {
+     "fma": 10014,
+     "nom": "Ninth thoracic vertebra",
+     "score": 0.59
+    },
+    {
+     "fma": 25058,
+     "nom": "Intervertebral disk of axis",
+     "score": 0.58
+    },
+    {
+     "fma": 13072,
+     "nom": "First lumbar vertebra",
+     "score": 0.57
+    },
+    {
+     "fma": 13076,
+     "nom": "Fifth lumbar vertebra",
+     "score": 0.57
+    }
+   ]
+  },
+  "articulation_temporo_mandibulaire": {
+   "latin": "Articulatio temporomandibularis",
+   "requete": "joint temporomandibularis",
+   "pistes": [
+    {
+     "fma": 49007,
+     "nom": "Right temporalis",
+     "score": 0.63
+    },
+    {
+     "fma": 49008,
+     "nom": "Left temporalis",
+     "score": 0.6
+    },
+    {
+     "fma": 46763,
+     "nom": "Right temporoparietalis",
+     "score": 0.58
+    },
+    {
+     "fma": 49007,
+     "nom": "Temporalis",
+     "score": 0.57
+    }
+   ]
+  },
+  "ligament_nuchal": {
+   "latin": "Ligamentum nuchae",
+   "requete": "nuchae",
+   "pistes": [
+    {
+     "fma": 24437,
+     "nom": "Lunate",
+     "score": 0.5
+    },
+    {
+     "fma": 72977,
+     "nom": "Insula",
+     "score": 0.5
+    },
+    {
+     "fma": 24448,
+     "nom": "Hamate",
+     "score": 0.5
+    },
+    {
+     "fma": 7394,
+     "nom": "Trachea",
+     "score": 0.46
+    }
+   ]
+  },
+  "membrane_atlanto_occipitale_anterieure": {
+   "latin": "Membrana atlantooccipitalis anterior",
+   "requete": "atlantooccipitalis anterior",
+   "pistes": [
+    {
+     "fma": 22544,
+     "nom": "Tibialis anterior",
+     "score": 0.73
+    },
+    {
+     "fma": 22545,
+     "nom": "Left tibialis anterior",
+     "score": 0.69
+    },
+    {
+     "fma": 46313,
+     "nom": "Rectus capitis anterior",
+     "score": 0.6
+    },
+    {
+     "fma": 46314,
+     "nom": "Left rectus capitis anterior",
+     "score": 0.55
+    }
+   ]
+  },
+  "membrane_atlanto_occipitale_posterieure": {
+   "latin": "Membrana atlantooccipitalis posterior",
+   "requete": "atlantooccipitalis posterior",
+   "pistes": [
+    {
+     "fma": 65018,
+     "nom": "Tibialis posterior",
+     "score": 0.74
+    },
+    {
+     "fma": 65019,
+     "nom": "Left tibialis posterior",
+     "score": 0.71
+    },
+    {
+     "fma": 22544,
+     "nom": "Tibialis anterior",
+     "score": 0.62
+    },
+    {
+     "fma": 13389,
+     "nom": "Left scalenus posterior",
+     "score": 0.59
+    }
+   ]
+  },
+  "ligament_transverse_atlas": {
+   "latin": "Ligamentum transversum atlantis",
+   "requete": "transversum atlantis",
+   "pistes": [
+    {
+     "fma": 22344,
+     "nom": "Transversus abdominis",
+     "score": 0.73
+    },
+    {
+     "fma": 9761,
+     "nom": "Transversus thoracis",
+     "score": 0.7
+    },
+    {
+     "fma": 9762,
+     "nom": "Left transversus thoracis",
+     "score": 0.62
+    },
+    {
+     "fma": 9761,
+     "nom": "Right transversus thoracis",
+     "score": 0.61
+    }
+   ]
+  },
+  "ligament_alaire": {
+   "latin": "Ligamenta alaria",
+   "requete": "alaria",
+   "pistes": [
+    {
+     "fma": 12519,
+     "nom": "Atlas",
+     "score": 0.55
+    },
+    {
+     "fma": 22560,
+     "nom": "Plantaris",
+     "score": 0.53
+    },
+    {
+     "fma": 13414,
+     "nom": "Subscapularis",
+     "score": 0.53
+    },
+    {
+     "fma": 53645,
+     "nom": "Lacrimal bone",
+     "score": 0.21
+    }
+   ]
+  },
+  "membrane_tectoria": {
+   "latin": "Membrana tectoria",
+   "requete": "tectoria",
+   "pistes": [
+    {
+     "fma": 8445,
+     "nom": "Tenth rib",
+     "score": 0.59
+    },
+    {
+     "fma": 7211,
+     "nom": "Testis",
+     "score": 0.57
+    },
+    {
+     "fma": 49007,
+     "nom": "Temporalis",
+     "score": 0.56
+    },
+    {
+     "fma": 7882,
+     "nom": "Second rib",
+     "score": 0.56
+    }
+   ]
+  },
+  "muscle_masseter": {
+   "latin": "Musculus masseter",
+   "requete": "mass er",
+   "pistes": [
+    {
+     "fma": 38930,
+     "nom": "Vastus lateralis",
+     "score": 0.52
+    },
+    {
+     "fma": 9710,
+     "nom": "Vomer",
+     "score": 0.5
+    },
+    {
+     "fma": 38934,
+     "nom": "Vastus intermedius",
+     "score": 0.48
+    },
+    {
+     "fma": 53647,
+     "nom": "Nasal bone",
+     "score": 0.47
+    }
+   ]
+  },
+  "muscle_pterygoidien_lateral": {
+   "latin": "Musculus pterygoideus lateralis",
+   "requete": "pterygoid lateral",
+   "pistes": [
+    {
+     "fma": 38930,
+     "nom": "Vastus lateralis",
+     "score": 0.55
+    },
+    {
+     "fma": 49012,
+     "nom": "Medial pterygoid",
+     "score": 0.55
+    },
+    {
+     "fma": 55099,
+     "nom": "Thyroid cartilage",
+     "score": 0.53
+    },
+    {
+     "fma": 24439,
+     "nom": "Triquetral",
+     "score": 0.44
+    }
+   ]
+  },
+  "glande_parotide": {
+   "latin": "Glandula parotidea",
+   "requete": "parotid",
+   "pistes": [
+    {
+     "fma": 10419,
+     "nom": "Pancreatic duct",
+     "score": 0.55
+    },
+    {
+     "fma": 24435,
+     "nom": "Scaphoid",
+     "score": 0.53
+    },
+    {
+     "fma": 9600,
+     "nom": "Prostate",
+     "score": 0.53
+    },
+    {
+     "fma": 13350,
+     "nom": "Sternothyroid",
+     "score": 0.4
+    }
+   ]
+  },
+  "conduit_parotidien": {
+   "latin": "Ductus parotideus",
+   "requete": "duct parotideus",
+   "pistes": [
+    {
+     "fma": 55611,
+     "nom": "Left procerus",
+     "score": 0.57
+    },
+    {
+     "fma": 55610,
+     "nom": "Right procerus",
+     "score": 0.55
+    },
+    {
+     "fma": 22355,
+     "nom": "Left sartorius",
+     "score": 0.55
+    },
+    {
+     "fma": 22592,
+     "nom": "Left popliteus",
+     "score": 0.55
+    }
+   ]
+  },
+  "nerf_facial_extracranien": {
+   "latin": "Nervus facialis",
+   "requete": "facial",
+   "pistes": [
+    {
+     "fma": 37668,
+     "nom": "Brachialis",
+     "score": 0.62
+    },
+    {
+     "fma": 37669,
+     "nom": "Left brachialis",
+     "score": 0.57
+    },
+    {
+     "fma": 43883,
+     "nom": "Gracilis",
+     "score": 0.57
+    },
+    {
+     "fma": 43884,
+     "nom": "Left gracilis",
+     "score": 0.53
+    }
+   ]
+  },
+  "fascia_cervical": {
+   "latin": "Fascia cervicalis",
+   "requete": "fascia cervical",
+   "pistes": [
+    {
+     "fma": 72939,
+     "nom": "Stria terminalis",
+     "score": 0.58
+    },
+    {
+     "fma": 12524,
+     "nom": "Sixth cervical vertebra",
+     "score": 0.58
+    },
+    {
+     "fma": 22781,
+     "nom": "Spinalis cervicis",
+     "score": 0.56
+    },
+    {
+     "fma": 22782,
+     "nom": "Left spinalis cervicis",
+     "score": 0.54
+    }
+   ]
+  },
+  "gaine_carotidienne": {
+   "latin": "Vagina carotica",
+   "requete": "sheath carotica",
+   "pistes": [
+    {
+     "fma": 55099,
+     "nom": "Thyroid cartilage",
+     "score": 0.56
+    },
+    {
+     "fma": 4707,
+     "nom": "Great cardiac vein",
+     "score": 0.55
+    },
+    {
+     "fma": 8229,
+     "nom": "Seventh rib",
+     "score": 0.54
+    },
+    {
+     "fma": 71704,
+     "nom": "Set of nasal cartilages",
+     "score": 0.53
+    }
+   ]
+  },
+  "muscle_trapeze": {
+   "latin": "Musculus trapezius",
+   "requete": "trapezius",
+   "pistes": [
+    {
+     "fma": 24443,
+     "nom": "Trapezium",
+     "score": 0.89
+    },
+    {
+     "fma": 23725,
+     "nom": "Trapezoid",
+     "score": 0.78
+    },
+    {
+     "fma": 24444,
+     "nom": "Left trapezium",
+     "score": 0.7
+    },
+    {
+     "fma": 24443,
+     "nom": "Right trapezium",
+     "score": 0.67
+    }
+   ]
+  },
+  "muscle_digastrique": {
+   "latin": "Musculus digastricus",
+   "requete": "digastric",
+   "pistes": [
+    {
+     "fma": 7857,
+     "nom": "First rib",
+     "score": 0.56
+    },
+    {
+     "fma": 8283,
+     "nom": "Eighth rib",
+     "score": 0.53
+    },
+    {
+     "fma": 14768,
+     "nom": "Left gastric artery",
+     "score": 0.5
+    },
+    {
+     "fma": 49012,
+     "nom": "Medial pterygoid",
+     "score": 0.32
+    }
+   ]
+  },
+  "muscle_long_du_cou": {
+   "latin": "Musculus longus colli",
+   "requete": "longus colli",
+   "pistes": [
+    {
+     "fma": 46309,
+     "nom": "Longus capitis",
+     "score": 0.69
+    },
+    {
+     "fma": 72830,
+     "nom": "Globus pallidus",
+     "score": 0.59
+    },
+    {
+     "fma": 22754,
+     "nom": "Longissimus capitis",
+     "score": 0.58
+    },
+    {
+     "fma": 46310,
+     "nom": "Left longus capitis",
+     "score": 0.58
+    }
+   ]
+  },
+  "triangle_anterieur_cou": {
+   "latin": "Regio cervicalis anterior",
+   "requete": "region cervical anterior",
+   "pistes": [
+    {
+     "fma": 81752,
+     "nom": "Right cervical rotator",
+     "score": 0.7
+    },
+    {
+     "fma": 22544,
+     "nom": "Right tibialis anterior",
+     "score": 0.64
+    },
+    {
+     "fma": 13398,
+     "nom": "Right serratus anterior",
+     "score": 0.64
+    },
+    {
+     "fma": 13392,
+     "nom": "Right scalenus anterior",
+     "score": 0.64
+    }
+   ]
+  },
+  "triangle_posterieur_cou": {
+   "latin": "Regio cervicalis lateralis",
+   "requete": "region cervical lateral",
+   "pistes": [
+    {
+     "fma": 12525,
+     "nom": "Seventh cervical vertebra",
+     "score": 0.67
+    },
+    {
+     "fma": 81752,
+     "nom": "Right cervical rotator",
+     "score": 0.67
+    },
+    {
+     "fma": 81753,
+     "nom": "Left cervical rotator",
+     "score": 0.64
+    },
+    {
+     "fma": 81752,
+     "nom": "Cervical rotator",
+     "score": 0.62
+    }
+   ]
+  },
+  "veine_jugulaire_externe": {
+   "latin": "Vena jugularis externa",
+   "requete": "jugular external",
+   "pistes": [
+    {
+     "fma": 22326,
+     "nom": "Obturator externus",
+     "score": 0.59
+    },
+    {
+     "fma": 15571,
+     "nom": "Ureter",
+     "score": 0.55
+    },
+    {
+     "fma": 61975,
+     "nom": "Lamina terminalis",
+     "score": 0.55
+    },
+    {
+     "fma": 22326,
+     "nom": "Right obturator externus",
+     "score": 0.5
+    }
+   ]
+  },
+  "veine_jugulaire_anterieure": {
+   "latin": "Vena jugularis anterior",
+   "requete": "jugular anterior",
+   "pistes": [
+    {
+     "fma": 22544,
+     "nom": "Tibialis anterior",
+     "score": 0.61
+    },
+    {
+     "fma": 13398,
+     "nom": "Serratus anterior",
+     "score": 0.61
+    },
+    {
+     "fma": 13392,
+     "nom": "Scalenus anterior",
+     "score": 0.61
+    },
+    {
+     "fma": 22545,
+     "nom": "Left tibialis anterior",
+     "score": 0.58
+    }
+   ]
+  },
+  "plexus_cervical": {
+   "latin": "Plexus cervicalis",
+   "requete": "plexus cervical",
+   "pistes": [
+    {
+     "fma": 22726,
+     "nom": "Splenius cervicis",
+     "score": 0.75
+    },
+    {
+     "fma": 22727,
+     "nom": "Left splenius cervicis",
+     "score": 0.65
+    },
+    {
+     "fma": 22726,
+     "nom": "Right splenius cervicis",
+     "score": 0.63
+    },
+    {
+     "fma": 22781,
+     "nom": "Spinalis cervicis",
+     "score": 0.62
+    }
+   ]
+  },
+  "nerf_grand_auriculaire": {
+   "latin": "Nervus auricularis magnus",
+   "requete": "auricularis great",
+   "pistes": [
+    {
+     "fma": 46841,
+     "nom": "Orbicularis oris",
+     "score": 0.67
+    },
+    {
+     "fma": 22554,
+     "nom": "Fibularis brevis",
+     "score": 0.61
+    },
+    {
+     "fma": 22554,
+     "nom": "Right fibularis brevis",
+     "score": 0.56
+    },
+    {
+     "fma": 22552,
+     "nom": "Fibularis longus",
+     "score": 0.55
+    }
+   ]
+  },
+  "nerf_petit_occipital": {
+   "latin": "Nervus occipitalis minor",
+   "requete": "occipital lesser",
+   "pistes": [
+    {
+     "fma": 72975,
+     "nom": "Occipital lobe",
+     "score": 0.8
+    },
+    {
+     "fma": 46761,
+     "nom": "Occipitalis",
+     "score": 0.74
+    },
+    {
+     "fma": 52735,
+     "nom": "Occipital bone",
+     "score": 0.73
+    },
+    {
+     "fma": 72976,
+     "nom": "Left occipital lobe",
+     "score": 0.69
+    }
+   ]
+  },
+  "nerf_transverse_du_cou": {
+   "latin": "Nervus transversus colli",
+   "requete": "transverse colli",
+   "pistes": [
+    {
+     "fma": 9761,
+     "nom": "Transversus thoracis",
+     "score": 0.67
+    },
+    {
+     "fma": 22344,
+     "nom": "Transversus abdominis",
+     "score": 0.65
+    },
+    {
+     "fma": 9762,
+     "nom": "Left transversus thoracis",
+     "score": 0.59
+    },
+    {
+     "fma": 33585,
+     "nom": "Transverse part of left trapezius",
+     "score": 0.57
+    }
+   ]
+  },
+  "nerfs_supraclaviculaires": {
+   "latin": "Nervi supraclaviculares",
+   "requete": "nervi supraclaviculares",
+   "pistes": [
+    {
+     "fma": 13412,
+     "nom": "Right subclavius",
+     "score": 0.62
+    },
+    {
+     "fma": 13322,
+     "nom": "Right clavicle",
+     "score": 0.59
+    },
+    {
+     "fma": 73422,
+     "nom": "Right superior colliculus",
+     "score": 0.58
+    },
+    {
+     "fma": 13411,
+     "nom": "Left subclavius",
+     "score": 0.58
+    }
+   ]
+  },
+  "nerf_grand_occipital": {
+   "latin": "Nervus occipitalis major",
+   "requete": "occipital greater",
+   "pistes": [
+    {
+     "fma": 72975,
+     "nom": "Occipital lobe",
+     "score": 0.71
+    },
+    {
+     "fma": 52735,
+     "nom": "Occipital bone",
+     "score": 0.71
+    },
+    {
+     "fma": 46761,
+     "nom": "Occipitalis",
+     "score": 0.64
+    },
+    {
+     "fma": 72976,
+     "nom": "Left occipital lobe",
+     "score": 0.61
+    }
+   ]
+  },
+  "anse_cervicale": {
+   "latin": "Ansa cervicalis",
+   "requete": "ansa cervical",
+   "pistes": [
+    {
+     "fma": 22781,
+     "nom": "Spinalis cervicis",
+     "score": 0.6
+    },
+    {
+     "fma": 61975,
+     "nom": "Lamina terminalis",
+     "score": 0.6
+    },
+    {
+     "fma": 12524,
+     "nom": "Sixth cervical vertebra",
+     "score": 0.56
+    },
+    {
+     "fma": 72939,
+     "nom": "Stria terminalis",
+     "score": 0.55
+    }
+   ]
+  },
+  "nez_externe": {
+   "latin": "Nasus externus",
+   "requete": "nasus externus",
+   "pistes": [
+    {
+     "fma": 38934,
+     "nom": "Vastus intermedius",
+     "score": 0.62
+    },
+    {
+     "fma": 22326,
+     "nom": "Obturator externus",
+     "score": 0.62
+    },
+    {
+     "fma": 38930,
+     "nom": "Vastus lateralis",
+     "score": 0.6
+    },
+    {
+     "fma": 38935,
+     "nom": "Left vastus intermedius",
+     "score": 0.54
+    }
+   ]
+  },
+  "cavite_nasale": {
+   "latin": "Cavitas nasi",
+   "requete": "cavitas nasi",
+   "pistes": [
+    {
+     "fma": 55606,
+     "nom": "Right nasalis",
+     "score": 0.56
+    },
+    {
+     "fma": 4755,
+     "nom": "Subclavian vein",
+     "score": 0.52
+    },
+    {
+     "fma": 55607,
+     "nom": "Left nasalis",
+     "score": 0.5
+    },
+    {
+     "fma": 24446,
+     "nom": "Capitate",
+     "score": 0.5
+    }
+   ]
+  },
+  "paroi_laterale_nasale": {
+   "latin": "Paries lateralis cavitatis nasi",
+   "requete": "paries lateral cavitatis nasi",
+   "pistes": [
+    {
+     "fma": 55680,
+     "nom": "Upper lateral incisor tooth",
+     "score": 0.54
+    },
+    {
+     "fma": 38930,
+     "nom": "Vastus lateralis",
+     "score": 0.53
+    },
+    {
+     "fma": 55608,
+     "nom": "Depressor septi nasi",
+     "score": 0.53
+    },
+    {
+     "fma": 78449,
+     "nom": "Right lateral ventricle",
+     "score": 0.46
+    }
+   ]
+  },
+  "septum_nasal": {
+   "latin": "Septum nasi",
+   "requete": "septum nasi",
+   "pistes": [
+    {
+     "fma": 55607,
+     "nom": "Left nasalis",
+     "score": 0.61
+    },
+    {
+     "fma": 55608,
+     "nom": "Depressor septi nasi",
+     "score": 0.58
+    },
+    {
+     "fma": 61844,
+     "nom": "Septum pellucidum",
+     "score": 0.57
+    },
+    {
+     "fma": 19387,
+     "nom": "Seminal vesicle",
+     "score": 0.54
+    }
+   ]
+  },
+  "choanes": {
+   "latin": "Choanae",
+   "requete": "choanae",
+   "pistes": [
+    {
+     "fma": 24448,
+     "nom": "Hamate",
+     "score": 0.62
+    },
+    {
+     "fma": 16586,
+     "nom": "Hip bone",
+     "score": 0.53
+    },
+    {
+     "fma": 24446,
+     "nom": "Capitate",
+     "score": 0.53
+    },
+    {
+     "fma": 14543,
+     "nom": "Colon",
+     "score": 0.5
+    }
+   ]
+  },
+  "sinus_frontal": {
+   "latin": "Sinus frontalis",
+   "requete": "sinus frontalis",
+   "pistes": [
+    {
+     "fma": 46759,
+     "nom": "Frontalis",
+     "score": 0.75
+    },
+    {
+     "fma": 46759,
+     "nom": "Right frontalis",
+     "score": 0.73
+    },
+    {
+     "fma": 46760,
+     "nom": "Left frontalis",
+     "score": 0.69
+    },
+    {
+     "fma": 72653,
+     "nom": "Superior frontal gyrus",
+     "score": 0.59
+    }
+   ]
+  },
+  "sinus_maxillaire": {
+   "latin": "Sinus maxillaris",
+   "requete": "sinus maxillary",
+   "pistes": [
+    {
+     "fma": 53649,
+     "nom": "Right maxilla",
+     "score": 0.64
+    },
+    {
+     "fma": 53649,
+     "nom": "Maxilla",
+     "score": 0.64
+    },
+    {
+     "fma": 53650,
+     "nom": "Left maxilla",
+     "score": 0.59
+    },
+    {
+     "fma": 59763,
+     "nom": "Maxillary gingiva",
+     "score": 0.56
+    }
+   ]
+  },
+  "cellules_ethmoidales": {
+   "latin": "Cellulae ethmoidales",
+   "requete": "cellulae hmoidales",
+   "pistes": [
+    {
+     "fma": 22346,
+     "nom": "Pyramidalis",
+     "score": 0.48
+    },
+    {
+     "fma": 52740,
+     "nom": "Ethmoid",
+     "score": 0.48
+    },
+    {
+     "fma": 22347,
+     "nom": "Left pyramidalis",
+     "score": 0.47
+    },
+    {
+     "fma": 13382,
+     "nom": "Left rhomboid major",
+     "score": 0.43
+    }
+   ]
+  },
+  "sinus_sphenoidal": {
+   "latin": "Sinus sphenoidalis",
+   "requete": "sinus sphenoidalis",
+   "pistes": [
+    {
+     "fma": 38932,
+     "nom": "Vastus medialis",
+     "score": 0.61
+    },
+    {
+     "fma": 18247,
+     "nom": "Glans penis",
+     "score": 0.55
+    },
+    {
+     "fma": 38930,
+     "nom": "Vastus lateralis",
+     "score": 0.53
+    },
+    {
+     "fma": 13390,
+     "nom": "Scalenus medius",
+     "score": 0.36
+    }
+   ]
+  },
+  "tache_vasculaire": {
+   "latin": "Locus Kiesselbachi",
+   "requete": "locus kiesselbachi",
+   "pistes": [
+    {
+     "fma": 46309,
+     "nom": "Longus capitis",
+     "score": 0.44
+    },
+    {
+     "fma": 37669,
+     "nom": "Left brachialis",
+     "score": 0.42
+    },
+    {
+     "fma": 72830,
+     "nom": "Globus pallidus",
+     "score": 0.42
+    },
+    {
+     "fma": 11336,
+     "nom": "Linea alba",
+     "score": 0.36
+    }
+   ]
+  },
+  "innervation_cavite_nasale": {
+   "latin": "Nervi cavitatis nasi",
+   "requete": "nervi cavitatis nasi",
+   "pistes": [
+    {
+     "fma": 24446,
+     "nom": "Right capitate",
+     "score": 0.53
+    },
+    {
+     "fma": 46313,
+     "nom": "Rectus capitis anterior",
+     "score": 0.51
+    },
+    {
+     "fma": 22728,
+     "nom": "Splenius capitis",
+     "score": 0.5
+    },
+    {
+     "fma": 46317,
+     "nom": "Rectus capitis lateralis",
+     "score": 0.5
+    }
+   ]
+  },
+  "cavite_buccale": {
+   "latin": "Cavitas oris",
+   "requete": "cavitas oris",
+   "pistes": [
+    {
+     "fma": 46841,
+     "nom": "Orbicularis oris",
+     "score": 0.64
+    },
+    {
+     "fma": 38928,
+     "nom": "Rectus femoris",
+     "score": 0.62
+    },
+    {
+     "fma": 22560,
+     "nom": "Plantaris",
+     "score": 0.57
+    },
+    {
+     "fma": 22338,
+     "nom": "Quadratus femoris",
+     "score": 0.55
+    }
+   ]
+  },
+  "palais_dur": {
+   "latin": "Palatum durum",
+   "requete": "palatum durum",
+   "pistes": [
+    {
+     "fma": 61844,
+     "nom": "Septum pellucidum",
+     "score": 0.53
+    },
+    {
+     "fma": 22348,
+     "nom": "Quadratus lumborum",
+     "score": 0.52
+    },
+    {
+     "fma": 10419,
+     "nom": "Pancreatic duct",
+     "score": 0.5
+    },
+    {
+     "fma": 22349,
+     "nom": "Left quadratus lumborum",
+     "score": 0.44
+    }
+   ]
+  },
+  "voile_du_palais": {
+   "latin": "Palatum molle",
+   "requete": "palatum molle",
+   "pistes": [
+    {
+     "fma": 45739,
+     "nom": "Platysma",
+     "score": 0.48
+    },
+    {
+     "fma": 61844,
+     "nom": "Septum pellucidum",
+     "score": 0.47
+    },
+    {
+     "fma": 22338,
+     "nom": "Quadratus femoris",
+     "score": 0.47
+    },
+    {
+     "fma": 24486,
+     "nom": "Patella",
+     "score": 0.4
+    }
+   ]
+  },
+  "muscle_tenseur_voile_palais": {
+   "latin": "Musculus tensor veli palatini",
+   "requete": "tensor veli palatini",
+   "pistes": [
+    {
+     "fma": 22425,
+     "nom": "Tensor fasciae latae",
+     "score": 0.6
+    },
+    {
+     "fma": 38504,
+     "nom": "Extensor digiti minimi",
+     "score": 0.57
+    },
+    {
+     "fma": 38525,
+     "nom": "Extensor indicis",
+     "score": 0.56
+    },
+    {
+     "fma": 55608,
+     "nom": "Depressor septi nasi",
+     "score": 0.5
+    }
+   ]
+  },
+  "muscle_elevateur_voile_palais": {
+   "latin": "Musculus levator veli palatini",
+   "requete": "levator veli palatini",
+   "pistes": [
+    {
+     "fma": 46823,
+     "nom": "Levator anguli oris",
+     "score": 0.6
+    },
+    {
+     "fma": 32540,
+     "nom": "Levator scapulae",
+     "score": 0.59
+    },
+    {
+     "fma": 53656,
+     "nom": "Left palatine bone",
+     "score": 0.56
+    },
+    {
+     "fma": 46803,
+     "nom": "Levator labii superioris alaeque nasi",
+     "score": 0.55
+    }
+   ]
+  },
+  "autres_muscles_voile": {
+   "latin": "Mm. uvulae, palatoglossus, palatopharyngeus",
+   "requete": "uvulae palatoglossus palatopharyngeus",
+   "pistes": [
+    {
+     "fma": 72831,
+     "nom": "Left globus pallidus",
+     "score": 0.49
+    },
+    {
+     "fma": 13359,
+     "nom": "Left latissimus dorsi",
+     "score": 0.48
+    },
+    {
+     "fma": 38482,
+     "nom": "Flexor pollicis longus",
+     "score": 0.31
+    },
+    {
+     "fma": 46804,
+     "nom": "Left levator labii superioris alaeque nasi",
+     "score": 0.18
+    }
+   ]
+  },
+  "langue": {
+   "latin": "Lingua",
+   "requete": "tongue",
+   "pistes": [
+    {
+     "fma": 22456,
+     "nom": "Adductor longus",
+     "score": 0.48
+    },
+    {
+     "fma": 16586,
+     "nom": "Hip bone",
+     "score": 0.43
+    },
+    {
+     "fma": 7409,
+     "nom": "Bronchus",
+     "score": 0.43
+    },
+    {
+     "fma": 37705,
+     "nom": "Anconeus",
+     "score": 0.43
+    }
+   ]
+  },
+  "muscle_genio_glosse": {
+   "latin": "Musculus genioglossus",
+   "requete": "genioglossus",
+   "pistes": [
+    {
+     "fma": 46326,
+     "nom": "Geniohyoid",
+     "score": 0.55
+    },
+    {
+     "fma": 22358,
+     "nom": "Semitendinosus",
+     "score": 0.54
+    },
+    {
+     "fma": 22358,
+     "nom": "Right semitendinosus",
+     "score": 0.5
+    },
+    {
+     "fma": 22359,
+     "nom": "Left semitendinosus",
+     "score": 0.45
+    }
+   ]
+  },
+  "muscle_hyo_glosse": {
+   "latin": "Musculus hyoglossus",
+   "requete": "hyoglossus",
+   "pistes": [
+    {
+     "fma": 62008,
+     "nom": "Hypothalamus",
+     "score": 0.55
+    },
+    {
+     "fma": 258714,
+     "nom": "Thalamus",
+     "score": 0.44
+    },
+    {
+     "fma": 22591,
+     "nom": "Popliteus",
+     "score": 0.42
+    },
+    {
+     "fma": 37465,
+     "nom": "Flexor accessorius",
+     "score": 0.36
+    }
+   ]
+  },
+  "muscle_stylo_glosse": {
+   "latin": "Musculus styloglossus",
+   "requete": "styloglossus",
+   "pistes": [
+    {
+     "fma": 45826,
+     "nom": "Stylohyoid",
+     "score": 0.55
+    },
+    {
+     "fma": 22354,
+     "nom": "Sartorius",
+     "score": 0.48
+    },
+    {
+     "fma": 7131,
+     "nom": "Esophagus",
+     "score": 0.48
+    },
+    {
+     "fma": 22558,
+     "nom": "Soleus",
+     "score": 0.44
+    }
+   ]
+  },
+  "papilles_linguales": {
+   "latin": "Papillae linguales",
+   "requete": "papillae linguales",
+   "pistes": [
+    {
+     "fma": 59763,
+     "nom": "Maxillary gingiva",
+     "score": 0.57
+    },
+    {
+     "fma": 38463,
+     "nom": "Palmaris longus",
+     "score": 0.55
+    },
+    {
+     "fma": 72826,
+     "nom": "Caudate nucleus",
+     "score": 0.55
+    },
+    {
+     "fma": 22552,
+     "nom": "Fibularis longus",
+     "score": 0.53
+    }
+   ]
+  },
+  "glande_submandibulaire": {
+   "latin": "Glandula submandibularis",
+   "requete": "submandibular",
+   "pistes": [
+    {
+     "fma": 52748,
+     "nom": "Mandible",
+     "score": 0.67
+    },
+    {
+     "fma": 59764,
+     "nom": "Mandibular gingiva",
+     "score": 0.65
+    },
+    {
+     "fma": 13414,
+     "nom": "Subscapularis",
+     "score": 0.62
+    },
+    {
+     "fma": 24480,
+     "nom": "Fibula",
+     "score": 0.53
+    }
+   ]
+  },
+  "glande_sublinguale": {
+   "latin": "Glandula sublingualis",
+   "requete": "sublingual",
+   "pistes": [
+    {
+     "fma": 13412,
+     "nom": "Subclavius",
+     "score": 0.6
+    },
+    {
+     "fma": 23467,
+     "nom": "Ulna",
+     "score": 0.57
+    },
+    {
+     "fma": 38513,
+     "nom": "Supinator",
+     "score": 0.53
+    },
+    {
+     "fma": 11336,
+     "nom": "Linea alba",
+     "score": 0.5
+    }
+   ]
+  },
+  "dents": {
+   "latin": "Dentes",
+   "requete": "tooth",
+   "pistes": [
+    {
+     "fma": 7148,
+     "nom": "Stomach",
+     "score": 0.5
+    },
+    {
+     "fma": 13348,
+     "nom": "Omohyoid",
+     "score": 0.46
+    },
+    {
+     "fma": 13350,
+     "nom": "Sternothyroid",
+     "score": 0.44
+    },
+    {
+     "fma": 13349,
+     "nom": "Left omohyoid",
+     "score": 0.44
+    }
+   ]
+  },
+  "tonsille_palatine": {
+   "latin": "Tonsilla palatina",
+   "requete": "tonsil palatina",
+   "pistes": [
+    {
+     "fma": 53656,
+     "nom": "Left palatine bone",
+     "score": 0.55
+    },
+    {
+     "fma": 53655,
+     "nom": "Right palatine bone",
+     "score": 0.53
+    },
+    {
+     "fma": 22425,
+     "nom": "Tensor fasciae latae",
+     "score": 0.51
+    },
+    {
+     "fma": 55099,
+     "nom": "Thyroid cartilage",
+     "score": 0.31
+    }
+   ]
+  },
+  "nerf_lingual": {
+   "latin": "Nervus lingualis",
+   "requete": "lingual",
+   "pistes": [
+    {
+     "fma": 72977,
+     "nom": "Insula",
+     "score": 0.62
+    },
+    {
+     "fma": 11336,
+     "nom": "Linea alba",
+     "score": 0.59
+    },
+    {
+     "fma": 72978,
+     "nom": "Left insula",
+     "score": 0.56
+    },
+    {
+     "fma": 21964,
+     "nom": "Inguinal ligament",
+     "score": 0.5
+    }
+   ]
+  },
+  "pharynx": {
+   "latin": "Pharynx",
+   "requete": "pharynx",
+   "pistes": [
+    {
+     "fma": 66643,
+     "nom": "Pulmonary vein",
+     "score": 0.48
+    },
+    {
+     "fma": 13889,
+     "nom": "Pituitary gland",
+     "score": 0.45
+    },
+    {
+     "fma": 72828,
+     "nom": "Putamen",
+     "score": 0.43
+    },
+    {
+     "fma": 45739,
+     "nom": "Platysma",
+     "score": 0.4
+    }
+   ]
+  },
+  "rhinopharynx": {
+   "latin": "Pars nasalis pharyngis",
+   "requete": "pars nasalis pharynx",
+   "pistes": [
+    {
+     "fma": 55606,
+     "nom": "Right nasalis",
+     "score": 0.55
+    },
+    {
+     "fma": 55606,
+     "nom": "Nasalis",
+     "score": 0.52
+    },
+    {
+     "fma": 53647,
+     "nom": "Right nasal bone",
+     "score": 0.5
+    },
+    {
+     "fma": 14752,
+     "nom": "Renal artery",
+     "score": 0.25
+    }
+   ]
+  },
+  "oropharynx": {
+   "latin": "Pars oralis pharyngis",
+   "requete": "pars oralis pharynx",
+   "pistes": [
+    {
+     "fma": 13375,
+     "nom": "Pectoralis minor",
+     "score": 0.51
+    },
+    {
+     "fma": 49007,
+     "nom": "Temporalis",
+     "score": 0.48
+    },
+    {
+     "fma": 13375,
+     "nom": "Right pectoralis minor",
+     "score": 0.44
+    },
+    {
+     "fma": 14752,
+     "nom": "Right renal artery",
+     "score": 0.22
+    }
+   ]
+  },
+  "laryngopharynx": {
+   "latin": "Pars laryngea pharyngis",
+   "requete": "pars laryngea pharynx",
+   "pistes": [
+    {
+     "fma": 66326,
+     "nom": "Pulmonary artery",
+     "score": 0.49
+    },
+    {
+     "fma": 53655,
+     "nom": "Palatine bone",
+     "score": 0.47
+    },
+    {
+     "fma": 38463,
+     "nom": "Palmaris longus",
+     "score": 0.44
+    },
+    {
+     "fma": 258847,
+     "nom": "Calcaneal tendon",
+     "score": 0.43
+    }
+   ]
+  },
+  "muscle_constricteur_superieur": {
+   "latin": "Musculus constrictor pharyngis superior",
+   "requete": "constrictor pharynx superior",
+   "pistes": [
+    {
+     "fma": 13403,
+     "nom": "Serratus posterior superior",
+     "score": 0.58
+    },
+    {
+     "fma": 46806,
+     "nom": "Right levator labii superioris",
+     "score": 0.55
+    },
+    {
+     "fma": 72805,
+     "nom": "Posterior part of left superior temporal gyrus",
+     "score": 0.54
+    },
+    {
+     "fma": 46806,
+     "nom": "Levator labii superioris",
+     "score": 0.54
+    }
+   ]
+  },
+  "muscle_constricteur_moyen": {
+   "latin": "Musculus constrictor pharyngis medius",
+   "requete": "constrictor pharynx middle",
+   "pistes": [
+    {
+     "fma": 23955,
+     "nom": "Distal phalanx of left middle finger",
+     "score": 0.48
+    },
+    {
+     "fma": 62072,
+     "nom": "Posterior commissure",
+     "score": 0.48
+    },
+    {
+     "fma": 24461,
+     "nom": "Distal phalanx of right middle finger",
+     "score": 0.48
+    },
+    {
+     "fma": 71908,
+     "nom": "Proximal phalanx of left middle finger",
+     "score": 0.47
+    }
+   ]
+  },
+  "muscle_constricteur_inferieur": {
+   "latin": "Musculus constrictor pharyngis inferior",
+   "requete": "constrictor pharynx inferior",
+   "pistes": [
+    {
+     "fma": 13405,
+     "nom": "Serratus posterior inferior",
+     "score": 0.58
+    },
+    {
+     "fma": 46817,
+     "nom": "Right depressor labii inferioris",
+     "score": 0.53
+    },
+    {
+     "fma": 13405,
+     "nom": "Right serratus posterior inferior",
+     "score": 0.52
+    },
+    {
+     "fma": 46817,
+     "nom": "Depressor labii inferioris",
+     "score": 0.52
+    }
+   ]
+  },
+  "muscles_elevateurs_pharynx": {
+   "latin": "Mm. stylopharyngeus, palatopharyngeus, salpingopharyngeus",
+   "requete": "stylopharyngeus palatopharyngeus salpingopharyngeus",
+   "pistes": [
+    {
+     "fma": 46824,
+     "nom": "Left levator anguli oris",
+     "score": 0.29
+    },
+    {
+     "fma": 44250,
+     "nom": "Left long plantar ligament",
+     "score": 0.21
+    },
+    {
+     "fma": 44249,
+     "nom": "Right long plantar ligament",
+     "score": 0.21
+    },
+    {
+     "fma": 44249,
+     "nom": "Long plantar ligament",
+     "score": 0.19
+    }
+   ]
+  },
+  "trompe_auditive": {
+   "latin": "Tuba auditiva",
+   "requete": "tube auditory",
+   "pistes": [
+    {
+     "fma": 32553,
+     "nom": "Teres minor",
+     "score": 0.5
+    },
+    {
+     "fma": 32551,
+     "nom": "Teres major",
+     "score": 0.5
+    },
+    {
+     "fma": 38514,
+     "nom": "Left supinator",
+     "score": 0.44
+    },
+    {
+     "fma": 46835,
+     "nom": "Buccinator",
+     "score": 0.43
+    }
+   ]
+  },
+  "tonsille_pharyngienne": {
+   "latin": "Tonsilla pharyngea",
+   "requete": "tonsil pharyngea",
+   "pistes": [
+    {
+     "fma": 59763,
+     "nom": "Maxillary gingiva",
+     "score": 0.48
+    },
+    {
+     "fma": 59764,
+     "nom": "Mandibular gingiva",
+     "score": 0.47
+    },
+    {
+     "fma": 7886,
+     "nom": "Second costal cartilage",
+     "score": 0.41
+    },
+    {
+     "fma": 76892,
+     "nom": "Omental taenia",
+     "score": 0.4
+    }
+   ]
+  },
+  "larynx": {
+   "latin": "Larynx",
+   "requete": "larynx",
+   "pistes": [
+    {
+     "fma": 66643,
+     "nom": "Pulmonary vein",
+     "score": 0.5
+    },
+    {
+     "fma": 14752,
+     "nom": "Renal artery",
+     "score": 0.44
+    },
+    {
+     "fma": 52780,
+     "nom": "Ear",
+     "score": 0.44
+    },
+    {
+     "fma": 59763,
+     "nom": "Maxillary gingiva",
+     "score": 0.43
+    }
+   ]
+  },
+  "cartilage_cricoide": {
+   "latin": "Cartilago cricoidea",
+   "requete": "cricoid",
+   "pistes": [
+    {
+     "fma": 24435,
+     "nom": "Right scaphoid",
+     "score": 0.57
+    },
+    {
+     "fma": 24435,
+     "nom": "Scaphoid",
+     "score": 0.53
+    },
+    {
+     "fma": 46839,
+     "nom": "Risorius",
+     "score": 0.53
+    },
+    {
+     "fma": 23725,
+     "nom": "Trapezoid",
+     "score": 0.5
+    }
+   ]
+  },
+  "cartilages_arytenoides": {
+   "latin": "Cartilagines arytenoideae",
+   "requete": "arytenoid",
+   "pistes": [
+    {
+     "fma": 13346,
+     "nom": "Sternohyoid",
+     "score": 0.6
+    },
+    {
+     "fma": 46326,
+     "nom": "Right geniohyoid",
+     "score": 0.56
+    },
+    {
+     "fma": 23725,
+     "nom": "Trapezoid",
+     "score": 0.56
+    },
+    {
+     "fma": 22354,
+     "nom": "Sartorius",
+     "score": 0.56
+    }
+   ]
+  },
+  "epiglotte": {
+   "latin": "Epiglottis",
+   "requete": "epiglottis",
+   "pistes": [
+    {
+     "fma": 7211,
+     "nom": "Right testis",
+     "score": 0.55
+    },
+    {
+     "fma": 22560,
+     "nom": "Plantaris",
+     "score": 0.53
+    },
+    {
+     "fma": 7211,
+     "nom": "Testis",
+     "score": 0.5
+    },
+    {
+     "fma": 46826,
+     "nom": "Right mentalis",
+     "score": 0.42
+    }
+   ]
+  },
+  "membrane_thyrohyoidienne": {
+   "latin": "Membrana thyrohyoidea",
+   "requete": "thyrohyoidea",
+   "pistes": [
+    {
+     "fma": 13352,
+     "nom": "Thyrohyoid",
+     "score": 0.91
+    },
+    {
+     "fma": 13353,
+     "nom": "Left thyrohyoid",
+     "score": 0.74
+    },
+    {
+     "fma": 45826,
+     "nom": "Stylohyoid",
+     "score": 0.73
+    },
+    {
+     "fma": 13352,
+     "nom": "Right thyrohyoid",
+     "score": 0.71
+    }
+   ]
+  },
+  "cone_elastique": {
+   "latin": "Conus elasticus",
+   "requete": "conus elasticus",
+   "pistes": [
+    {
+     "fma": 46309,
+     "nom": "Longus capitis",
+     "score": 0.62
+    },
+    {
+     "fma": 13390,
+     "nom": "Scalenus medius",
+     "score": 0.6
+    },
+    {
+     "fma": 72830,
+     "nom": "Globus pallidus",
+     "score": 0.53
+    },
+    {
+     "fma": 72717,
+     "nom": "Cingulate gyrus",
+     "score": 0.27
+    }
+   ]
+  },
+  "plis_vocaux": {
+   "latin": "Plicae vocales",
+   "requete": "folds vocal",
+   "pistes": [
+    {
+     "fma": 86464,
+     "nom": "Corpus callosum",
+     "score": 0.46
+    },
+    {
+     "fma": 13395,
+     "nom": "Scapula",
+     "score": 0.44
+    },
+    {
+     "fma": 46762,
+     "nom": "Left occipitalis",
+     "score": 0.44
+    },
+    {
+     "fma": 32540,
+     "nom": "Levator scapulae",
+     "score": 0.37
+    }
+   ]
+  },
+  "muscle_cricothyroidien": {
+   "latin": "Musculus cricothyroideus",
+   "requete": "cricothyroid",
+   "pistes": [
+    {
+     "fma": 13350,
+     "nom": "Sternothyroid",
+     "score": 0.72
+    },
+    {
+     "fma": 13350,
+     "nom": "Right sternothyroid",
+     "score": 0.65
+    },
+    {
+     "fma": 13352,
+     "nom": "Right thyrohyoid",
+     "score": 0.64
+    },
+    {
+     "fma": 13352,
+     "nom": "Thyrohyoid",
+     "score": 0.64
+    }
+   ]
+  },
+  "muscle_cricoarytenoidien_posterieur": {
+   "latin": "Musculus cricoarytenoideus posterior",
+   "requete": "cricoarytenoid posterior",
+   "pistes": [
+    {
+     "fma": 13388,
+     "nom": "Scalenus posterior",
+     "score": 0.67
+    },
+    {
+     "fma": 13388,
+     "nom": "Right scalenus posterior",
+     "score": 0.67
+    },
+    {
+     "fma": 65018,
+     "nom": "Tibialis posterior",
+     "score": 0.62
+    },
+    {
+     "fma": 65018,
+     "nom": "Right tibialis posterior",
+     "score": 0.58
+    }
+   ]
+  },
+  "muscle_cricoarytenoidien_lateral": {
+   "latin": "Musculus cricoarytenoideus lateralis",
+   "requete": "cricoarytenoid lateral",
+   "pistes": [
+    {
+     "fma": 3941,
+     "nom": "Right common carotid artery",
+     "score": 0.57
+    },
+    {
+     "fma": 3941,
+     "nom": "Common carotid artery",
+     "score": 0.56
+    },
+    {
+     "fma": 15900,
+     "nom": "Urinary bladder",
+     "score": 0.54
+    },
+    {
+     "fma": 38930,
+     "nom": "Vastus lateralis",
+     "score": 0.53
+    }
+   ]
+  },
+  "muscle_thyroarytenoidien": {
+   "latin": "Musculus thyroarytenoideus",
+   "requete": "thyroarytenoid",
+   "pistes": [
+    {
+     "fma": 13352,
+     "nom": "Thyrohyoid",
+     "score": 0.75
+    },
+    {
+     "fma": 13353,
+     "nom": "Left thyrohyoid",
+     "score": 0.62
+    },
+    {
+     "fma": 23725,
+     "nom": "Trapezoid",
+     "score": 0.61
+    },
+    {
+     "fma": 13352,
+     "nom": "Right thyrohyoid",
+     "score": 0.6
+    }
+   ]
+  },
+  "muscle_arytenoidien": {
+   "latin": "Musculus arytenoideus",
+   "requete": "arytenoid",
+   "pistes": [
+    {
+     "fma": 13346,
+     "nom": "Sternohyoid",
+     "score": 0.6
+    },
+    {
+     "fma": 46326,
+     "nom": "Right geniohyoid",
+     "score": 0.56
+    },
+    {
+     "fma": 23725,
+     "nom": "Trapezoid",
+     "score": 0.56
+    },
+    {
+     "fma": 22354,
+     "nom": "Sartorius",
+     "score": 0.56
+    }
+   ]
+  },
+  "nerf_larynge_superieur": {
+   "latin": "Nervus laryngeus superior",
+   "requete": "laryngeus superior",
+   "pistes": [
+    {
+     "fma": 22334,
+     "nom": "Gemellus superior",
+     "score": 0.74
+    },
+    {
+     "fma": 22335,
+     "nom": "Left gemellus superior",
+     "score": 0.7
+    },
+    {
+     "fma": 22334,
+     "nom": "Right gemellus superior",
+     "score": 0.68
+    },
+    {
+     "fma": 13388,
+     "nom": "Scalenus posterior",
+     "score": 0.61
+    }
+   ]
+  },
+  "nerf_larynge_recurrent": {
+   "latin": "Nervus laryngeus recurrens",
+   "requete": "laryngeus recurrens",
+   "pistes": [
+    {
+     "fma": 46309,
+     "nom": "Longus capitis",
+     "score": 0.48
+    },
+    {
+     "fma": 22330,
+     "nom": "Gluteus medius",
+     "score": 0.48
+    },
+    {
+     "fma": 46768,
+     "nom": "Aponeurosis of epicranius",
+     "score": 0.41
+    },
+    {
+     "fma": 46823,
+     "nom": "Levator anguli oris",
+     "score": 0.37
+    }
+   ]
+  },
+  "glande_thyroide": {
+   "latin": "Glandula thyroidea",
+   "requete": "thyroid",
+   "pistes": [
+    {
+     "fma": 13352,
+     "nom": "Thyrohyoid",
+     "score": 0.82
+    },
+    {
+     "fma": 52740,
+     "nom": "Ethmoid",
+     "score": 0.71
+    },
+    {
+     "fma": 45826,
+     "nom": "Stylohyoid",
+     "score": 0.71
+    },
+    {
+     "fma": 13350,
+     "nom": "Sternothyroid",
+     "score": 0.7
+    }
+   ]
+  },
+  "glandes_parathyroides": {
+   "latin": "Glandulae parathyroideae",
+   "requete": "parathyroideae",
+   "pistes": [
+    {
+     "fma": 13350,
+     "nom": "Sternothyroid",
+     "score": 0.59
+    },
+    {
+     "fma": 13352,
+     "nom": "Thyrohyoid",
+     "score": 0.58
+    },
+    {
+     "fma": 13352,
+     "nom": "Right thyrohyoid",
+     "score": 0.53
+    },
+    {
+     "fma": 55099,
+     "nom": "Thyroid cartilage",
+     "score": 0.52
+    }
+   ]
+  },
+  "cornee": {
+   "latin": "Cornea",
+   "requete": "cornea",
+   "pistes": [
+    {
+     "fma": 37705,
+     "nom": "Anconeus",
+     "score": 0.57
+    },
+    {
+     "fma": 14543,
+     "nom": "Colon",
+     "score": 0.55
+    },
+    {
+     "fma": 4706,
+     "nom": "Coronary sinus",
+     "score": 0.5
+    },
+    {
+     "fma": 24528,
+     "nom": "Cuboid bone",
+     "score": 0.47
+    }
+   ]
+  },
+  "cristallin": {
+   "latin": "Lens",
+   "requete": "lens",
+   "pistes": [
+    {
+     "fma": 7196,
+     "nom": "Spleen",
+     "score": 0.6
+    },
+    {
+     "fma": 22558,
+     "nom": "Soleus",
+     "score": 0.6
+    },
+    {
+     "fma": 72978,
+     "nom": "Left insula",
+     "score": 0.53
+    },
+    {
+     "fma": 23467,
+     "nom": "Ulna",
+     "score": 0.5
+    }
+   ]
+  },
+  "retine": {
+   "latin": "Retina",
+   "requete": "r ina",
+   "pistes": [
+    {
+     "fma": 72977,
+     "nom": "Right insula",
+     "score": 0.59
+    },
+    {
+     "fma": 72977,
+     "nom": "Insula",
+     "score": 0.55
+    },
+    {
+     "fma": 23467,
+     "nom": "Right ulna",
+     "score": 0.53
+    },
+    {
+     "fma": 32553,
+     "nom": "Teres minor",
+     "score": 0.5
+    }
+   ]
+  },
+  "nerf_optique_ii": {
+   "latin": "Nervus opticus",
+   "requete": "optic",
+   "pistes": [
+    {
+     "fma": 62382,
+     "nom": "Optic tract",
+     "score": 0.62
+    },
+    {
+     "fma": 50875,
+     "nom": "Optic nerve",
+     "score": 0.62
+    },
+    {
+     "fma": 62045,
+     "nom": "Optic chiasm",
+     "score": 0.59
+    },
+    {
+     "fma": 67936,
+     "nom": "Left optic tract",
+     "score": 0.48
+    }
+   ]
+  },
+  "appareil_lacrymal": {
+   "latin": "Apparatus lacrimalis",
+   "requete": "apparatus lacrimal",
+   "pistes": [
+    {
+     "fma": 53645,
+     "nom": "Right lacrimal bone",
+     "score": 0.59
+    },
+    {
+     "fma": 38930,
+     "nom": "Vastus lateralis",
+     "score": 0.59
+    },
+    {
+     "fma": 53646,
+     "nom": "Left lacrimal bone",
+     "score": 0.56
+    },
+    {
+     "fma": 38930,
+     "nom": "Right vastus lateralis",
+     "score": 0.5
+    }
+   ]
+  },
+  "paupieres": {
+   "latin": "Palpebrae",
+   "requete": "palpebrae",
+   "pistes": [
+    {
+     "fma": 7196,
+     "nom": "Spleen",
+     "score": 0.53
+    },
+    {
+     "fma": 24486,
+     "nom": "Patella",
+     "score": 0.5
+    },
+    {
+     "fma": 7202,
+     "nom": "Gallbladder",
+     "score": 0.4
+    },
+    {
+     "fma": 9600,
+     "nom": "Prostate",
+     "score": 0.35
+    }
+   ]
+  },
+  "ganglion_ciliaire": {
+   "latin": "Ganglion ciliare",
+   "requete": "ganglion ciliare",
+   "pistes": [
+    {
+     "fma": 14765,
+     "nom": "Common iliac artery",
+     "score": 0.51
+    },
+    {
+     "fma": 61961,
+     "nom": "Anterior commissure",
+     "score": 0.51
+    },
+    {
+     "fma": 14766,
+     "nom": "Left common iliac artery",
+     "score": 0.5
+    },
+    {
+     "fma": 43883,
+     "nom": "Gracilis",
+     "score": 0.5
+    }
+   ]
+  },
+  "artere_ophtalmique": {
+   "latin": "Arteria ophthalmica",
+   "requete": "ophthalmic",
+   "pistes": [
+    {
+     "fma": 46761,
+     "nom": "Occipitalis",
+     "score": 0.57
+    },
+    {
+     "fma": 258714,
+     "nom": "Thalamus",
+     "score": 0.56
+    },
+    {
+     "fma": 62008,
+     "nom": "Hypothalamus",
+     "score": 0.55
+    },
+    {
+     "fma": 46759,
+     "nom": "Frontalis",
+     "score": 0.53
+    }
+   ]
+  },
+  "oreille_externe": {
+   "latin": "Auris externa",
+   "requete": "auris external",
+   "pistes": [
+    {
+     "fma": 13336,
+     "nom": "Right external oblique",
+     "score": 0.61
+    },
+    {
+     "fma": 38930,
+     "nom": "Vastus lateralis",
+     "score": 0.6
+    },
+    {
+     "fma": 15571,
+     "nom": "Ureter",
+     "score": 0.6
+    },
+    {
+     "fma": 72939,
+     "nom": "Stria terminalis",
+     "score": 0.6
+    }
+   ]
+  },
+  "membrane_tympanique": {
+   "latin": "Membrana tympanica",
+   "requete": "tympanic",
+   "pistes": [
+    {
+     "fma": 49007,
+     "nom": "Temporalis",
+     "score": 0.56
+    },
+    {
+     "fma": 7148,
+     "nom": "Stomach",
+     "score": 0.53
+    },
+    {
+     "fma": 45739,
+     "nom": "Platysma",
+     "score": 0.5
+    },
+    {
+     "fma": 7198,
+     "nom": "Pancreas",
+     "score": 0.5
+    }
+   ]
+  },
+  "oreille_moyenne": {
+   "latin": "Auris media",
+   "requete": "auris media",
+   "pistes": [
+    {
+     "fma": 38932,
+     "nom": "Vastus medialis",
+     "score": 0.69
+    },
+    {
+     "fma": 13390,
+     "nom": "Scalenus medius",
+     "score": 0.62
+    },
+    {
+     "fma": 38933,
+     "nom": "Left vastus medialis",
+     "score": 0.58
+    },
+    {
+     "fma": 38932,
+     "nom": "Right vastus medialis",
+     "score": 0.56
+    }
+   ]
+  },
+  "osselets": {
+   "latin": "Ossicula auditus",
+   "requete": "ossicula auditus",
+   "pistes": [
+    {
+     "fma": 13414,
+     "nom": "Subscapularis",
+     "score": 0.55
+    },
+    {
+     "fma": 13412,
+     "nom": "Subclavius",
+     "score": 0.54
+    },
+    {
+     "fma": 23465,
+     "nom": "Left radius",
+     "score": 0.44
+    },
+    {
+     "fma": 23464,
+     "nom": "Right radius",
+     "score": 0.43
+    }
+   ]
+  },
+  "oreille_interne": {
+   "latin": "Auris interna",
+   "requete": "auris internal",
+   "pistes": [
+    {
+     "fma": 13892,
+     "nom": "Right internal oblique",
+     "score": 0.61
+    },
+    {
+     "fma": 38930,
+     "nom": "Vastus lateralis",
+     "score": 0.6
+    },
+    {
+     "fma": 72939,
+     "nom": "Stria terminalis",
+     "score": 0.6
+    },
+    {
+     "fma": 61975,
+     "nom": "Lamina terminalis",
+     "score": 0.58
+    }
+   ]
+  },
+  "cochlee": {
+   "latin": "Cochlea",
+   "requete": "cochlea",
+   "pistes": [
+    {
+     "fma": 7394,
+     "nom": "Trachea",
+     "score": 0.57
+    },
+    {
+     "fma": 13322,
+     "nom": "Clavicle",
+     "score": 0.53
+    },
+    {
+     "fma": 14543,
+     "nom": "Colon",
+     "score": 0.5
+    },
+    {
+     "fma": 46443,
+     "nom": "Coccygeus",
+     "score": 0.5
+    }
+   ]
+  },
+  "vestibule_labyrinthe": {
+   "latin": "Vestibulum",
+   "requete": "vestibule",
+   "pistes": [
+    {
+     "fma": 24481,
+     "nom": "Left fibula",
+     "score": 0.6
+    },
+    {
+     "fma": 7211,
+     "nom": "Testis",
+     "score": 0.53
+    },
+    {
+     "fma": 24480,
+     "nom": "Fibula",
+     "score": 0.53
+    },
+    {
+     "fma": 78454,
+     "nom": "Third ventricle",
+     "score": 0.5
+    }
+   ]
+  },
+  "canaux_semi_circulaires": {
+   "latin": "Canales semicirculares",
+   "requete": "canales semicircular",
+   "pistes": [
+    {
+     "fma": 13388,
+     "nom": "Scalenus posterior",
+     "score": 0.53
+    },
+    {
+     "fma": 22781,
+     "nom": "Spinalis cervicis",
+     "score": 0.49
+    },
+    {
+     "fma": 13390,
+     "nom": "Scalenus medius",
+     "score": 0.4
+    },
+    {
+     "fma": 13396,
+     "nom": "Left scapula",
+     "score": 0.31
+    }
+   ]
+  },
+  "nerf_vestibulo_cochleaire": {
+   "latin": "Nervus vestibulocochlearis",
+   "requete": "vestibulocochlear",
+   "pistes": [
+    {
+     "fma": 24481,
+     "nom": "Left fibula",
+     "score": 0.5
+    },
+    {
+     "fma": 45858,
+     "nom": "Iliococcygeus",
+     "score": 0.47
+    },
+    {
+     "fma": 78454,
+     "nom": "Third ventricle",
+     "score": 0.44
+    },
+    {
+     "fma": 46835,
+     "nom": "Buccinator",
+     "score": 0.3
+    }
+   ]
+  },
+  "nerf_facial_intrapetreux": {
+   "latin": "Nervus facialis (canalis)",
+   "requete": "facial",
+   "pistes": [
+    {
+     "fma": 37668,
+     "nom": "Brachialis",
+     "score": 0.62
+    },
+    {
+     "fma": 37669,
+     "nom": "Left brachialis",
+     "score": 0.57
+    },
+    {
+     "fma": 43883,
+     "nom": "Gracilis",
+     "score": 0.57
+    },
+    {
+     "fma": 43884,
+     "nom": "Left gracilis",
+     "score": 0.53
+    }
+   ]
+  },
+  "dure_mere_cranienne": {
+   "latin": "Dura mater cranialis",
+   "requete": "dura mater cranial",
+   "pistes": [
+    {
+     "fma": 72939,
+     "nom": "Stria terminalis",
+     "score": 0.53
+    },
+    {
+     "fma": 38460,
+     "nom": "Right flexor carpi radialis",
+     "score": 0.49
+    },
+    {
+     "fma": 72667,
+     "nom": "Supramarginal gyrus",
+     "score": 0.49
+    },
+    {
+     "fma": 38486,
+     "nom": "Brachioradialis",
+     "score": 0.48
+    }
+   ]
+  },
+  "faux_du_cerveau": {
+   "latin": "Falx cerebri",
+   "requete": "falx cerebri",
+   "pistes": [
+    {
+     "fma": 72924,
+     "nom": "Fornix of forebrain",
+     "score": 0.52
+    },
+    {
+     "fma": 22781,
+     "nom": "Spinalis cervicis",
+     "score": 0.48
+    },
+    {
+     "fma": 22782,
+     "nom": "Left spinalis cervicis",
+     "score": 0.47
+    },
+    {
+     "fma": 37465,
+     "nom": "Flexor accessorius",
+     "score": 0.4
+    }
+   ]
+  },
+  "tente_du_cervelet": {
+   "latin": "Tentorium cerebelli",
+   "requete": "tentorium cerebelli",
+   "pistes": [
+    {
+     "fma": 10037,
+     "nom": "Tenth thoracic vertebra",
+     "score": 0.57
+    },
+    {
+     "fma": 67944,
+     "nom": "Cerebellum",
+     "score": 0.55
+    },
+    {
+     "fma": 51142,
+     "nom": "Extensor digitorum brevis",
+     "score": 0.55
+    },
+    {
+     "fma": 8445,
+     "nom": "Tenth rib",
+     "score": 0.5
+    }
+   ]
+  },
+  "arachnoide": {
+   "latin": "Arachnoidea mater",
+   "requete": "arachnoid mater",
+   "pistes": [
+    {
+     "fma": 13381,
+     "nom": "Rhomboid major",
+     "score": 0.62
+    },
+    {
+     "fma": 3941,
+     "nom": "Common carotid artery",
+     "score": 0.56
+    },
+    {
+     "fma": 13383,
+     "nom": "Rhomboid minor",
+     "score": 0.55
+    },
+    {
+     "fma": 13382,
+     "nom": "Left rhomboid major",
+     "score": 0.53
+    }
+   ]
+  },
+  "pie_mere": {
+   "latin": "Pia mater",
+   "requete": "pia mater",
+   "pistes": [
+    {
+     "fma": 24448,
+     "nom": "Hamate",
+     "score": 0.67
+    },
+    {
+     "fma": 50737,
+     "nom": "Celiac artery",
+     "score": 0.64
+    },
+    {
+     "fma": 22342,
+     "nom": "Psoas major",
+     "score": 0.6
+    },
+    {
+     "fma": 14773,
+     "nom": "Splenic artery",
+     "score": 0.52
+    }
+   ]
+  },
+  "sinus_sagittal_superieur": {
+   "latin": "Sinus sagittalis superior",
+   "requete": "sinus sagittal superior",
+   "pistes": [
+    {
+     "fma": 32534,
+     "nom": "Obliquus capitis superior",
+     "score": 0.67
+    },
+    {
+     "fma": 32535,
+     "nom": "Left obliquus capitis superior",
+     "score": 0.6
+    },
+    {
+     "fma": 13403,
+     "nom": "Serratus posterior superior",
+     "score": 0.6
+    },
+    {
+     "fma": 13392,
+     "nom": "Scalenus anterior",
+     "score": 0.6
+    }
+   ]
+  },
+  "sinus_lateraux_duraux": {
+   "latin": "Sinus rectus, transversus, sigmoideus",
+   "requete": "sinus rectus transverse sigmoideus",
+   "pistes": [
+    {
+     "fma": 38928,
+     "nom": "Right rectus femoris",
+     "score": 0.52
+    },
+    {
+     "fma": 46313,
+     "nom": "Right rectus capitis anterior",
+     "score": 0.51
+    },
+    {
+     "fma": 38928,
+     "nom": "Rectus femoris",
+     "score": 0.5
+    },
+    {
+     "fma": 46313,
+     "nom": "Rectus capitis anterior",
+     "score": 0.49
+    }
+   ]
+  },
+  "sinus_caverneux": {
+   "latin": "Sinus cavernosus",
+   "requete": "sinus cavernosus",
+   "pistes": [
+    {
+     "fma": 19618,
+     "nom": "Corpus cavernosum of penis",
+     "score": 0.62
+    },
+    {
+     "fma": 22726,
+     "nom": "Splenius cervicis",
+     "score": 0.55
+    },
+    {
+     "fma": 22781,
+     "nom": "Spinalis cervicis",
+     "score": 0.55
+    },
+    {
+     "fma": 13392,
+     "nom": "Scalenus anterior",
+     "score": 0.55
+    }
+   ]
+  },
+  "circulation_lcs": {
+   "latin": "Liquor cerebrospinalis",
+   "requete": "liquor cerebrospinalis",
+   "pistes": [
+    {
+     "fma": 61975,
+     "nom": "Lamina terminalis",
+     "score": 0.56
+    },
+    {
+     "fma": 38460,
+     "nom": "Flexor carpi radialis",
+     "score": 0.56
+    },
+    {
+     "fma": 72939,
+     "nom": "Stria terminalis",
+     "score": 0.53
+    },
+    {
+     "fma": 37665,
+     "nom": "Coracobrachialis",
+     "score": 0.53
+    }
+   ]
+  },
+  "granulations_arachnoidiennes": {
+   "latin": "Granulationes arachnoideae",
+   "requete": "granulationes arachnoideae",
+   "pistes": [
+    {
+     "fma": 46326,
+     "nom": "Geniohyoid",
+     "score": 0.44
+    },
+    {
+     "fma": 37669,
+     "nom": "Left brachialis",
+     "score": 0.44
+    },
+    {
+     "fma": 73303,
+     "nom": "Lateral geniculate body",
+     "score": 0.37
+    },
+    {
+     "fma": 61961,
+     "nom": "Anterior commissure",
+     "score": 0.27
+    }
+   ]
+  },
+  "nc_vue_ensemble": {
+   "latin": "Nervi craniales",
+   "requete": "nervi craniales",
+   "pistes": [
+    {
+     "fma": 37668,
+     "nom": "Right brachialis",
+     "score": 0.58
+    },
+    {
+     "fma": 22346,
+     "nom": "Right pyramidalis",
+     "score": 0.56
+    },
+    {
+     "fma": 38460,
+     "nom": "Flexor carpi radialis",
+     "score": 0.56
+    },
+    {
+     "fma": 43883,
+     "nom": "Right gracilis",
+     "score": 0.55
+    }
+   ]
+  },
+  "nerf_olfactif_i": {
+   "latin": "Nervus olfactorius",
+   "requete": "olfactory",
+   "pistes": [
+    {
+     "fma": 50737,
+     "nom": "Celiac artery",
+     "score": 0.55
+    },
+    {
+     "fma": 38514,
+     "nom": "Left supinator",
+     "score": 0.52
+    },
+    {
+     "fma": 22355,
+     "nom": "Left sartorius",
+     "score": 0.52
+    },
+    {
+     "fma": 46836,
+     "nom": "Left buccinator",
+     "score": 0.5
+    }
+   ]
+  },
+  "nerf_oculomoteur_iii": {
+   "latin": "Nervus oculomotorius",
+   "requete": "oculomotor",
+   "pistes": [
+    {
+     "fma": 13408,
+     "nom": "Sternocleidomastoid",
+     "score": 0.48
+    },
+    {
+     "fma": 23083,
+     "nom": "Thoracic rotator",
+     "score": 0.46
+    },
+    {
+     "fma": 46841,
+     "nom": "Orbicularis oris",
+     "score": 0.46
+    },
+    {
+     "fma": 23089,
+     "nom": "Lumbar rotator",
+     "score": 0.33
+    }
+   ]
+  },
+  "nerf_trochleaire_iv": {
+   "latin": "Nervus trochlearis",
+   "requete": "trochlear",
+   "pistes": [
+    {
+     "fma": 7394,
+     "nom": "Trachea",
+     "score": 0.75
+    },
+    {
+     "fma": 55610,
+     "nom": "Procerus",
+     "score": 0.59
+    },
+    {
+     "fma": 55611,
+     "nom": "Left procerus",
+     "score": 0.55
+    },
+    {
+     "fma": 55610,
+     "nom": "Right procerus",
+     "score": 0.52
+    }
+   ]
+  },
+  "nerf_trijumeau_v": {
+   "latin": "Nervus trigeminus",
+   "requete": "trigeminal",
+   "pistes": [
+    {
+     "fma": 72939,
+     "nom": "Stria terminalis",
+     "score": 0.69
+    },
+    {
+     "fma": 24439,
+     "nom": "Triquetral",
+     "score": 0.6
+    },
+    {
+     "fma": 46826,
+     "nom": "Right mentalis",
+     "score": 0.58
+    },
+    {
+     "fma": 19387,
+     "nom": "Right seminal vesicle",
+     "score": 0.58
+    }
+   ]
+  },
+  "nerf_ophtalmique_v1": {
+   "latin": "Nervus ophthalmicus",
+   "requete": "ophthalmicus",
+   "pistes": [
+    {
+     "fma": 258714,
+     "nom": "Thalamus",
+     "score": 0.7
+    },
+    {
+     "fma": 62008,
+     "nom": "Hypothalamus",
+     "score": 0.67
+    },
+    {
+     "fma": 258714,
+     "nom": "Right thalamus",
+     "score": 0.62
+    },
+    {
+     "fma": 46761,
+     "nom": "Occipitalis",
+     "score": 0.61
+    }
+   ]
+  },
+  "nerf_maxillaire_v2": {
+   "latin": "Nervus maxillaris",
+   "requete": "maxillary",
+   "pistes": [
+    {
+     "fma": 53649,
+     "nom": "Maxilla",
+     "score": 0.88
+    },
+    {
+     "fma": 59763,
+     "nom": "Maxillary gingiva",
+     "score": 0.69
+    },
+    {
+     "fma": 74877,
+     "nom": "Mammillary body",
+     "score": 0.67
+    },
+    {
+     "fma": 53650,
+     "nom": "Left maxilla",
+     "score": 0.67
+    }
+   ]
+  },
+  "nerf_mandibulaire_v3": {
+   "latin": "Nervus mandibularis",
+   "requete": "mandibularis",
+   "pistes": [
+    {
+     "fma": 59764,
+     "nom": "Mandibular gingiva",
+     "score": 0.73
+    },
+    {
+     "fma": 52748,
+     "nom": "Mandible",
+     "score": 0.7
+    },
+    {
+     "fma": 22560,
+     "nom": "Plantaris",
+     "score": 0.57
+    },
+    {
+     "fma": 7486,
+     "nom": "Manubrium",
+     "score": 0.57
+    }
+   ]
+  },
+  "nerf_abducens_vi": {
+   "latin": "Nervus abducens",
+   "requete": "abducens",
+   "pistes": [
+    {
+     "fma": 23464,
+     "nom": "Radius",
+     "score": 0.57
+    },
+    {
+     "fma": 72826,
+     "nom": "Caudate nucleus",
+     "score": 0.52
+    },
+    {
+     "fma": 22459,
+     "nom": "Adductor magnus",
+     "score": 0.52
+    },
+    {
+     "fma": 22456,
+     "nom": "Adductor longus",
+     "score": 0.52
+    }
+   ]
+  },
+  "nerf_glossopharyngien_ix": {
+   "latin": "Nervus glossopharyngeus",
+   "requete": "glossopharyngeal",
+   "pistes": [
+    {
+     "fma": 46763,
+     "nom": "Temporoparietalis",
+     "score": 0.48
+    },
+    {
+     "fma": 7131,
+     "nom": "Esophagus",
+     "score": 0.48
+    },
+    {
+     "fma": 46764,
+     "nom": "Left temporoparietalis",
+     "score": 0.47
+    },
+    {
+     "fma": 46763,
+     "nom": "Right temporoparietalis",
+     "score": 0.46
+    }
+   ]
+  },
+  "nerf_vague_x": {
+   "latin": "Nervus vagus",
+   "requete": "vagus",
+   "pistes": [
+    {
+     "fma": 24482,
+     "nom": "Talus",
+     "score": 0.6
+    },
+    {
+     "fma": 7131,
+     "nom": "Esophagus",
+     "score": 0.57
+    },
+    {
+     "fma": 23464,
+     "nom": "Radius",
+     "score": 0.55
+    },
+    {
+     "fma": 22322,
+     "nom": "Iliacus",
+     "score": 0.5
+    }
+   ]
+  },
+  "nerf_accessoire_xi": {
+   "latin": "Nervus accessorius",
+   "requete": "accessory",
+   "pistes": [
+    {
+     "fma": 72701,
+     "nom": "Accessory short gyrus",
+     "score": 0.6
+    },
+    {
+     "fma": 37465,
+     "nom": "Flexor accessorius",
+     "score": 0.59
+    },
+    {
+     "fma": 72702,
+     "nom": "Left accessory short gyrus",
+     "score": 0.51
+    },
+    {
+     "fma": 72701,
+     "nom": "Right accessory short gyrus",
+     "score": 0.5
+    }
+   ]
+  },
+  "nerf_hypoglosse_xii": {
+   "latin": "Nervus hypoglossus",
+   "requete": "hypoglossal",
+   "pistes": [
+    {
+     "fma": 62008,
+     "nom": "Hypothalamus",
+     "score": 0.52
+    },
+    {
+     "fma": 72830,
+     "nom": "Globus pallidus",
+     "score": 0.46
+    },
+    {
+     "fma": 72830,
+     "nom": "Right globus pallidus",
+     "score": 0.44
+    },
+    {
+     "fma": 9600,
+     "nom": "Prostate",
+     "score": 0.42
+    }
+   ]
+  },
+  "artere_carotide_commune": {
+   "latin": "Arteria carotis communis",
+   "requete": "carotid common",
+   "pistes": [
+    {
+     "fma": 24528,
+     "nom": "Cuboid bone",
+     "score": 0.56
+    },
+    {
+     "fma": 52749,
+     "nom": "Hyoid bone",
+     "score": 0.5
+    },
+    {
+     "fma": 13383,
+     "nom": "Rhomboid minor",
+     "score": 0.43
+    },
+    {
+     "fma": 13381,
+     "nom": "Rhomboid major",
+     "score": 0.43
+    }
+   ]
+  },
+  "artere_carotide_externe": {
+   "latin": "Arteria carotis externa",
+   "requete": "carotid external",
+   "pistes": [
+    {
+     "fma": 3941,
+     "nom": "Common carotid artery",
+     "score": 0.59
+    },
+    {
+     "fma": 13336,
+     "nom": "Right external oblique",
+     "score": 0.58
+    },
+    {
+     "fma": 61975,
+     "nom": "Lamina terminalis",
+     "score": 0.55
+    },
+    {
+     "fma": 72939,
+     "nom": "Stria terminalis",
+     "score": 0.5
+    }
+   ]
+  },
+  "artere_thyroidienne_superieure": {
+   "latin": "Arteria thyroidea superior",
+   "requete": "thyroid superior",
+   "pistes": [
+    {
+     "fma": 46806,
+     "nom": "Levator labii superioris",
+     "score": 0.6
+    },
+    {
+     "fma": 55099,
+     "nom": "Thyroid cartilage",
+     "score": 0.55
+    },
+    {
+     "fma": 38513,
+     "nom": "Right supinator",
+     "score": 0.52
+    },
+    {
+     "fma": 22334,
+     "nom": "Right gemellus superior",
+     "score": 0.51
+    }
+   ]
+  },
+  "artere_linguale": {
+   "latin": "Arteria lingualis",
+   "requete": "lingual",
+   "pistes": [
+    {
+     "fma": 72977,
+     "nom": "Insula",
+     "score": 0.62
+    },
+    {
+     "fma": 11336,
+     "nom": "Linea alba",
+     "score": 0.59
+    },
+    {
+     "fma": 72978,
+     "nom": "Left insula",
+     "score": 0.56
+    },
+    {
+     "fma": 21964,
+     "nom": "Inguinal ligament",
+     "score": 0.5
+    }
+   ]
+  },
+  "artere_faciale": {
+   "latin": "Arteria facialis",
+   "requete": "facial",
+   "pistes": [
+    {
+     "fma": 37668,
+     "nom": "Brachialis",
+     "score": 0.62
+    },
+    {
+     "fma": 37669,
+     "nom": "Left brachialis",
+     "score": 0.57
+    },
+    {
+     "fma": 43883,
+     "nom": "Gracilis",
+     "score": 0.57
+    },
+    {
+     "fma": 43884,
+     "nom": "Left gracilis",
+     "score": 0.53
+    }
+   ]
+  },
+  "artere_occipitale": {
+   "latin": "Arteria occipitalis",
+   "requete": "occipital",
+   "pistes": [
+    {
+     "fma": 46761,
+     "nom": "Occipitalis",
+     "score": 0.9
+    },
+    {
+     "fma": 72975,
+     "nom": "Occipital lobe",
+     "score": 0.78
+    },
+    {
+     "fma": 52735,
+     "nom": "Occipital bone",
+     "score": 0.78
+    },
+    {
+     "fma": 46762,
+     "nom": "Left occipitalis",
+     "score": 0.72
+    }
+   ]
+  },
+  "artere_temporale_superficielle": {
+   "latin": "Arteria temporalis superficialis",
+   "requete": "temporalis superficial",
+   "pistes": [
+    {
+     "fma": 49007,
+     "nom": "Temporalis",
+     "score": 0.62
+    },
+    {
+     "fma": 22874,
+     "nom": "Semispinalis cervicis",
+     "score": 0.6
+    },
+    {
+     "fma": 22875,
+     "nom": "Left semispinalis cervicis",
+     "score": 0.58
+    },
+    {
+     "fma": 52738,
+     "nom": "Temporal bone",
+     "score": 0.57
+    }
+   ]
+  },
+  "artere_maxillaire": {
+   "latin": "Arteria maxillaris",
+   "requete": "maxillary",
+   "pistes": [
+    {
+     "fma": 53649,
+     "nom": "Maxilla",
+     "score": 0.88
+    },
+    {
+     "fma": 59763,
+     "nom": "Maxillary gingiva",
+     "score": 0.69
+    },
+    {
+     "fma": 74877,
+     "nom": "Mammillary body",
+     "score": 0.67
+    },
+    {
+     "fma": 53650,
+     "nom": "Left maxilla",
+     "score": 0.67
+    }
+   ]
+  },
+  "artere_meningee_moyenne": {
+   "latin": "Arteria meningea media",
+   "requete": "meningeal media",
+   "pistes": [
+    {
+     "fma": 76892,
+     "nom": "Omental taenia",
+     "score": 0.62
+    },
+    {
+     "fma": 14335,
+     "nom": "Renal vein",
+     "score": 0.56
+    },
+    {
+     "fma": 62033,
+     "nom": "Pineal body",
+     "score": 0.54
+    },
+    {
+     "fma": 19387,
+     "nom": "Seminal vesicle",
+     "score": 0.53
+    }
+   ]
+  },
+  "artere_carotide_interne": {
+   "latin": "Arteria carotis interna",
+   "requete": "carotid internal",
+   "pistes": [
+    {
+     "fma": 3941,
+     "nom": "Common carotid artery",
+     "score": 0.59
+    },
+    {
+     "fma": 13892,
+     "nom": "Right internal oblique",
+     "score": 0.58
+    },
+    {
+     "fma": 61975,
+     "nom": "Lamina terminalis",
+     "score": 0.55
+    },
+    {
+     "fma": 72939,
+     "nom": "Stria terminalis",
+     "score": 0.5
+    }
+   ]
+  },
+  "artere_vertebrale": {
+   "latin": "Arteria vertebralis",
+   "requete": "vertebral",
+   "pistes": [
+    {
+     "fma": 12513,
+     "nom": "Eyeball",
+     "score": 0.62
+    },
+    {
+     "fma": 62394,
+     "nom": "Cerebral peduncle",
+     "score": 0.54
+    },
+    {
+     "fma": 78467,
+     "nom": "Cerebral aqueduct",
+     "score": 0.54
+    },
+    {
+     "fma": 15571,
+     "nom": "Ureter",
+     "score": 0.27
+    }
+   ]
+  },
+  "cercle_arteriel_willis": {
+   "latin": "Circulus arteriosus cerebri",
+   "requete": "circulus arteriosus cerebri",
+   "pistes": [
+    {
+     "fma": 13392,
+     "nom": "Scalenus anterior",
+     "score": 0.55
+    },
+    {
+     "fma": 13403,
+     "nom": "Serratus posterior superior",
+     "score": 0.52
+    },
+    {
+     "fma": 13392,
+     "nom": "Right scalenus anterior",
+     "score": 0.48
+    },
+    {
+     "fma": 46841,
+     "nom": "Orbicularis oris",
+     "score": 0.42
+    }
+   ]
+  },
+  "veine_jugulaire_interne": {
+   "latin": "Vena jugularis interna",
+   "requete": "jugular internal",
+   "pistes": [
+    {
+     "fma": 61975,
+     "nom": "Lamina terminalis",
+     "score": 0.61
+    },
+    {
+     "fma": 22324,
+     "nom": "Obturator internus",
+     "score": 0.59
+    },
+    {
+     "fma": 13893,
+     "nom": "Left internal oblique",
+     "score": 0.54
+    },
+    {
+     "fma": 22324,
+     "nom": "Right obturator internus",
+     "score": 0.5
+    }
+   ]
+  },
+  "veine_faciale": {
+   "latin": "Vena facialis",
+   "requete": "facial",
+   "pistes": [
+    {
+     "fma": 37668,
+     "nom": "Brachialis",
+     "score": 0.62
+    },
+    {
+     "fma": 37669,
+     "nom": "Left brachialis",
+     "score": 0.57
+    },
+    {
+     "fma": 43883,
+     "nom": "Gracilis",
+     "score": 0.57
+    },
+    {
+     "fma": 43884,
+     "nom": "Left gracilis",
+     "score": 0.53
+    }
+   ]
+  },
+  "plexus_pterygoidien": {
+   "latin": "Plexus venosus pterygoideus",
+   "requete": "plexus venosus pterygoid",
+   "pistes": [
+    {
+     "fma": 49013,
+     "nom": "Left medial pterygoid",
+     "score": 0.62
+    },
+    {
+     "fma": 19618,
+     "nom": "Corpus cavernosum of penis",
+     "score": 0.56
+    },
+    {
+     "fma": 13389,
+     "nom": "Left scalenus posterior",
+     "score": 0.55
+    },
+    {
+     "fma": 49012,
+     "nom": "Medial pterygoid",
+     "score": 0.55
+    }
+   ]
+  },
+  "drainage_lymphatique_cou": {
+   "latin": "Nodi lymphoidei capitis et colli",
+   "requete": "lymph nodes capitis colli",
+   "pistes": [
+    {
+     "fma": 46318,
+     "nom": "Left rectus capitis lateralis",
+     "score": 0.59
+    },
+    {
+     "fma": 46317,
+     "nom": "Right rectus capitis lateralis",
+     "score": 0.58
+    },
+    {
+     "fma": 46317,
+     "nom": "Rectus capitis lateralis",
+     "score": 0.57
+    },
+    {
+     "fma": 46309,
+     "nom": "Longus capitis",
+     "score": 0.56
+    }
+   ]
+  },
+  "occlusion_larynx": {
+   "latin": "Cartilagines laryngis",
+   "requete": "laryngis",
+   "pistes": [
+    {
+     "fma": 22560,
+     "nom": "Plantaris",
+     "score": 0.59
+    },
+    {
+     "fma": 59763,
+     "nom": "Maxillary gingiva",
+     "score": 0.56
+    },
+    {
+     "fma": 18247,
+     "nom": "Glans penis",
+     "score": 0.53
+    },
+    {
+     "fma": 46823,
+     "nom": "Levator anguli oris",
+     "score": 0.52
+    }
+   ]
+  }
+ }
+}

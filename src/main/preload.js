@@ -22,16 +22,36 @@ contextBridge.exposeInMainWorld('api', {
     apercuCategories: (sel) => ipcRenderer.invoke('jeu:apercuCategories', sel)
   },
 
-  oeuvres: {
-    chercher: (criteres) => ipcRenderer.invoke('oeuvres:chercher', criteres),
-    numero: (n) => ipcRenderer.invoke('oeuvres:numero', n),
-    parTag: (tag, texte) => ipcRenderer.invoke('oeuvres:parTag', { tag, texte }),
-    toutes: (criteres) => ipcRenderer.invoke('oeuvres:toutes', criteres)
+  revision: {
+    file: () => ipcRenderer.invoke('revision:file'),
+    tirer: () => ipcRenderer.invoke('revision:tirer'),
+    noter: (id, note) => ipcRenderer.invoke('revision:noter', { id, note }),
+    apercuNotes: (id) => ipcRenderer.invoke('revision:apercuNotes', id),
+    stats: () => ipcRenderer.invoke('revision:stats'),
+    reinitialiser: () => ipcRenderer.invoke('revision:reinitialiser')
+  },
+
+  fiches: {
+    chercher: (criteres) => ipcRenderer.invoke('fiches:chercher', criteres),
+    numero: (n) => ipcRenderer.invoke('fiches:numero', n),
+    parTag: (tag, texte) => ipcRenderer.invoke('fiches:parTag', { tag, texte }),
+    toutes: (criteres) => ipcRenderer.invoke('fiches:toutes', criteres)
   },
 
   tags: {
     basculer: (id, tag) => ipcRenderer.invoke('tags:basculer', { id, tag }),
     effacerTout: () => ipcRenderer.invoke('tags:effacerTout')
+  },
+
+  decks: {
+    lister: () => ipcRenderer.invoke('decks:lister'),
+    activer: (deck) => ipcRenderer.invoke('decks:activer', deck)
+  },
+
+  csv: {
+    analyser: () => ipcRenderer.invoke('csv:analyser'),
+    creerDeck: (opts) => ipcRenderer.invoke('csv:creerDeck', opts),
+    ajouter: (opts) => ipcRenderer.invoke('csv:ajouter', opts)
   },
 
   reglages: {
@@ -40,7 +60,7 @@ contextBridge.exposeInMainWorld('api', {
 
   edition: {
     creer: (champs) => ipcRenderer.invoke('edition:creer', champs),
-    tuile: (id) => ipcRenderer.invoke('edition:tuile', id),
+    fiche: (id) => ipcRenderer.invoke('edition:fiche', id),
     modifier: (id, champs) => ipcRenderer.invoke('edition:modifier', { id, champs }),
     supprimer: (id) => ipcRenderer.invoke('edition:supprimer', id),
     choisirImage: () => ipcRenderer.invoke('edition:choisirImage'),

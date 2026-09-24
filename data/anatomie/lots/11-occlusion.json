@@ -1,0 +1,12 @@
+[
+{
+ "id":"occlusion_larynx","image":"","image_src":"libre","image_legende":"",
+ "nom_fr":"Larynx : cartilages (à légender)","nom_latin":"Cartilagines laryngis",
+ "region":"Larynx et thyroïde","systeme":"Organe des sens",
+ "fonction":"Fiche d'entraînement par occlusion : retrouver le nom de la structure masquée sur la vue antérieure du larynx (os hyoïde, membrane thyro-hyoïdienne, cartilage thyroïde, cartilage cricoïde, trachée).",
+ "rapports":"Voir les fiches dédiées : os hyoïde, membrane thyro-hyoïdienne, cartilage thyroïde, cartilage cricoïde. La membrane crico-thyroïdienne (entre thyroïde et cricoïde) est le repère de la cricothyroïdotomie.",
+ "notes_cliniques":"Exemple d'utilisation du type de champ « occlusion » : une zone est masquée au hasard à chaque révision, comme un masque de texte. L'éditeur permet de dessiner et de légender les zones à la souris.",
+ "sources":"https://fr.wikipedia.org/wiki/Larynx",
+ "importance":"2"
+}
+]

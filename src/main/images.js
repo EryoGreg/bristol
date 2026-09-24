@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Import d'une image pour une tuile locale.
+ * Import d'une image pour une fiche locale.
  *
  * - reduit le cote max a 1400 px (comme le corpus)
  * - vise <= 500 Ko : JPEG q85 -> q descend jusqu'a 45, puis dimensions -15 %

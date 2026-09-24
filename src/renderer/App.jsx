@@ -1,5 +1,13 @@
 import { useEffect, useState, useCallback, useRef, useMemo, createContext, useContext, Fragment } from 'react';
 import * as I from './icones.jsx';
+import {
+  champsTries, champImage, champOcclusion, champRole, estCourt, estLong, estImage, ChampBloc,
+  GalerieImage, ImageOcclusion, listerImages
+} from './champs.jsx';
+
+// Gabarit du deck courant ({ cle, nom, champs }). Fourni par <App>, consomme
+// par tout ce qui affiche ou edite une fiche.
+const GabaritContext = createContext({ cle: null, nom: null, champs: [] });
 
 // Densite de la grille des galeries (tuiles visibles par ligne). Reglage
 // global, cycle 5 -> 7 -> 9 -> 5, pilote par le bouton de BarreFiltres.
@@ -20,10 +28,12 @@ function Menu({ etat, aller, onQuitter }) {
     <div className="menu">
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
         <div className="surtitre">
-          {etat.oeuvres} œuvres · {etat.tags.livre + etat.tags.etoile + etat.tags.bad_smiley} marquées
+          {etat.fiches} fiches · {etat.tags.livre + etat.tags.etoile + etat.tags.bad_smiley} marquées
         </div>
-        <h1>Tuiles <span className="amp">&amp;</span> Toiles</h1>
-        <div className="soustitre">Entraînement mémoriel — histoire de l’art</div>
+        <h1>Bristol</h1>
+        <div className="soustitre">
+          {(etat.gabarit && etat.gabarit.nom) || 'Fiches de révision à masques auto-générés'}
+        </div>
       </div>
 
       <div className="filet" />
@@ -38,7 +48,7 @@ function Menu({ etat, aller, onQuitter }) {
         </button>
 
         {[
-          ['bibliotheque', I.Bibliotheque, 'Bibliothèque', 'Toutes les tuiles', etat.oeuvres, null],
+          ['bibliotheque', I.Bibliotheque, 'Bibliothèque', 'Toutes les fiches', etat.fiches, null],
           ['livre', I.Livre, 'Livre', 'À approfondir', etat.tags.livre, 'var(--livre)'],
           ['etoile', I.Etoile, 'Étoile', 'Favorites', etat.tags.etoile, 'var(--etoile)'],
           ['revoir', I.Revoir, 'À revoir', 'Ratées la dernière fois', etat.tags.bad_smiley, 'var(--revoir)'],
@@ -79,15 +89,34 @@ const MARQUES = [
   ['bad_smiley', I.Revoir, 'revoir']
 ];
 
+// Notation de révision espacée (FSRS).
+const NOTES = [
+  [1, 'Encore', 'encore'],
+  [2, 'Difficile', 'difficile'],
+  [3, 'Bien', 'bien'],
+  [4, 'Facile', 'facile']
+];
+
+/** Intervalle en jours -> libellé court (« < 1 j », « 3 j », « 2 sem. », « 4 mois »). */
+function fmtIntervalle(j) {
+  if (j == null || j <= 0) return '< 1 j';
+  if (j < 7) return j + ' j';
+  if (j < 30) return Math.round(j / 7) + ' sem.';
+  if (j < 365) return Math.round(j / 30) + ' mois';
+  const a = j / 365;
+  return (a < 2 ? a.toFixed(1) : Math.round(a)) + ' ans';
+}
+
 function Tuile({
   tuile, revele, sur, onReveler,
   onSuivante, onPrecedente, onMarquer, peutRevenir,
-  apercu = false, onFermer, onChanger
+  apercu = false, onFermer, onChanger, revision = null
 }) {
   // Vue plein cadre de l'image (85% de la fenetre) : locale, pas dans
   // l'historique de Jeu — changer de tuile referme toujours la vue.
   const [agrandie, setAgrandie] = useState(false);
-  useEffect(() => { setAgrandie(false); }, [tuile && tuile.id]);
+  const [iImg, setIImg] = useState(0);
+  useEffect(() => { setAgrandie(false); setIImg(0); }, [tuile && tuile.id]);
   useEffect(() => {
     if (!agrandie) return undefined;
     const clavier = (e) => { if (e.key === 'Escape') setAgrandie(false); };
@@ -95,19 +124,32 @@ function Tuile({
     return () => window.removeEventListener('keydown', clavier);
   }, [agrandie]);
 
+  const gabarit = useContext(GabaritContext);
+
   if (!tuile) return <div className="chargement">{apercu ? 'ouverture…' : 'tirage…'}</div>;
   const d = revele || tuile.champs;
   // En apercu tout est visible d'office. Sinon : un champ revele mais vide
-  // (25 oeuvres sans artiste, 81 sans lieu) reste revele — on suit l'etat,
-  // pas la verite de la valeur.
+  // reste revele — on suit l'etat, pas la verite de la valeur.
   const voit = (c) => apercu || !!revele || sur.has(c) || tuile.champs[c] != null;
-  const ou = (v) => (v == null || String(v).trim() === '' ? '—' : v);
 
-  const Cache = ({ champ, label }) => (
-    <button className="masque" onClick={() => onReveler(champ)}>
-      <I.OeilBarre /> {label || 'masqué'}
-    </button>
+  const champOcc = champOcclusion(gabarit);
+  const valOcc = champOcc ? d[champOcc.cle] : null;
+  const estOcc = !!(valOcc && valOcc.zones && valOcc.zones.length);
+
+  const champImg = champImage(gabarit);
+  // `revele` (jeu.completer) aplatit les champs mais force `image` a la 1re url
+  // (vignette de carte) : la galerie complete reste dans `.champs`.
+  const valImg = champImg
+    ? ((revele && revele.champs && revele.champs[champImg.cle]) ?? d[champImg.cle])
+    : null;
+  const images = champImg && !estOcc ? listerImages(valImg, tuile.image_legende) : [];
+  const iImgSur = Math.min(iImg, Math.max(0, images.length - 1));
+  const imageZoom = estOcc ? (valOcc.image || null) : (images.length ? images[iImgSur].url : null);
+  const reste = champsTries(gabarit).filter(
+    (c) => (!champImg || c.cle !== champImg.cle) && (!champOcc || c.cle !== champOcc.cle)
   );
+  const courts = reste.filter(estCourt);
+  const autres = reste.filter((c) => !estCourt(c));   // texte_long, liste — pleine largeur, dans l'ordre
 
   return (
     <>
@@ -143,82 +185,38 @@ function Tuile({
               autres. Sur une fenetre courte, .corps defile plutot que de
               rogner les tags. */}
           <div className="corps">
-            {voit('image') && d.image
+            {estOcc ? (
+              <ImageOcclusion
+                val={valOcc}
+                cachee={apercu ? null : tuile.occCachee}
+                revele={!!revele}
+                onReveler={() => onReveler(null)}
+                onZoom={() => setAgrandie(true)}
+              />
+            ) : champImg && (voit(champImg.cle) && images.length
               // <img> est un element remplace : un flex-basis dessus n'est pas
-              // fiable (retombe sur sa taille naturelle, 1400px). Un cadre en
-              // div porte la hauteur ; l'image se contente de le remplir.
-              ? <div className="cadre-image">
-                  <img className="visuel" src={d.image} alt="" onClick={() => setAgrandie(true)} />
-                </div>
-              : <button className="masque image" onClick={() => onReveler('image')}>
+              // fiable. Un cadre en div porte la hauteur ; l'image le remplit.
+              ? <GalerieImage
+                  images={images}
+                  i={iImgSur}
+                  onI={setIImg}
+                  onZoom={() => setAgrandie(true)}
+                />
+              : <button className="masque image" onClick={() => onReveler(champImg.cle)}>
                   <I.OeilBarre t={26} /> image masquée
-                </button>}
+                </button>)}
 
             <div className="corps-reste">
-              <div className="grille2">
-                <div className="champ">
-                  <div className="etiquette">Titre</div>
-                  <div className="valeur valeur-titre">
-                    {voit('titre')
-                      ? <div style={{ fontFamily: 'var(--serif)', fontSize: 22, lineHeight: 1.2 }}>{ou(d.titre)}</div>
-                      : <Cache champ="titre" />}
-                  </div>
+              {courts.length > 0 && (
+                <div className="grille2">
+                  {courts.map((c) => (
+                    <ChampBloc key={c.cle} champ={c} valeur={d[c.cle]} voit={voit} onReveler={onReveler} />
+                  ))}
                 </div>
-
-                <div className="champ">
-                  <div className="etiquette">Artiste</div>
-                  <div className="valeur">
-                    {voit('artiste')
-                      ? <div style={{ fontSize: 14.5, color: 'var(--tuile-ink)' }}>{ou(d.artiste)}</div>
-                      : <Cache champ="artiste" />}
-                  </div>
-                </div>
-
-                <div className="champ">
-                  <div className="etiquette">Année / période</div>
-                  {/* Jamais visible au tirage, mais revelable au clic comme
-                      n'importe quel autre champ. Deja a hauteur fixe
-                      (.annee), partagee entre masque et revele. */}
-                  {voit('date')
-                    ? <div className="annee">
-                        <span style={{ fontFamily: 'var(--mono)', fontSize: 14 }}>{ou(d.date)}</span>
-                      </div>
-                    : <button className="annee cachee" onClick={() => onReveler('date')}>
-                        <span className="points">? ? ? ?</span>
-                        <span className="note">cliquer pour révéler</span>
-                      </button>}
-                </div>
-
-                <div className="champ">
-                  <div className="etiquette">Conservation</div>
-                  <div className="valeur">
-                    {voit('lieu')
-                      ? <div style={{ fontSize: 14.5, color: 'var(--tuile-ink)' }}>{ou(d.lieu)}</div>
-                      : <Cache champ="lieu" />}
-                  </div>
-                </div>
-              </div>
-
-              {/* Seul champ de longueur vraiment variable : sa case a une
-                  hauteur bornee (clamp) ; le texte defile a l'interieur si
-                  besoin, scrollbar masquee. */}
-              <div className="champ champ-description">
-                <div className="etiquette">Description</div>
-                <div className="valeur-description">
-                  {voit('description')
-                    ? <div className="texte-description">{ou(d.description)}</div>
-                    : <Cache champ="description" />}
-                </div>
-              </div>
-
-              <div className="champ">
-                <div className="etiquette">Tags</div>
-                <div className="valeur">
-                  {voit('tags')
-                    ? <div style={{ fontSize: 13, color: 'var(--attenue)' }}>{ou(d.tags)}</div>
-                    : <Cache champ="tags" label={(tuile.tagVisible ? tuile.tagVisible + ' · ' : '') + 'tags masqués'} />}
-                </div>
-              </div>
+              )}
+              {autres.map((c) => (
+                <ChampBloc key={c.cle} champ={c} valeur={d[c.cle]} voit={voit} onReveler={onReveler} />
+              ))}
             </div>
           </div>
         </div>
@@ -239,6 +237,35 @@ function Tuile({
               </button>
             </div>
           </>
+        ) : revision ? (
+          <>
+            <div className="actions-gauche">
+              <span className="revision-compteur">
+                {revision.dus} due{revision.dus > 1 ? 's' : ''} · {revision.nouvelles} nouvelle{revision.nouvelles > 1 ? 's' : ''}
+              </span>
+            </div>
+            <div className="actions-droite">
+              {!revele ? (
+                <button className="bouton-valide" onClick={() => onReveler(null)}>
+                  <I.Coche /> Révéler <span className="raccourci">Espace</span>
+                </button>
+              ) : (
+                <div className="notation">
+                  {NOTES.map(([n, mot, classe]) => (
+                    <button
+                      key={n}
+                      className={'note-btn ' + classe}
+                      onClick={() => revision.onNoter(n)}
+                    >
+                      <span className="note-mot">{mot}</span>
+                      <span className="note-intervalle">{fmtIntervalle(revision.apercu[n])}</span>
+                      <span className="raccourci">{n}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </>
         ) : (
           <>
             <div className="actions-gauche">
@@ -247,7 +274,7 @@ function Tuile({
                   <I.Fleche t={16} retour /> Mode
                 </button>
               )}
-              <span className="compteur-sac">{tuile.restant} tuiles restantes dans le sac</span>
+              <span className="compteur-sac">{tuile.restant} fiches restantes dans le sac</span>
             </div>
             <div className="actions-droite">
               <button
@@ -271,10 +298,10 @@ function Tuile({
       </div>
 
       {/* Reclic sur l'image (ou n'importe ou autour) pour refermer. */}
-      {agrandie && d.image && (
+      {agrandie && imageZoom && (
         <div className="recouvrement-image" onClick={() => setAgrandie(false)}>
           <div className="cadre-image-agrandie">
-            <img className="image-agrandie" src={d.image} alt="" />
+            <img className="image-agrandie" src={imageZoom} alt="" />
           </div>
         </div>
       )}
@@ -380,7 +407,7 @@ function NouvellePartie({ onLancer }) {
               {choisies.length === 0
                 ? 'choisir au moins une catégorie'
                 : total == null ? '…'
-                : total === 0 ? 'aucune tuile — combinaison impossible'
+                : total === 0 ? 'aucune fiche — combinaison impossible'
                 : total + (total > 1 ? ' tuiles' : ' tuile')}
             </span>
           )}
@@ -400,8 +427,8 @@ function NouvellePartie({ onLancer }) {
               className={'np-combi ' + (soustractif ? 'soustr' : 'addit')}
               onClick={() => setSoustractif((s) => !s)}
               title={soustractif
-                ? 'Soustractif : les tuiles portant TOUTES les catégories choisies. Cliquer pour repasser en additif.'
-                : 'Additif : les tuiles portant AU MOINS UNE catégorie choisie. Cliquer pour passer en soustractif.'}
+                ? 'Soustractif : les fiches portant TOUTES les catégories choisies. Cliquer pour repasser en additif.'
+                : 'Additif : les fiches portant AU MOINS UNE catégorie choisie. Cliquer pour passer en soustractif.'}
             >
               <span className="np-combi-signe">{soustractif ? '−' : '+'}</span>
               <span className="np-combi-mot">{soustractif ? 'toutes' : 'au moins une'}</span>
@@ -551,23 +578,151 @@ function Partie({ filtre, onChanger, onEtat }) {
   );
 }
 
+/* ------------------------------------------------------- revision espacee */
+
+// Boucle de repetition espacee (FSRS). Sa propre boucle, sans historique
+// arriere : une fiche notee est notee. Reutilise <Tuile> via la prop `revision`.
+function PageRevision({ onEtat }) {
+  const [tuile, setTuile] = useState(null);
+  const [revele, setRevele] = useState(null);
+  const [sur, setSur] = useState(new Set());
+  const [fini, setFini] = useState(false);
+  const [stats, setStats] = useState(null);
+
+  const avancer = useCallback(async () => {
+    const t = await window.api.revision.tirer();
+    if (!t) {
+      setTuile(null);
+      setFini(true);
+      setStats(await window.api.revision.stats());
+      return;
+    }
+    setRevele(null);
+    setSur(new Set());
+    setFini(false);
+    setTuile(t);
+  }, []);
+
+  useEffect(() => {
+    (async () => { await window.api.revision.file(); await avancer(); })();
+  }, [avancer]);
+
+  const reveler = async (champ) => {
+    if (champ === null) {
+      setRevele(await window.api.jeu.reveler(tuile.id));
+    } else {
+      setSur((s) => new Set(s).add(champ));
+      const complet = await window.api.jeu.reveler(tuile.id);
+      setTuile((t) => ({ ...t, champs: { ...t.champs, [champ]: complet[champ] } }));
+    }
+  };
+
+  const noter = async (n) => {
+    if (!tuile || !revele) return;
+    await window.api.revision.noter(tuile.id, n);
+    onEtat();
+    await avancer();
+  };
+
+  const marquer = async (tag) => {
+    if (!tuile) return;
+    const r = await window.api.tags.basculer(tuile.id, tag);
+    setTuile((t) => ({
+      ...t,
+      tagsUtilisateur: r.actif
+        ? [...t.tagsUtilisateur, tag]
+        : t.tagsUtilisateur.filter((x) => x !== tag)
+    }));
+    onEtat();
+  };
+
+  useEffect(() => {
+    const clavier = (e) => {
+      if (e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+      if (e.code === 'Space') { e.preventDefault(); if (!revele) reveler(null); }
+      else if (revele && '1234'.includes(e.key)) noter(parseInt(e.key, 10));
+      else if (e.key.toLowerCase() === 'l') marquer('livre');
+      else if (e.key.toLowerCase() === 'e') marquer('etoile');
+      else if (e.key.toLowerCase() === 's') marquer('bad_smiley');
+    };
+    window.addEventListener('keydown', clavier);
+    return () => window.removeEventListener('keydown', clavier);
+  });
+
+  if (fini) return <RevisionFinie stats={stats} onRelancer={async () => { await window.api.revision.file(); avancer(); }} />;
+  if (!tuile) return <div className="chargement">chargement…</div>;
+
+  return (
+    <div className="jeu">
+      <Tuile
+        tuile={tuile} revele={revele} sur={sur}
+        onReveler={reveler} onMarquer={marquer}
+        onSuivante={() => {}} onPrecedente={() => {}} peutRevenir={false}
+        revision={{
+          onNoter: noter,
+          apercu: tuile.apercu || { 1: 0, 2: 1, 3: 3, 4: 15 },
+          dus: tuile.dusRestants || 0,
+          nouvelles: tuile.nouvellesRestantes || 0
+        }}
+      />
+    </div>
+  );
+}
+
+function RevisionFinie({ stats, onRelancer }) {
+  const s = stats || {};
+  const ech = s.echeances || [];
+  const maxN = Math.max(1, ...ech.map((e) => e.n));
+  return (
+    <div className="revision-vide">
+      <div className="revision-vide-tete">
+        <I.Boucle t={34} />
+        <h2>Révision terminée</h2>
+        <p>
+          {s.revuesAujourdhui
+            ? `${s.revuesAujourdhui} fiche${s.revuesAujourdhui > 1 ? 's' : ''} revue${s.revuesAujourdhui > 1 ? 's' : ''} aujourd’hui`
+            : 'Rien à réviser pour le moment'}
+          {s.retention30j != null && ` · rétention 30 j : ${Math.round(s.retention30j * 100)} %`}
+        </p>
+      </div>
+      {ech.length > 0 && (
+        <div className="echeances">
+          <div className="echeances-titre">Prochaines échéances</div>
+          <div className="echeances-barres">
+            {ech.map((e) => (
+              <div key={e.jour} className="echeance" title={`J+${e.jour} : ${e.n}`}>
+                <div className="echeance-barre" style={{ height: Math.round((e.n / maxN) * 46) + 2 }} />
+                <div className="echeance-jour">{e.jour === 0 ? 'auj.' : 'J' + e.jour}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      <button className="bouton-neutre" onClick={onRelancer}><I.Rafraichir t={15} /> Vérifier à nouveau</button>
+    </div>
+  );
+}
+
 /* ---------------------------------------------------------------- coquille */
 
 function Barre({ page, aller, etat, repliee, basculer, onQuitter }) {
+  const rev = etat.revision || { dus: 0, nouvelles: 0 };
   const items = [
     ['menu', I.Maison, 'Accueil', null],
+    ['revision', I.Boucle, 'Révision', (rev.dus + rev.nouvelles) || null],
     ['jeu', I.Manette, 'Jouer', null],
-    ['bibliotheque', I.Bibliotheque, 'Bibliothèque', etat.oeuvres],
+    ['bibliotheque', I.Bibliotheque, 'Bibliothèque', etat.fiches],
     ['livre', I.Livre, 'Livre', etat.tags.livre],
     ['etoile', I.Etoile, 'Étoile', etat.tags.etoile],
     ['revoir', I.Revoir, 'À revoir', etat.tags.bad_smiley],
-    ['edition', I.Crayon, 'Édition', null]
+    ['edition', I.Crayon, 'Édition', null],
+    ['decks', I.Grille, 'Decks', (etat.decks || []).length || null]
   ];
   return (
     <aside className={'barre' + (repliee ? ' repliee' : '')}>
       <button className="entree" onClick={basculer}>
         <I.Hamburger />
-        {!repliee && <span className="libelle" style={{ fontFamily: 'var(--serif)', fontSize: 16 }}>Tuiles &amp; Toiles</span>}
+        {!repliee && <span className="libelle" style={{ fontFamily: 'var(--serif)', fontSize: 16 }}>Bristol</span>}
       </button>
       {items.map(([cle, Icone, nom, n]) => (
         <button key={cle} className={'entree' + (page === cle ? ' active' : '')} onClick={() => aller(cle)}>
@@ -602,6 +757,11 @@ const PIPS = [
 // Carte commune a la Bibliotheque et aux galeries. Clic n'importe ou =
 // agrandir ; la croix (galeries seulement) retire le tag sans agrandir.
 function CarteTuile({ o, onOuvrir, onRetirer, nomRetirer }) {
+  const gabarit = useContext(GabaritContext);
+  const cTitre = champRole(gabarit, 'titre');
+  const cSous = champRole(gabarit, 'sous_titre');
+  const titre = cTitre ? o[cTitre.cle] : null;
+  const sousTitre = cSous ? o[cSous.cle] : null;
   return (
     <div className="carte-galerie" onClick={onOuvrir}>
       {onRetirer && (
@@ -617,11 +777,9 @@ function CarteTuile({ o, onOuvrir, onRetirer, nomRetirer }) {
         ? <img className="carte-galerie-image" src={o.image} alt="" loading="lazy" />
         : <div className="carte-galerie-image carte-galerie-image-vide" />}
       <div className="carte-galerie-corps">
-        <span className="numero">#{o.ref}</span>
-        <div className="carte-galerie-titre">{o.titre || '—'}</div>
-        <div className="carte-galerie-artiste">
-          {o.artiste || '—'}{o.date ? ' · ' + o.date : ''}
-        </div>
+        <span className="numero">#{o.ref}{o.imageSrc === 'ebook' ? ' · perso' : ''}</span>
+        <div className="carte-galerie-titre">{titre || '—'}</div>
+        <div className="carte-galerie-artiste">{sousTitre || '—'}</div>
       </div>
       {o.tagsUtilisateur && o.tagsUtilisateur.length > 0 && (
         <div className="carte-galerie-pips">
@@ -748,8 +906,8 @@ function SelecteurTags({ choisies, onChoisies, soustractif, onSoustractif }) {
         className={'np-combi sel-tags-combi ' + (soustractif ? 'soustr' : 'addit')}
         onClick={() => onSoustractif(!soustractif)}
         title={soustractif
-          ? 'Soustractif : les tuiles portant TOUS les tags choisis. Cliquer pour repasser en additif.'
-          : 'Additif : les tuiles portant AU MOINS UN tag choisi. Cliquer pour passer en soustractif.'}
+          ? 'Soustractif : les fiches portant TOUS les tags choisis. Cliquer pour repasser en additif.'
+          : 'Additif : les fiches portant AU MOINS UN tag choisi. Cliquer pour passer en soustractif.'}
       >
         <span className="np-combi-signe">{soustractif ? '−' : '+'}</span>
       </button>
@@ -853,7 +1011,7 @@ function Galerie({ nom, tag, couleur, Icone, description, onEtat }) {
   useEffect(() => {
     let vivant = true;
     const h = setTimeout(async () => {
-      const r = await window.api.oeuvres.parTag(tag, q.trim() || undefined);
+      const r = await window.api.fiches.parTag(tag, q.trim() || undefined);
       if (vivant) setBrut(r);
     }, 120);
     return () => { vivant = false; clearTimeout(h); };
@@ -898,7 +1056,7 @@ function Galerie({ nom, tag, couleur, Icone, description, onEtat }) {
         <div className="chargement">chargement…</div>
       ) : ordonnees.length === 0 ? (
         <div className="galerie-vide">
-          {filtre ? 'Aucun résultat.' : `Aucune tuile marquée ${nom.toLowerCase()} pour l'instant.`}
+          {filtre ? 'Aucun résultat.' : `Aucune fiche marquée ${nom.toLowerCase()} pour l'instant.`}
         </div>
       ) : (
         <div className="galerie-grille">
@@ -936,7 +1094,7 @@ function PageRevoir({ onEtat }) {
 
 /* ----------------------------------------------------------- bibliotheque */
 
-// Toutes les tuiles du corpus. Le filtre passe par la recherche permissive
+// Toutes les fiches du corpus. Le filtre passe par la recherche permissive
 // de la base (accents / casse / ponctuation ignores des deux cotes, chaque
 // mot devant apparaitre quelque part hors image). Clic = agrandir, avec le
 // rail de marquage comme partout.
@@ -958,7 +1116,7 @@ function PageBibliotheque({ onEtat, onChoisirTuile }) {
       if (q.trim()) criteres.texte = q;
       if (catsFiltre.length) { criteres.categories = catsFiltre; criteres.soustractif = soustractif; }
       const actif = Object.keys(criteres).length > 0;
-      const r = await window.api.oeuvres.toutes(actif ? criteres : undefined);
+      const r = await window.api.fiches.toutes(actif ? criteres : undefined);
       if (!vivant) return;
       setResultats(r);
       if (!actif) setTotal(r.length);
@@ -987,8 +1145,8 @@ function PageBibliotheque({ onEtat, onChoisirTuile }) {
       <div className="galerie-tete">
         <span className="galerie-icone"><I.Bibliotheque t={22} /></span>
         <div>
-          <h2>{choix ? 'Choisir une tuile' : 'Bibliothèque'}</h2>
-          <div className="soustitre">{choix ? 'Clic pour la modifier ou la supprimer' : 'Toutes les tuiles'}</div>
+          <h2>{choix ? 'Choisir une fiche' : 'Bibliothèque'}</h2>
+          <div className="soustitre">{choix ? 'Clic pour la modifier ou la supprimer' : 'Toutes les fiches'}</div>
         </div>
         <span className="galerie-compte">
           {affichees ? affichees.length : '…'}
@@ -1010,7 +1168,7 @@ function PageBibliotheque({ onEtat, onChoisirTuile }) {
       {!affichees ? (
         <div className="chargement">chargement…</div>
       ) : affichees.length === 0 ? (
-        <div className="galerie-vide">Aucune tuile ne correspond.</div>
+        <div className="galerie-vide">Aucune fiche ne correspond.</div>
       ) : (
         <div className="galerie-grille">
           {affichees.map((o) => (
@@ -1054,9 +1212,8 @@ function pesee(o) {
   return ko >= 1024 ? (ko / 1024).toFixed(1) + ' Mo' : ko + ' Ko';
 }
 
-const CHAMPS_VIDES = { titre: '', artiste: '', date: '', lieu: '', description: '', tags: '', image: '' };
-function memeChamps(a, b) {
-  return Object.keys(CHAMPS_VIDES).every((c) => (a[c] || '') === (b[c] || ''));
+function memeChamps(a, b, cles) {
+  return cles.every((c) => (a[c] || '') === (b[c] || ''));
 }
 
 // Cextrait une URL d'image d'un depot venant d'une page web.
@@ -1074,12 +1231,123 @@ function urlDepuisDrop(dt) {
 // Meme gabarit qu'une tuile affichee, champs editables.
 //   mode 'creer'    : champs vides, bouton « Valider la création »
 //   mode 'modifier' : champs pre-remplis, « Valider les changements » (grise
-//                     tant que rien n'a change), + « Supprimer la tuile »
+//                     tant que rien n'a change), + « Supprimer la fiche »
+// Editeur graphique des zones d'occlusion : dessin a la souris sur l'image,
+// libelle par zone. `value` = chaine JSON { image, zones:[{x,y,w,h,texte}] }.
+function EditeurOcclusion({ value, onChange }) {
+  const parse = (s) => {
+    try { const o = typeof s === 'string' ? JSON.parse(s) : s; return o && typeof o === 'object' ? o : {}; }
+    catch (_) { return {}; }
+  };
+  const init = parse(value);
+  const [image, setImage] = useState(init.image || '');
+  const [zones, setZones] = useState(Array.isArray(init.zones) ? init.zones : []);
+  const [sel, setSel] = useState(null);
+  const [trace, setTrace] = useState(null);   // rectangle en cours { x0,y0,x,y }
+  const imgRef = useRef(null);
+
+  const pousser = (img, zs) => onChange(JSON.stringify({ image: img, zones: zs }));
+
+  const choisirImg = async () => {
+    const r = await window.api.edition.choisirImage();
+    if (r && r.nom) { setImage(r.nom); pousser(r.nom, zones); }
+  };
+
+  const rel = (e) => {
+    const r = imgRef.current.getBoundingClientRect();
+    return {
+      x: Math.min(Math.max((e.clientX - r.left) / r.width, 0), 1),
+      y: Math.min(Math.max((e.clientY - r.top) / r.height, 0), 1)
+    };
+  };
+  const onDown = (e) => {
+    if (!image || e.button !== 0) return;
+    const p = rel(e);
+    setTrace({ x0: p.x, y0: p.y, x: p.x, y: p.y });
+    setSel(null);
+  };
+  const onMove = (e) => { if (trace) { const p = rel(e); setTrace((t) => ({ ...t, x: p.x, y: p.y })); } };
+  const onUp = () => {
+    if (!trace) return;
+    const z = {
+      x: Math.min(trace.x0, trace.x), y: Math.min(trace.y0, trace.y),
+      w: Math.abs(trace.x - trace.x0), h: Math.abs(trace.y - trace.y0)
+    };
+    setTrace(null);
+    if (z.w < 0.02 || z.h < 0.02) return;
+    const t = window.prompt('Libellé de la zone :', '');
+    if (t == null) return;
+    const zs = [...zones, { ...z, texte: t.trim() }];
+    setZones(zs); pousser(image, zs); setSel(zs.length - 1);
+  };
+  const majTexte = (i, t) => {
+    const zs = zones.map((z, k) => (k === i ? { ...z, texte: t } : z));
+    setZones(zs); pousser(image, zs);
+  };
+  const suppr = (i) => {
+    const zs = zones.filter((_, k) => k !== i);
+    setZones(zs); pousser(image, zs); setSel(null);
+  };
+
+  return (
+    <div className="occ-editeur">
+      <div className="occ-editeur-toile" onMouseDown={onDown} onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={onUp}>
+        {image ? (
+          <>
+            <img ref={imgRef} src={'fiche://' + image} alt="" draggable={false} />
+            <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" className="occ-editeur-svg">
+              {zones.map((z, i) => (
+                <rect key={i} x={z.x * 1000} y={z.y * 1000} width={z.w * 1000} height={z.h * 1000}
+                      rx="4" className={'occ-edit-zone' + (i === sel ? ' sel' : '')}
+                      onMouseDown={(e) => { e.stopPropagation(); setSel(i); }} />
+              ))}
+              {trace && (
+                <rect className="occ-edit-trace"
+                      x={Math.min(trace.x0, trace.x) * 1000} y={Math.min(trace.y0, trace.y) * 1000}
+                      width={Math.abs(trace.x - trace.x0) * 1000} height={Math.abs(trace.y - trace.y0) * 1000} />
+              )}
+            </svg>
+          </>
+        ) : (
+          <button className="bouton-neutre" onClick={choisirImg}><I.OeilBarre t={16} /> Choisir le schéma</button>
+        )}
+      </div>
+      {image && (
+        <div className="occ-editeur-liste">
+          <div className="options-note">Glisser sur l’image pour tracer une zone. {zones.length} zone{zones.length > 1 ? 's' : ''}.</div>
+          {zones.map((z, i) => (
+            <div key={i} className={'occ-editeur-ligne' + (i === sel ? ' sel' : '')} onMouseEnter={() => setSel(i)}>
+              <input value={z.texte} onChange={(e) => majTexte(i, e.target.value)} placeholder="libellé" />
+              <button className="occ-editeur-x" onClick={() => suppr(i)} title="Supprimer"><I.Croix t={12} /></button>
+            </div>
+          ))}
+          <button className="bouton-neutre" onClick={choisirImg} style={{ marginTop: 6 }}>
+            <I.Rafraichir t={13} /> Changer de schéma
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function EditeurTuile({ mode, tuile, onFini, onAnnuler, onSupprimer }) {
+  const gabarit = useContext(GabaritContext);
+  const cOcc = champOcclusion(gabarit);
+  const champsDef = champsTries(gabarit).filter((c) => !estImage(c) && (!cOcc || c.cle !== cOcc.cle));
+  const cTitre = champRole(gabarit, 'titre');
+  const cles = [...champsDef.map((c) => c.cle), 'image', ...(cOcc ? [cOcc.cle] : [])];
+
+  const vides = Object.fromEntries(cles.map((c) => [c, '']));
   const initial = mode === 'modifier'
-    ? Object.fromEntries(Object.keys(CHAMPS_VIDES).map((c) => [c, tuile[c] || '']))
-    : CHAMPS_VIDES;
-  const imageInitiale = initial.image;
+    ? {
+        ...Object.fromEntries(champsDef.map((c) => [
+          c.cle, (tuile.valeurs && tuile.valeurs[c.cle]) || ''
+        ])),
+        image: tuile.image || '',
+        ...(cOcc ? { [cOcc.cle]: (tuile.valeurs && tuile.valeurs[cOcc.cle]) || '' } : {})
+      }
+    : vides;
+  const imageInitiale = initial.image || '';
 
   const [champs, setChamps] = useState(initial);
   const [imgInfo, setImgInfo] = useState(null);
@@ -1090,10 +1358,10 @@ function EditeurTuile({ mode, tuile, onFini, onAnnuler, onSupprimer }) {
 
   const set = (c) => (e) => setChamps((x) => ({ ...x, [c]: e.target.value }));
 
-  const dirty = !memeChamps(champs, initial);
+  const dirty = !memeChamps(champs, initial, cles);
   const peutValider = mode === 'modifier'
     ? dirty
-    : (champs.titre.trim().length > 0 || champs.image.trim().length > 0);
+    : ((cTitre && (champs[cTitre.cle] || '').trim().length > 0) || (champs.image || '').trim().length > 0);
 
   // Ne « oublie » que les images importees pendant cette session.
   const purge = (nom) => { if (nom && nom !== imageInitiale) window.api.edition.oublierImage(nom); };
@@ -1168,7 +1436,7 @@ function EditeurTuile({ mode, tuile, onFini, onAnnuler, onSupprimer }) {
             >
               {champs.image ? (
                 <>
-                  <img className="visuel" src={'tuile://' + champs.image} alt="" />
+                  <img className="visuel" src={'fiche://' + champs.image} alt="" />
                   <button className="editeur-image-x" onClick={retirerImage} title="Retirer l’image">
                     <I.Croix t={13} />
                   </button>
@@ -1190,27 +1458,53 @@ function EditeurTuile({ mode, tuile, onFini, onAnnuler, onSupprimer }) {
               )}
             </div>
 
-            <div className="corps-reste">
-              <div className="grille2">
-                <ChampEdit etiquette="Titre" v={champs.titre} onChange={set('titre')} serif grand />
-                <ChampEdit etiquette="Artiste" v={champs.artiste} onChange={set('artiste')} />
-                <ChampEdit etiquette="Année / période" v={champs.date} onChange={set('date')} mono
-                  placeholder="masquée au tirage" />
-                <ChampEdit etiquette="Conservation" v={champs.lieu} onChange={set('lieu')} />
-              </div>
-
+            {cOcc && (
               <div className="champ champ-description">
-                <div className="etiquette">Description</div>
-                <textarea
-                  className="editeur-textarea"
-                  value={champs.description}
-                  onChange={set('description')}
-                  spellCheck={false}
+                <div className="etiquette">{cOcc.libelle}</div>
+                <EditeurOcclusion
+                  value={champs[cOcc.cle]}
+                  onChange={(json) => setChamps((x) => ({ ...x, [cOcc.cle]: json }))}
                 />
               </div>
+            )}
 
-              <ChampEdit etiquette="Tags" v={champs.tags} onChange={set('tags')}
-                placeholder="séparés par des virgules" />
+            <div className="corps-reste">
+              <div className="grille2">
+                {champsDef.filter(estCourt).map((c) => (
+                  <ChampEdit
+                    key={c.cle}
+                    etiquette={c.libelle}
+                    v={champs[c.cle]}
+                    onChange={set(c.cle)}
+                    serif={c.role === 'titre'}
+                    grand={c.role === 'titre'}
+                    mono={c.type === 'date' || c.type === 'nombre'}
+                    placeholder={c.toujours_cache ? 'masquée au tirage' : undefined}
+                  />
+                ))}
+              </div>
+
+              {champsDef.filter((c) => !estCourt(c)).map((c) => (
+                estLong(c) ? (
+                  <div key={c.cle} className="champ champ-description">
+                    <div className="etiquette">{c.libelle}</div>
+                    <textarea
+                      className="editeur-textarea"
+                      value={champs[c.cle]}
+                      onChange={set(c.cle)}
+                      spellCheck={false}
+                    />
+                  </div>
+                ) : (
+                  <ChampEdit
+                    key={c.cle}
+                    etiquette={c.libelle}
+                    v={champs[c.cle]}
+                    onChange={set(c.cle)}
+                    placeholder={c.type === 'liste' ? 'séparés par des virgules' : undefined}
+                  />
+                )
+              ))}
             </div>
           </div>
         </div>
@@ -1220,7 +1514,7 @@ function EditeurTuile({ mode, tuile, onFini, onAnnuler, onSupprimer }) {
         <div className="actions-gauche">
           {mode === 'modifier' && (
             <button className="bouton-danger" onClick={() => onSupprimer(tuile)}>
-              <I.Croix t={14} /> Supprimer la tuile
+              <I.Croix t={14} /> Supprimer la fiche
             </button>
           )}
           <span className="compteur-sac">
@@ -1279,7 +1573,7 @@ function PageEdition({ onEtat }) {
     notifier(`#${r.ref} enregistrée${r.masques === 0 ? ' — 0 masque valide' : ` (${r.masques} masques)`}.`);
   };
   const ouvrir = async (o) => {
-    const t = await window.api.edition.tuile(o.id);
+    const t = await window.api.edition.fiche(o.id);
     if (t) setMode({ tuile: t });
   };
   const confirmerSuppr = async () => {
@@ -1316,7 +1610,7 @@ function PageEdition({ onEtat }) {
         />
         {demandeSuppr && (
           <BoiteConfirmation
-            titre={demandeSuppr.estLocale ? 'Suppression de la tuile locale' : 'Suppression de la tuile'}
+            titre={demandeSuppr.estLocale ? 'Suppression de la fiche locale' : 'Suppression de la fiche'}
             texteConfirmer="CONFIRMER"
             onAnnuler={() => setDemandeSuppr(null)}
             onConfirmer={confirmerSuppr}
@@ -1352,7 +1646,7 @@ function PageEdition({ onEtat }) {
         <button className="carte" onClick={() => setMode('creer')}>
           <span className="pastille"><I.Crayon t={22} /></span>
           <span>
-            <div className="nom">Créer une tuile</div>
+            <div className="nom">Créer une fiche</div>
             <div className="desc">Champs vides, à remplir librement</div>
           </span>
         </button>
@@ -1360,10 +1654,227 @@ function PageEdition({ onEtat }) {
           <span className="pastille"><I.Bibliotheque t={22} /></span>
           <span>
             <div className="nom">Modifier ou supprimer</div>
-            <div className="desc">Choisir une tuile dans la liste</div>
+            <div className="desc">Choisir une fiche dans la liste</div>
           </span>
         </button>
       </div>
+    </div>
+  );
+}
+
+/* ----------------------------------------------------------------- decks */
+
+const TYPES_CHAMP = ['texte_court', 'texte_long', 'date', 'nombre', 'liste', 'image'];
+
+function AssistantCsv({ gabarit, onFini, onAnnuler }) {
+  const [etape, setEtape] = useState('debut');   // debut | mode | deck | ajout
+  const [ana, setAna] = useState(null);          // resultat de csv:analyser
+  const [nomDeck, setNomDeck] = useState('');
+  const [champs, setChamps] = useState([]);      // gabarit editable (mode deck)
+  const [mapping, setMapping] = useState({});    // header -> cle champ (mode ajout)
+  const [occupe, setOccupe] = useState(false);
+  const [err, setErr] = useState(null);
+
+  const choisir = async () => {
+    setErr(null);
+    const r = await window.api.csv.analyser();
+    if (r.annule) return;
+    if (r.erreur) { setErr(r.erreur); return; }
+    setAna(r);
+    setChamps(r.gabaritPropose.champs);
+    const m = {};
+    for (const h of r.entetes) {
+      const c = (gabarit.champs || []).find((x) => x.libelle === h || x.cle === h);
+      m[h] = c ? c.cle : '__ignore__';
+    }
+    setMapping(m);
+    setEtape('mode');
+  };
+
+  const majChamp = (i, patch) => setChamps((cs) => cs.map((c, j) => (j === i ? { ...c, ...patch } : c)));
+
+  const creerDeck = async () => {
+    setOccupe(true); setErr(null);
+    const r = await window.api.csv.creerDeck({
+      deck: nomDeck.trim(),
+      gabarit: { champs },
+      chemin: ana.chemin
+    });
+    if (r.erreur) { setOccupe(false); setErr(r.erreur); return; }
+    onFini();
+  };
+
+  const ajouter = async () => {
+    setOccupe(true); setErr(null);
+    const r = await window.api.csv.ajouter({ chemin: ana.chemin, mapping });
+    if (r.erreur) { setOccupe(false); setErr(r.erreur); return; }
+    onFini();
+  };
+
+  return (
+    <div className="options" style={{ maxWidth: 760 }}>
+      <h2>Importer un CSV</h2>
+      {err && <div className="sauv-msg erreur">{err}</div>}
+
+      {etape === 'debut' && (
+        <section>
+          <div className="soustitre">
+            Fichier séparé par « ; », en-têtes en première ligne. Une colonne
+            <code> id </code> sert de clé stable, <code> image </code> nomme le fichier image.
+          </div>
+          <button className="bouton-valide" onClick={choisir}>Choisir un fichier CSV…</button>
+        </section>
+      )}
+
+      {etape === 'mode' && ana && (
+        <section>
+          <div className="soustitre">{ana.nLignes} ligne(s), {ana.entetes.length} colonne(s) : {ana.entetes.join(', ')}</div>
+          <div className="np-modes">
+            <button className="np-mode" onClick={() => setEtape('deck')}>
+              <span className="np-radio" />
+              <span><div className="np-mode-nom">Nouveau deck</div>
+                <div className="np-mode-desc">Le CSV devient un pack à part entière (gabarit dérivé, ajustable).</div></span>
+            </button>
+            <button className="np-mode" onClick={() => setEtape('ajout')} disabled={!gabarit || !gabarit.cle}>
+              <span className="np-radio" />
+              <span><div className="np-mode-nom">Ajouter au deck courant{gabarit && gabarit.nom ? ' (' + gabarit.nom + ')' : ''}</div>
+                <div className="np-mode-desc">Chaque ligne devient une fiche locale. Mapper les colonnes aux champs existants.</div></span>
+            </button>
+          </div>
+        </section>
+      )}
+
+      {etape === 'deck' && (
+        <section>
+          <label className="etiquette">Nom du deck</label>
+          <input className="editeur-input" value={nomDeck} onChange={(e) => setNomDeck(e.target.value)}
+            placeholder="ex. Anatomie — Tête et cou" />
+          <table className="csv-table">
+            <thead><tr><th>Colonne</th><th>Type</th><th>Masquable</th><th>Évocateur</th><th>Toujours caché</th><th>Rôle</th></tr></thead>
+            <tbody>
+              {champs.map((c, i) => (
+                <tr key={c.cle}>
+                  <td>{c.libelle}</td>
+                  <td>
+                    <select value={c.type} onChange={(e) => majChamp(i, { type: e.target.value })}>
+                      {TYPES_CHAMP.map((t) => <option key={t} value={t}>{t}</option>)}
+                    </select>
+                  </td>
+                  <td><input type="checkbox" checked={!!c.masquable} onChange={(e) => majChamp(i, { masquable: e.target.checked })} /></td>
+                  <td><input type="checkbox" checked={!!c.evocateur} onChange={(e) => majChamp(i, { evocateur: e.target.checked })} /></td>
+                  <td><input type="checkbox" checked={!!c.toujours_cache} onChange={(e) => majChamp(i, { toujours_cache: e.target.checked })} /></td>
+                  <td>
+                    <select value={c.role || ''} onChange={(e) => majChamp(i, { role: e.target.value || undefined })}>
+                      <option value="">—</option>
+                      <option value="titre">titre</option>
+                      <option value="sous_titre">sous-titre</option>
+                      <option value="categories">catégories</option>
+                    </select>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button className="bouton-valide" disabled={occupe || !nomDeck.trim()} onClick={creerDeck}>
+            {occupe ? 'Construction…' : 'Créer le deck'}
+          </button>
+        </section>
+      )}
+
+      {etape === 'ajout' && ana && (
+        <section>
+          <div className="soustitre">Chaque colonne du CSV → un champ du deck courant, ou « ignorer ».</div>
+          <table className="csv-table">
+            <thead><tr><th>Colonne CSV</th><th>Champ du deck</th></tr></thead>
+            <tbody>
+              {ana.entetes.map((h) => (
+                <tr key={h}>
+                  <td>{h}</td>
+                  <td>
+                    <select value={mapping[h] || '__ignore__'} onChange={(e) => setMapping((m) => ({ ...m, [h]: e.target.value }))}>
+                      <option value="__ignore__">— ignorer —</option>
+                      <option value="image">image</option>
+                      {(gabarit.champs || []).filter((c) => c.type !== 'image').map((c) => (
+                        <option key={c.cle} value={c.cle}>{c.libelle}</option>
+                      ))}
+                    </select>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button className="bouton-valide" disabled={occupe} onClick={ajouter}>
+            {occupe ? 'Ajout…' : `Ajouter ${ana.nLignes} fiche(s)`}
+          </button>
+        </section>
+      )}
+
+      <div className="filet" />
+      <button className="bouton-neutre" onClick={onAnnuler}><I.Croix t={14} /> Fermer</button>
+    </div>
+  );
+}
+
+function PageDecks({ onEtat }) {
+  const gabarit = useContext(GabaritContext);
+  const [decks, setDecks] = useState(null);
+  const [assistant, setAssistant] = useState(false);
+  const [occupe, setOccupe] = useState(null);
+
+  const { setRetour } = useContext(NavContext);
+  useEffect(() => {
+    setRetour(assistant ? () => { setAssistant(false); return true; } : null);
+    return () => setRetour(null);
+  }, [assistant]);
+
+  useEffect(() => { window.api.decks.lister().then(setDecks); }, []);
+
+  const activer = async (deck) => {
+    setOccupe(deck);
+    const r = await window.api.decks.activer(deck);
+    if (r && r.erreur) { setOccupe(null); return; }
+    window.location.reload();
+  };
+
+  if (assistant) {
+    return <AssistantCsv gabarit={gabarit} onAnnuler={() => setAssistant(false)}
+      onFini={() => window.location.reload()} />;
+  }
+
+  return (
+    <div className="options">
+      <h2>Decks</h2>
+      <div className="soustitre">Un deck = un sujet (son gabarit + ses fiches). Le deck actif alimente le jeu et la bibliothèque.</div>
+
+      <section>
+        {!decks ? <div className="chargement">chargement…</div>
+          : decks.length === 0 ? <div className="galerie-vide">Aucun deck installé.</div>
+          : (
+            <div className="decks-liste">
+              {decks.map((d) => (
+                <div key={d.deck} className={'deck-carte' + (d.actif ? ' actif' : '')}>
+                  <div className="deck-nom">{d.nom}{d.actif && <span className="deck-actif-pastille">actif</span>}</div>
+                  <div className="deck-meta">
+                    {d.nFiches} fiche(s) · gabarit <code>{d.gabaritCle}</code>
+                    {d.sousLicence > 0 && <span className="deck-licence"> · {d.sousLicence} image(s) sous licence</span>}
+                    {d.release && <span> · release</span>}
+                  </div>
+                  {!d.actif && (
+                    <button className="bouton-neutre" disabled={occupe === d.deck} onClick={() => activer(d.deck)}>
+                      {occupe === d.deck ? 'activation…' : 'Activer'}
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+      </section>
+
+      <div className="filet" />
+      <section>
+        <div className="etiquette">Import</div>
+        <button className="bouton-valide" onClick={() => setAssistant(true)}>Importer un CSV…</button>
+      </section>
     </div>
   );
 }
@@ -1494,6 +2005,18 @@ function Options({ etat, onEtat }) {
     setTimeout(() => setEffacementFait(null), 3500);
   };
 
+  const rev = etat.reglagesRevision || { nouvellesParJour: 20, maxParJour: 0, retention: 0.9 };
+  const [retention, setRetention] = useState(rev.retention);
+  const [demandeResetFsrs, setDemandeResetFsrs] = useState(false);
+  const [resetFsrsFait, setResetFsrsFait] = useState(false);
+  const reinitProgression = async () => {
+    await window.api.revision.reinitialiser();
+    setDemandeResetFsrs(false);
+    setResetFsrsFait(true);
+    onEtat();
+    setTimeout(() => setResetFsrsFait(false), 3500);
+  };
+
   return (
     <div className="options">
       <h2>Options</h2>
@@ -1538,7 +2061,7 @@ function Options({ etat, onEtat }) {
             {raccourciManuel && (
               <div className="options-note" style={{ color: 'var(--laiton)' }}>
                 Windows n’autorise plus l’épinglage automatique. Le dossier s’est ouvert : clic droit
-                sur « Tuiles &amp; Toiles » → Épingler à la barre des tâches (ou glisse-le sur la barre).
+                sur « Bristol » → Épingler à la barre des tâches (ou glisse-le sur la barre).
               </div>
             )}
             <div className="options-note">
@@ -1547,6 +2070,51 @@ function Options({ etat, onEtat }) {
           </section>
         </>
       )}
+
+      <div className="filet" />
+
+      <section>
+        <div className="etiquette">Révision espacée</div>
+        <div className="reglages-revision">
+          <label>
+            <span>Nouvelles fiches par jour</span>
+            <input
+              type="number" min="0" max="500" defaultValue={rev.nouvellesParJour}
+              onBlur={(e) => definir('revision_nouvelles_par_jour', String(Math.max(0, parseInt(e.target.value, 10) || 0)))}
+            />
+          </label>
+          <label>
+            <span>Plafond de révisions par jour <em>(0 = illimité)</em></span>
+            <input
+              type="number" min="0" max="9999" defaultValue={rev.maxParJour}
+              onBlur={(e) => definir('revision_max_par_jour', String(Math.max(0, parseInt(e.target.value, 10) || 0)))}
+            />
+          </label>
+          <label>
+            <span>Rétention cible : <b>{Math.round(retention * 100)} %</b></span>
+            <input
+              type="range" min="0.80" max="0.97" step="0.01" value={retention}
+              onChange={(e) => setRetention(parseFloat(e.target.value))}
+              onMouseUp={(e) => definir('revision_retention', e.target.value)}
+            />
+          </label>
+        </div>
+        <div className="options-note">
+          Plus la rétention cible est haute, plus les fiches reviennent souvent (0,90 par défaut).
+        </div>
+        {!demandeResetFsrs ? (
+          <button className="bouton-danger" onClick={() => setDemandeResetFsrs(true)}>
+            <I.Croix t={14} /> Réinitialiser la progression de révision
+          </button>
+        ) : (
+          <div className="options-confirmation-danger">
+            Effacer tous les intervalles et l’historique de révision ?
+            <button className="bouton-danger" onClick={reinitProgression}>Oui, effacer</button>
+            <button className="bouton-neutre" onClick={() => setDemandeResetFsrs(false)}>Annuler</button>
+          </div>
+        )}
+        {resetFsrsFait && <div className="options-confirmation"><I.Coche t={14} /> Progression réinitialisée</div>}
+      </section>
 
       <div className="filet" />
 
@@ -1581,7 +2149,7 @@ function Options({ etat, onEtat }) {
         <div className="options-note">
           {totalMarques > 0
             ? `${totalMarques} tuile${totalMarques > 1 ? 's' : ''} actuellement marquée${totalMarques > 1 ? 's' : ''}.`
-            : 'Aucune tuile marquée pour l’instant.'}
+            : 'Aucune fiche marquée pour l’instant.'}
         </div>
       </section>
 
@@ -1630,7 +2198,8 @@ function Options({ etat, onEtat }) {
           <div className="drive-encours">
             <span className="drive-pastille" />
             {drvAction === 'envoi' ? 'Envoi des données vers Google Drive…'
-              : drvAction === 'recuperation' ? 'Récupération des données depuis Google Drive…'              : 'Connexion à Google Drive — autorise l’accès dans le navigateur…'}
+              : drvAction === 'recuperation' ? 'Récupération des données depuis Google Drive…'
+              : 'Connexion à Google Drive — autorise l’accès dans le navigateur…'}
           </div>
         )}
         {drvMsg && drvMsg.ok && <div className="options-confirmation"><I.Coche t={14} /> {drvMsg.ok}</div>}
@@ -1708,7 +2277,7 @@ function Options({ etat, onEtat }) {
             <p className="options-note">
               Sauvegarde du{' '}
               {new Date(sauvImport.manifest.exporteLe).toLocaleString('fr-FR')} ·{' '}
-              {sauvImport.manifest.oeuvresLocales ?? '?'} tuile(s) locale(s) ·{' '}
+              {sauvImport.manifest.fichesLocales ?? '?'} fiche(s) locale(s) ·{' '}
               {sauvImport.manifest.marques ?? '?'} marque(s) · pack{' '}
               {sauvImport.manifest.pack || '?'}
             </p>
@@ -1729,7 +2298,7 @@ function Options({ etat, onEtat }) {
         >
           <p>
             Les {totalMarques} marques livre, étoile et à revoir seront retirées.
-            Les {etat.oeuvres} œuvres, leurs informations, tes corrections et ta
+            Les {etat.fiches} fiches, leurs informations, tes corrections et ta
             progression ne sont pas touchées — seules les marques disparaissent.
           </p>
           <p>
@@ -1788,7 +2357,7 @@ function BoiteConfirmation({ titre, texteConfirmer, onAnnuler, onConfirmer, vali
 function ConfirmationFermeture({ onAnnuler, onConfirmer }) {
   return (
     <BoiteConfirmation
-      titre="Fermer Tuiles & Toiles ?"
+      titre="Fermer Bristol ?"
       texteConfirmer="Quitter"
       validerEntree
       onAnnuler={onAnnuler}
@@ -1826,7 +2395,7 @@ function PropositionRaccourcis({ onFermer }) {
     <div className="recouvrement" onClick={onFermer}>
       <div className="boite-dialogue" style={{ width: 440 }} onClick={(e) => e.stopPropagation()}>
         <h3>Ajouter un raccourci ?</h3>
-        <p>Pour retrouver Tuiles &amp; Toiles facilement. Rien n’est ajouté sans ton clic.</p>
+        <p>Pour retrouver Bristol facilement. Rien n’est ajouté sans ton clic.</p>
         <div className="choix-raccourcis" style={{ margin: '4px 0 14px' }}>
           {RACCOURCIS.map(([cle, labelAjout, labelPose]) => {
             const pose = rc[cle];
@@ -2043,7 +2612,7 @@ export default function App() {
       onConfirmer={reparerRaccourcis}
     >
       <p>
-        {racPerimes.length > 1 ? 'Des raccourcis' : 'Un raccourci'} vers Tuiles &amp; Toiles
+        {racPerimes.length > 1 ? 'Des raccourcis' : 'Un raccourci'} vers Bristol
         ({racPerimes.map((r) => NOMS_RAC[r.type]).join(', ')}) pointe
         {racPerimes.length > 1 ? 'nt' : ''} vers un ancien emplacement de l’application.
         Le{racPerimes.length > 1 ? 's' : ''} faire pointer vers l’exe actuel ?
@@ -2073,6 +2642,7 @@ export default function App() {
   }
 
   return (
+    <GabaritContext.Provider value={etat.gabarit || { cle: null, nom: null, champs: [] }}>
     <GrilleContext.Provider value={{ colonnes, cycler: cyclerColonnes }}>
      <NavContext.Provider value={navValue}>
       <div className="appli">
@@ -2085,9 +2655,11 @@ export default function App() {
               souris4/5) remonte la page et repart de son etat initial. */}
           <Fragment key={page + '#' + navNonce}>
             {page === 'jeu' ? <Jeu onEtat={charger} />
+              : page === 'revision' ? <PageRevision onEtat={charger} />
               : page === 'options' ? <Options etat={etat} onEtat={charger} />
               : page === 'bibliotheque' ? <PageBibliotheque onEtat={charger} />
               : page === 'edition' ? <PageEdition onEtat={charger} />
+              : page === 'decks' ? <PageDecks onEtat={charger} />
               : page === 'livre' ? <PageLivre onEtat={charger} />
               : page === 'etoile' ? <PageEtoile onEtat={charger} />
               : page === 'revoir' ? <PageRevoir onEtat={charger} />
@@ -2100,5 +2672,6 @@ export default function App() {
       </div>
      </NavContext.Provider>
     </GrilleContext.Provider>
+    </GabaritContext.Provider>
   );
 }

@@ -1,169 +1,222 @@
-# Tuiles & Toiles — état du projet
+# Bristol — état du projet
 
-Application de bureau d'entraînement mémoriel en histoire de l'art.
+Application de bureau de **fiches de révision**, tous sujets. Le cœur : à partir
+d'une fiche unique, le moteur génère automatiquement **N angles de quiz**
+(masques) au lieu d'un recto/verso figé — c'est le différenciateur face à Anki.
+
 Electron + React + SQLite. Windows, mono-utilisateur.
+
+**Fork de Tuiles & Toiles** (`../tuiles-et-toiles`, en hiatus) : T&T était figé sur
+6 champs « histoire de l'art ». Bristol rend le schéma **piloté par gabarit** pour
+servir l'anatomie (déclencheur : Atlas Netter, section 1) ou n'importe quel sujet.
 
 ## Où on en est
 
-**Fait** — l'app tourne et se distribue :
+**Release test buildable** (2026-09-10) : `npm run dist` → `release/Bristol-<version>.exe`
+(portable, 100 Mo). Deck livré = anatomie (205 fiches, tout `libre`, diffusable).
+`faire-icone.js` no-op si `icone-source.jpg` absent. `deck-actif.json` = anatomie
+→ `stage-release` vise le bon deck. 36 fiches portent une 2ᵉ vignette `<id>-3d.jpg`
+(rendu BodyParts3D) à côté de la gravure Gray — relecture / comparaison en app.
+Reste avant diffusion : relecture du contenu **via l'app**, jugement des rendus 3D,
+audit qualité des tirages (masques très permissifs : ~250/256 valides par fiche).
 
-- menu, jeu (modes aléatoire / catégorie), Bibliothèque, Livre / Étoile / À revoir, Options
-- vue tuile agrandie (aperçu depuis les galeries ; pointillés dorés sur les
-  champs qu'un tirage cacherait)
-- tri (ordre d'ajout / numéro + sens) et recherche permissive sur toutes les pages
-- 10 thèmes (dont 7 clairs), barres de défilement thématisées
-- exe portable unique, données dans `%APPDATA%`, raccourcis bureau / menu /
-  barre des tâches + détection des raccourcis périmés au lancement
-- **S1 du modèle pack** : socle 2 bases (voir « Architecture données »)
+**Phase 1 + P2 + P2b faites** :
 
-**En cours — Édition (ajouts locaux).** Découpage :
+- schéma `gabarit` (champs typés + drapeaux de masque) + `fiches.donnees` JSON
+- `masques.js` généralisé : `calculer(fiches, champs)` — sujet-agnostique
+- **multi-decks** (P2b) : chaque deck construit dans `data/packs/<deck>.db` ;
+  deck actif dans `reglages.deck_actif` ; page **Decks** (barre latérale) liste +
+  bascule (DETACH/ATTACH + `reconstruireVue` + reload). `db.ouvrir(USER)` puis
+  `db.attacherDeck(chemin)`. `src/main/decks.js`.
+- **import CSV** (P2b) : page Decks → « Importer un CSV » → assistant.
+  *Nouveau deck* : gabarit dérivé des en-têtes (types devinés, drapeaux
+  ajustables) → `data/<deck>/` + `import.js` + activation. *Ajout au deck courant* :
+  mapping colonne→champ → `edition.creerLot` (fiches locales). `src/main/csv-import.js`.
+- `reconstruireVue` filtre `fiches_locales WHERE gabarit = <actif>` + garde `vue_deck`.
+- build : `npm run import -- <deck>` depuis `data/<deck>/`
+- terminologie renommée (`oeuvres`→`fiches`, IPC `fiches:*`, protocole `fiche://`)
+- **rendu piloté par gabarit** (P2) : `src/renderer/champs.jsx` + `Tuile`,
+  `CarteTuile`, `EditeurTuile`, aperçu bouclent sur `etat.gabarit.champs` (via
+  `GabaritContext`). Types rendus : image, texte_court/date/nombre (grille),
+  texte_long (bloc scrollable), liste. `toujours_cache` → « ? ? ? ? » révélable.
+- **provenance des images** (P2) : `data/<deck>/images/{libre,ebook}/` + colonne
+  CSV `image_src` + colonne `fiches.image_src`. `pack_meta.sous_licence` = compte.
+  `npm run import -- <deck> --audit` (rapport) / `--release` (omet les `ebook`,
+  fiche gardée). `npm run dist` → `scripts/stage-release.js` : build `--release`
+  + copie `images/libre/` → `data/images/` (jamais `ebook/`).
+- **régression** : pack art (431 fiches) → masques **identiques bit à bit** à T&T
+  (min 35 / méd 55 / max 59, 0 bloquée). Vérifié après P1 et P2.
+- deck de test `data/anatomie/` (3 fiches) : l'app tourne dessus
+- banc d'essai rendu (dev) : `src/renderer/harness.{html,jsx}` stubbe `window.api`
+  depuis `_fixture.json` → `http://localhost:5500/harness.html` teste App.jsx dans
+  un navigateur ordinaire. Régénérer la fixture : dump depuis `db`/`jeu` (jetable).
 
-- S1 ✅ socle : `pack.db` / `utilisateur.db`, migration v1 → v2, identité stable
-- S2 union `pack ∪ oeuvres_locales` + filtre `user_archive` + overrides + hook recalcul masques
-- S3 page Édition + éditeur de tuile + flux « créer »
-- S4 pipeline image (dossier local, resize ≤ 500 Ko, sélecteur + drag-drop fichier)
-- S5 drag-drop web, modifier / supprimer, `user_archive` pour les œuvres du pack
-- S6 undo/redo, menu contextuel (l'export / import zip est passé au chantier synchro, É0)
+**Suite (non fait)** :
 
-**En cours — Sauvegarde / synchro Google Drive.** Ce qui voyage : `utilisateur.db`
-+ `images-locales/`. Jamais `pack.db`. Découpage :
+- **P2c** : import Anki `.apkg` ; multi-deck **empaqueté** (livrer plusieurs decks +
+  images) ; assistant CSV → étape « joindre un dossier d'images » ; supprimer/exporter
+  un deck depuis la page Decks
+- **P3** répétition espacée **FSRS** (remplace `user_stats` + tag « à revoir »)
+- **P4** occlusion d'image ; cloze `{{c1::…}}`
+- **P5** LaTeX/MathJax ; tags hiérarchiques ; priorité 1re classe ; champ Sources en UI
+- **contenu** : deck Netter section 1 « Tête et cou » — mémoire `netter-sources`.
+  - `scripts/extraire-netter.py <epub 6e> <pdf 6e>` → 151 planches rendues du PDF
+    @ 200 dpi (filigrane rogné) `data/anatomie/images/ebook/pl###.jpg` (~1750px,
+    gitignoré) + `planches-source.csv` + `planches-legendes.json`.
+  - `scripts/telecharger-libre.py` → images `libre/` (licences PD/CC-BY/SA/CC0
+    seulement) + `credits-libre.json` + `ATTRIBUTIONS.md`. Le classeur auto
+    (image d'infobox / catégorie Commons) est peu fiable en anatomie → dict
+    `OVERRIDE` en tête du script = planche Commons imposée par structure
+    (Gray's Anatomy 1918 PD vérifié + `Skull foramina labeled.svg` composite).
+    SVG et GIF gardés tels quels ; le reste → JPEG ≤ 1500 px.
+  - **Pilote fait** : `data/anatomie/contenu.csv` (TSV) = 43 fiches « os et
+    ligaments » (1 fiche = 1 structure). **43 images `libre`** (28 PD, 1 CC0,
+    14 CC-BY-SA) → `pack_meta.sous_licence = 0`, **deck entièrement diffusable**.
+    `ATTRIBUTIONS.md` + `credits-libre.json`. Qualité `libre` = gravures Gray 1918,
+    légendes anglais/latin (compromis diffusable vs planches Netter).
+  - `articulation_uncovertebrale.png` : aucune image libre existante → **traduit +
+    relégendé** (PIL) le diagramme `Cervical vertebra blank.png` (debivort,
+    CC-BY-SA 3.0) — dérivée FR avec l'uncus ajouté, reste CC-BY-SA 3.0.
+  - Reste : relecture des fiches pilote ; ~108 structures des autres sous-sections.
+  - **Rendus 3D BodyParts3D** (`pyrender`, alternative aux gravures Gray) :
+    - `scripts/apparier-bp3d.py` → brouillon `data/anatomie/bp3d.json` :
+      pour chaque fiche, concept FMA + maillage STL (miroir
+      `Kevin-Mattheus-Moerman/BodyParts3D`, 925 parties). `OVERRIDE` (os),
+      appariement auto (myologie, difflib + gate token/système), `EXCLURE`
+      (foramens, vues d'ensemble, maillage absent), `PLANS` (contexte + caméra
+      par fiche). **36 fiches appariées** (25 os/rachis + ~11 muscles + cartilage
+      thyroïde + globe oculaire) ; ~50 possibles à la main, le reste hors périmètre
+      (nerfs/artères/méninges : pas de maillage exploitable).
+    - `scripts/rendre-anatomie.py` lit `bp3d.json` : 2 passes opaques pyrender
+      (cible / contexte) recomposées NumPy — **contourne l'OIT bancal de
+      pyrender**. Cible rouge opaque toujours au-dessus, contexte en fantôme gris.
+      Défaut → PNG `_bp3d-rendu/` (relecture). `--gif` → GIF tournant 720 px.
+      `--ecrire` → JPEG ≤ 1500 px dans `images/libre/<id>.jpg` + entrée
+      `credits-libre.json` (`CC-BY-SA 2.1 Japan`, DBCLS). Refuse d'écraser une
+      image du deck sans `--force`.
+    - Licence CC-BY-SA 2.1-ja → remixable BY-SA 4.0, cohérent avec le deck (déjà
+      partiellement BY-SA). Attribution obligatoire, `sous_licence` inchangé.
+    - Cache STL `_bp3d-cache/`, sorties `_bp3d-rendu/` : gitignorés.
+    - Reste : relire les 36 rendus, ajuster `PLANS` (caméra/contexte) au cas par
+      cas, `--ecrire` ceux qui valent mieux que la gravure Gray ; compléter
+      `bp3d.json` à la main pour les ~15 autres muscles à maillage.
 
-- É0 ✅ export / import zip (`src/main/sauvegarde.js`, `adm-zip`). Zip = `utilisateur.db`
-  (via `VACUUM INTO`, base `pack` exclue) + `images-locales/` + `manifest.json`.
-  Import = **remplacement complet**, copie de secours `utilisateur.db.avant-import-<horodatage>`,
-  `reconstruireVue({force})` + `window.location.reload()`. Options → « Sauvegarde des données ».
-- É1 ✅ snapshot Drive via API (`src/main/drive.js`). OAuth installed-app + PKCE, redirection
-  loopback `http://localhost:<port>`, navigateur système. Scope `drive.file`, dossier `Tuiles et
-  Toiles/` (sans `&` — nom de dossier Drive). Fichier `utilisateur.zip` mis à jour en place ;
-  avant tout écrasement la version distante est copiée dans `historique/`. Conflit détecté via
-  `headRevisionId` distant retenu dans la table `sync` (`drive_rev`, `drive_synchro_le`).
-  Jeton (refresh_token) chiffré `safeStorage` → `%APPDATA%\Tuiles et Toiles\drive-jeton.bin`.
-  Client OAuth : `src/main/oauth-client.json` (gitignoré, embarqué dans l'asar). Projet Google
-  Cloud `tuiles-et-toiles`, écran de consentement en **Testing** → chaque testeur à ajouter en
-  *test user*, ou publier l'app. Options → « Google Drive » : Connecter / Sauvegarder / Restaurer
-  / Déconnecter. Pas d'auto push/pull pour l'instant (boutons manuels).
-- É2 (payant) fusion ligne à ligne via journal de changements keyé par `id` stable.
+**Sources des images / remerciements** :
+- `data/<deck>/credits-libre.json` (versionné) = source de vérité :
+  `{ "fichier.jpg": { structure, auteur, licence, source (URL Commons), note? } }`.
+  `telecharger-libre.py` le remplit ; compléter à la main pour les images ajoutées.
+- `import.js` **refuse de bâtir** si une image `libre` n'y figure pas (dès que le
+  fichier existe), et refuse un `--release` sans ce fichier.
+- Génère `pack_meta.attributions` (markdown, dans le `.db`) + `data/<deck>/ATTRIBUTIONS.md`.
+  `--release` écrit aussi `data/ATTRIBUTIONS.md` → `extraResources` l'embarque à
+  côté de `pack.db`. `etat.attributions` l'expose au rendu.
+- Les remerciements appartiennent au **pack**, pas à l'app (chaque deck porte les
+  siens). Un champ optionnel `gabarit.json:credits` / `licence` s'ajoute en tête.
 
-Contrainte : la synchro est **toujours optionnelle et non bloquante** — l'app tourne
-identique sans compte Drive (règle 1). Piège connu : `ref_local_seq` peut produire deux
-`#L1` sur deux postes ; les `id` (`local:<uuid>`) restent uniques, seul l'affichage est à
-renuméroter à la fusion (É2).
+**Caveat non technique** : un deck qui suit la *sélection et l'ordre* d'une section
+de Netter reste une compilation dérivée, même avec des images 100 % libres. La
+provenance ne couvre que les images. Une release publique d'anatomie suppose une
+sélection de structures indépendante.
 
-**Après** — MAJ de pack + catalogue de packs en ligne (gratuits / payants).
-Direction retenue (dev repoussé) : héberger `manifest.json` + `pack-*.db` sur un
-host statique (GitHub Releases pour commencer — URLs stables, ETag, CDN, gratuit),
-**pas** Google Drive (scope `drive.file` ne lit pas un fichier tiers ; le lien
-public `uc?export=download` marche mais est fragile et ne gère aucun paiement).
-App : fetch du manifeste → choix → download du `.db` → swap atomique. Packs
-payants → endpoint de licence plus tard ; packs gratuits livrables dès le host
-statique. Téléchargement = action explicite, jamais bloquant, échec silencieux
-hors-ligne (règle 1).
+Plans : `C:\Users\EryoGreg\.claude\plans\lazy-conjuring-peach.md` (P1),
+`vast-munching-blum.md` (P2 + P2b).
 
-## Règles non négociables
+## Le gabarit (`data/<deck>/gabarit.json`)
 
-1. **Le pack est du contenu, remplaçable en bloc.** `data/pack.db` est généré
-   hors ligne depuis `data/manifest.csv` + `data/registre.json`. L'app au
-   runtime n'y écrit jamais et ne dépend d'aucune source externe — le Google Doc
-   d'origine (propriété d'un tiers) n'est plus qu'un intrant de build.
-   Une MAJ de pack = remplacer le fichier ; `utilisateur.db` n'est jamais touché.
-2. **La date n'est jamais visible au tirage.** C'est ce que l'entraînement fait
-   mémoriser. Elle ne fait partie d'aucun masque — mais l'utilisateur peut la
-   révéler au clic, comme n'importe quel autre champ.
-3. **Mono-utilisateur, mais la création locale de tuiles rouvre le périmètre.**
-   Pas de comptes ni de partage réseau. Les tuiles créées vivent dans
-   `oeuvres_locales` (utilisateur.db), jamais dans le pack ; elles s'exportent
-   en zip.
-4. **Rien de mutable dans pack.db.** Tags, archivage, corrections de champ,
-   tuiles locales → `utilisateur.db`. Ces tables pointent vers les œuvres par
-   leur `id` (stable à vie), **jamais** par leur `ref` (numéro d'affichage).
+`{ cle, nom, champs: [ champ… ] }`. Un **champ** :
 
-## Identité des œuvres
+| clé | rôle |
+|---|---|
+| `cle`, `libelle`, `type`, `ordre` | `type` ∈ texte_court / texte_long / image / date / liste / nombre |
+| `masquable` | le moteur peut le cacher (sinon : toujours visible) |
+| `toujours_cache` | jamais visible au tirage — l'analogue générique de la « date » de T&T |
+| `evocateur` | peut servir d'indice visible à lui seul |
+| `evoc_min` | longueur mini du texte pour compter comme évocateur (déf. 60 si texte_long) |
+| `evoc_si_unique` | évocateur quand sa valeur est unique dans le corpus (ex. artiste) |
+| `verif_fuite` | ce champ caché ne doit pas être trahi par un texte_long visible |
+| `fuite_min_mots` | nb de mots significatifs requis pour qu'une fuite compte (déf. 2) |
+| `role: "categories"` | champ sur lequel porte le mode catégorie (1 par gabarit) |
+| `role: "titre"` / `role: "sous_titre"` | titre / sous-titre des cartes de galerie (fallback : 1er / 2e `texte_court`) |
 
-- `id` — `p:` + 10 hex, opaque, **gelé dans `data/registre.json`**, jamais
-  réutilisé. Clé de toutes les relations `user_*`.
-- `ref` — numéro d'affichage `"002".."432"` (locales : `"L1"…`), **figé** :
-  jamais renuméroté. Une œuvre retirée par une MAJ de pack laisse un trou, on ne
-  décale pas. Le registre gèle `slug → {id, ref}` ; l'import le complète pour
-  les nouvelles œuvres sans toucher l'existant.
-- `slug` — dérivé titre + date, sert au build à apparier une ligne du CSV au
-  registre, et nomme les fichiers image. **Instable** (une correction de titre
-  le change) → jamais utilisé comme clé.
+`data/<deck>/contenu.csv` : 1 colonne par `cle` + `id` (slug) + `image` +
+`image_src` (`libre` défaut / `ebook`). **Séparateur auto-détecté** par
+`import.js:lireCsv` : TABULATION si présente dans l'en-tête, sinon `;`. La prose
+française contient des `;` → **écrire le contenu en TSV** (tabulation, jamais
+saisie par mégarde). `lireCsv` jette une erreur explicite si une ligne n'a pas le
+bon nombre de champs (plus de décalage silencieux). Le deck `anatomie` est en TSV,
+le pack `art` (manifest T&T) reste en `;` + guillemets.
 
-## Architecture données (S1)
+Les bitmasks de `fiches.masques` sont indexés sur l'**ordre des champs masquables**
+du gabarit → n'ont de sens qu'avec ce gabarit (qui voyage dans `pack.db`).
+
+## Architecture données
 
 | `pack.db` — attaché sous `pack`, lecture seule | `utilisateur.db` — connexion principale, inscriptible |
 |---|---|
-| `oeuvres` (id, ref, champs, hash_texte, recherche, masques) | `user_tags`, `user_stats`, `user_corrections`, `reglages`, `sync` |
-| `pack_meta` (version, hash, cree_le, n_oeuvres) | `user_archive` (oeuvre_id) — œuvres du pack masquées |
-| | `user_overrides` (oeuvre_id, champ, valeur, valeur_source) |
-| | `oeuvres_locales` (mêmes champs + cree_le, modifie_le) |
+| `gabarit` (cle, nom, champs JSON) | `user_tags`, `user_stats`, `user_corrections`, `reglages`, `sync` |
+| `fiches` (id, ref, gabarit, **donnees JSON**, image, dims, hash, recherche, masques) | `user_archive` (fiche_id) |
+| `pack_meta` (deck, gabarit, version, hash, n_fiches) | `user_overrides` (fiche_id, champ, valeur, valeur_source) |
+| | `fiches_locales` (mêmes champs + cree_le, modifie_le) |
+| | `fiches_effectives` — vue matérialisée = pack (− archive, overrides pliés) + fiches_locales |
 
-`db.ouvrir(USER, PACK)` ouvre utilisateur.db puis `ATTACH DATABASE pack.db AS
-pack`. Toutes les requêtes de contenu visent `pack.oeuvres`. S1 : lecture =
-pack seul ; l'union `pack ∪ oeuvres_locales`, le filtre `user_archive` et les
-overrides arrivent en S2.
+`db.ouvrir(USER, PACK)` → ATTACH pack.db + `chargerGabarit()`. Toute lecture de
+contenu vise `fiches_effectives` (reconstruite à l'ouverture et après chaque
+écriture user). `db.champs()` = les définitions triées par `ordre`.
 
-Migration depuis une install v1 (`tuiles.db` monolithique) : `db.migrer()`
-recopie les tables `user_*`, **re-clé les tags** des anciens slugs vers les `id`
-stables via le registre (slug disparu → tag ignoré), renomme l'ancien fichier
-`tuiles.db.avant-v2`.
+## Règles non négociables (héritées de T&T)
 
-Emplacements (empaqueté) : `%APPDATA%\Tuiles et Toiles\` — `pack.db` (copié du
-bundle si sa version est **strictement supérieure**, donc un pack téléchargé
-plus récent n'est jamais écrasé), `utilisateur.db` (jamais écrasé). Images :
-`resources/data/images/`, lecture seule, jamais recopiées. En dev : tout dans
-`data/`.
+1. **Le pack est du contenu, remplaçable en bloc.** `data/pack.db` est généré
+   hors ligne. L'app au runtime n'y écrit jamais. MAJ de pack = remplacer le
+   fichier ; `utilisateur.db` n'est jamais touché.
+2. **Un champ `toujours_cache` n'est jamais visible au tirage** — révélable au
+   clic comme tout autre. En histoire de l'art c'est la date.
+3. **Mono-utilisateur, création locale de fiches permise.** Les fiches créées
+   vivent dans `fiches_locales`, jamais dans le pack ; elles s'exportent en zip.
+4. **Rien de mutable dans `pack.db`.** Tags, archivage, corrections, fiches
+   locales → `utilisateur.db`, pointant les fiches par `id` (stable), jamais `ref`.
 
-## Le moteur de masques
+## Identité des fiches
 
-`src/main/masques.js`. Un masque = l'ensemble des champs visibles ; retenu s'il
-est **discriminant** (ne désigne qu'une œuvre), **évocateur** (image, titre,
-description ≥ 60 car., ou artiste unique au corpus), **sans fuite** (21
-descriptions citent l'artiste ou le titre) et **incomplet**. La date n'en fait
-jamais partie.
+- `id` — `p:` + 10 hex (pack) ou `local:<uuid>`, opaque, gelé dans
+  `data/<deck>/registre.json`, jamais réutilisé. Clé de toutes les relations user_*.
+- `ref` — numéro d'affichage figé (`"001"…`, locales `"L1"…`), jamais renuméroté.
+- Le CSV `data/<deck>/contenu.csv` : une colonne par `cle` de champ + `id` (slug,
+  clé du registre) + `image`. Le build gèle `slug → {id, ref}`.
 
-Précalculé à la fabrication du pack. Sur les 431 œuvres : min 35, médiane 55,
-max 59 masques valides, aucune œuvre bloquée. Créer / modifier / supprimer une
-tuile locale change la discriminance de tout le corpus → recalcul complet à
-chaque écriture (S2+, ~100 ms).
+## Build
 
-Corollaire de méthode, appris à mes dépens : **apparier en souple** (valeurs
-normalisées) mais **comparer en strict** (valeurs brutes). Sert à détecter un
-conflit quand une MAJ de pack corrige un champ que l'utilisateur avait déjà
-surchargé (`user_overrides.valeur_source` = la valeur du pack au moment de la
-correction).
+```
+npm run import -- <deck>            # -> data/packs/<deck>.db
+npm run import -- <deck> --audit    # rapport provenance images, pas de build
+npm run import -- <deck> --release  # -> data/pack.db (images ebook omises)
+npm run dist                        # stage-release.js + vite + electron-builder
+```
+`import.js` lit `data/<deck>/{gabarit.json, contenu.csv, registre.json, images/{libre,ebook}/}`.
+Build normal → `data/packs/<deck>.db` (bibliothèque de decks). `--release` →
+`data/pack.db` (artefact d'empaquetage). Sans argument : deck de `data/deck-actif.json`.
+`stage-release.js` résout le deck (arg / `reglages.deck_actif` / 1er pack), build
+`--release`, stage `images/libre/` → `data/images/`. `extraResources` = `data/pack.db`
++ `data/images` (un seul deck livré ; multi-deck empaqueté = P2c).
 
-## Pièges de l'environnement
+En dev : `index.js` ouvre `utilisateur.db`, lit `reglages.deck_actif`, attache
+`data/packs/<deck>.db`. Bascule via la page Decks (IPC `decks:activer`).
 
-- **Ports réservés.** Vite tourne sur **5500** : cette machine réserve des
-  plages (Hyper-V) dont 4173 et 5173. Un `listen EACCES` vient de là.
-  `netsh interface ipv4 show excludedportrange protocol=tcp`
-- **better-sqlite3** est compilé pour l'ABI d'Electron. Le Node du système
-  (`node -e`, `node script.js`) plante : `NODE_MODULE_VERSION 137` contre 130.
-  Passer par `node scripts/lancer-node.js <fichier>` (Electron en mode node).
-  Le binaire est téléchargé prêt à l'emploi (`scripts/binaire-sqlite.js`), pas
-  compilé.
-- **Exe portable.** `portable.unpackDirName` doit être **versionné**
-  (`TuilesEtToiles-${version}`), sinon les builds successifs se disputent le
-  même dossier d'extraction `%LOCALAPPDATA%\Temp\` et le corrompent (symptôme :
-  `ffmpeg.dll was not found`). Defender met aussi parfois `ffmpeg.dll` en
-  quarantaine (faux positif Electron non signé) — si l'erreur persiste après un
-  dossier propre, c'est ça : exclusion Defender ou signature de l'exe.
-- **`&` dans les chemins.** `productName` = `Tuiles et Toiles` (sans `&`),
-  sinon cmd et electron-builder cassent les chemins générés. L'UI garde
-  « Tuiles & Toiles » (via le `<title>` HTML).
+## Pièges de l'environnement (hérités de T&T, toujours valides)
 
-## Données
+- **Port Vite = 5500.** Cette machine réserve des plages (Hyper-V) dont 4173 et
+  5173. `netsh interface ipv4 show excludedportrange protocol=tcp`.
+- **better-sqlite3** compilé pour l'ABI d'Electron : le Node système plante
+  (`NODE_MODULE_VERSION`). Passer par `node scripts/lancer-node.js <fichier>`
+  (Electron en mode node). Binaire téléchargé prêt à l'emploi
+  (`scripts/binaire-sqlite.js` via prebuild-install), pas compilé. `npm install`
+  peut échouer sur le build gyp de better-sqlite3 — dans ce cas, copier
+  `node_modules/better-sqlite3` depuis une install qui marche.
+- **Backticks dans les commentaires SQL** : `db.js` définit `SCHEMA_*` comme
+  template literals — pas de `` ` `` dans les commentaires à l'intérieur.
+- **`productName` = `Bristol`** (pas de `&` ni d'espace — piège chemins Windows).
+- **Exe portable** : `portable.unpackDirName` versionné (`Bristol-${version}`).
 
-- `data/manifest.csv` (431 lignes) — export du Google Doc, intrant de build.
-- `data/registre.json` (431 entrées, **versionné, gelé**) — `slug → {id, ref}`.
-  Amorcé une seule fois par `node scripts/registre-init.js`.
-- `data/pack.db` — régénéré par `npm run import` (`= node scripts/lancer-node.js
-  src/main/import.js`).
-- `data/images/` (431 JPEG, 53,5 Mo, côté max 1400 px), bundlé lecture seule.
-- `data/utilisateur.db` — créé au runtime, jamais versionné.
+## Outils
 
-33 images font moins de 500 px de côté — limitation de la source, pas de la
-conversion. Extraction des images d'origine : `tools/extraire_images.gs` (le
-connecteur Drive tronque `read_file_content` à ~101 000 caractères et plafonne
-l'export complet à 10 Mo).
+- Upscaling d'images (planches Netter basse déf en secours) : **HAT** dans
+  `C:\AI\HAT` (super-résolution, mode chunked). Pas LM Studio (= LLM seulement).

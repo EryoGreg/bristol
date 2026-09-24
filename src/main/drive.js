@@ -28,7 +28,7 @@ const db = require('./db');
 const sauvegarde = require('./sauvegarde');
 
 const SCOPE = 'https://www.googleapis.com/auth/drive.file';
-const NOM_DOSSIER = 'Tuiles et Toiles';
+const NOM_DOSSIER = 'Bristol';
 const NOM_HISTO = 'historique';
 const NOM_FICHIER = 'utilisateur.zip';
 const API = 'https://www.googleapis.com/drive/v3';
@@ -38,16 +38,16 @@ const b64url = (buf) => buf.toString('base64')
   .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 
 const LISEZMOI = [
-  'Dossier « Tuiles et Toiles »',
-  '=============================',
+  'Dossier « Bristol »',
+  '===================',
   '',
-  'Ce dossier est créé et géré par l\'application Tuiles et Toiles',
-  '(entraînement mémoriel en histoire de l\'art) quand tu actives la',
+  'Ce dossier est créé et géré par l\'application Bristol',
+  '(fiches de révision à masques auto-générés) quand tu actives la',
   'sauvegarde sur Google Drive.',
   '',
   'utilisateur.zip',
-  '  Ta sauvegarde personnelle : les tuiles que tu as créées, tes',
-  '  corrections, les œuvres que tu as archivées et tes marques',
+  '  Ta sauvegarde personnelle : les fiches que tu as créées, tes',
+  '  corrections, les fiches que tu as archivées et tes marques',
   '  (livre / étoile / à revoir). PAS le contenu du pack — seulement',
   '  ce que TU as ajouté. L\'application le remplace à chaque',
   '  « Sauvegarder sur Drive » et le relit à « Restaurer depuis Drive »',
@@ -129,7 +129,7 @@ async function serveurRedirection(attendu) {
     const u = new URL(req.url, 'http://127.0.0.1');
     if (u.pathname !== '/') { rep.writeHead(404); rep.end(); return; }
     rep.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    rep.end('<!doctype html><meta charset="utf-8"><title>Tuiles et Toiles</title>'
+    rep.end('<!doctype html><meta charset="utf-8"><title>Bristol</title>'
       + '<body style="font-family:system-ui;background:#14110f;color:#e8e0d4;'
       + 'display:flex;align-items:center;justify-content:center;height:100vh;margin:0">'
       + '<p>Connexion Google Drive terminée. Vous pouvez fermer cet onglet.</p>');
@@ -348,7 +348,7 @@ async function pousser({ forcer = false } = {}) {
     }
     if (distantABouge) await copierVersHistorique(oauth, dossierId, distant);
 
-    const tmp = path.join(os.tmpdir(), 'tuiles-drive-push-' + Date.now() + '.zip');
+    const tmp = path.join(os.tmpdir(), 'bristol-drive-push-' + Date.now() + '.zip');
     sauvegarde.exporter(tmp);
     const maj = await televerser(oauth, dossierId, tmp, distant);
     try { fs.rmSync(tmp, { force: true }); } catch { /* deja parti */ }
@@ -374,7 +374,7 @@ async function tirer({ forcer = false } = {}) {
       return { aJour: true };
     }
 
-    const tmp = path.join(os.tmpdir(), 'tuiles-drive-pull-' + Date.now() + '.zip');
+    const tmp = path.join(os.tmpdir(), 'bristol-drive-pull-' + Date.now() + '.zip');
     await telecharger(oauth, distant.id, tmp);
     const r = sauvegarde.importer(tmp);
     try { fs.rmSync(tmp, { force: true }); } catch { /* deja parti */ }

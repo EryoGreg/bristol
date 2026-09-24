@@ -21,6 +21,14 @@ const TAILLES = [256, 128, 64, 48, 32, 16];
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
+  if (!fs.existsSync(SRC)) {
+    // icone-source.jpg absent (non versionne) : on garde build/icon.ico tel quel.
+    if (fs.existsSync(path.join(OUT, 'icon.ico'))) {
+      console.log('faire-icone : icone-source.jpg absent, build/icon.ico conserve');
+      return;
+    }
+    throw new Error('icone-source.jpg absent et build/icon.ico introuvable');
+  }
   const src = await Jimp.read(SRC);
 
   const fond = src.clone().cover(MAITRE, MAITRE).blur(18).brightness(-0.4);

@@ -1,0 +1,12 @@
+{
+  "occlusion_larynx": {
+    "image": "larynx.jpg",
+    "zones": [
+      { "x": 0.10, "y": 0.02, "w": 0.30, "h": 0.055, "texte": "Os hyoïde" },
+      { "x": 0.12, "y": 0.15, "w": 0.32, "h": 0.085, "texte": "Membrane thyro-hyoïdienne" },
+      { "x": 0.11, "y": 0.37, "w": 0.24, "h": 0.10, "texte": "Cartilage thyroïde" },
+      { "x": 0.09, "y": 0.71, "w": 0.24, "h": 0.085, "texte": "Cartilage cricoïde" },
+      { "x": 0.12, "y": 0.88, "w": 0.20, "h": 0.06, "texte": "Trachée" }
+    ]
+  }
+}

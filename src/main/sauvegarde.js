@@ -3,8 +3,8 @@
  * Sauvegarde / restauration des donnees utilisateur dans un fichier .zip.
  *
  * Le zip contient TOUT ce que l'utilisateur a produit :
- *   utilisateur.db          tags, stats, archive, overrides, tuiles locales, reglages
- *   images-locales/<nom>     images des tuiles creees
+ *   utilisateur.db          tags, stats, archive, overrides, fiches locales, reglages
+ *   images-locales/<nom>     images des fiches creees
  *   manifest.json            versions + comptes, pour verifier avant import
  *
  * Etape 0 de la synchro : l'utilisateur depose ce zip dans un dossier
@@ -33,7 +33,7 @@ function horodatage() {
 function comptesLocaux() {
   const d = db.instance();
   return {
-    oeuvresLocales: d.prepare('SELECT COUNT(*) n FROM oeuvres_locales').get().n,
+    fichesLocales: d.prepare('SELECT COUNT(*) n FROM fiches_locales').get().n,
     archives: d.prepare('SELECT COUNT(*) n FROM user_archive').get().n,
     overrides: d.prepare('SELECT COUNT(*) n FROM user_overrides').get().n,
     marques: d.prepare('SELECT COUNT(*) n FROM user_tags').get().n
@@ -55,7 +55,7 @@ function exporter(cheminZip) {
 
   // Copie transactionnellement propre de utilisateur.db (VACUUM INTO : pas de
   // -wal, base `pack` attachee exclue).
-  const tmp = path.join(os.tmpdir(), 'tuiles-export-' + horodatage() + '.db');
+  const tmp = path.join(os.tmpdir(), 'bristol-export-' + horodatage() + '.db');
   try { fs.rmSync(tmp, { force: true }); } catch { /* n'existe pas */ }
   db.exporterVers(tmp);
   zip.addLocalFile(tmp, '', 'utilisateur.db');
@@ -66,7 +66,7 @@ function exporter(cheminZip) {
   }
 
   const manifest = {
-    app: 'tuiles-et-toiles',
+    app: 'bristol',
     version: cfg.versionApp,
     pack: lireVersionPack(),
     exporteLe: new Date().toISOString(),
@@ -101,7 +101,7 @@ function inspecter(cheminZip) {
     const zip = new AdmZip(cheminZip);
     const entreeDb = zip.getEntry('utilisateur.db');
     const entreeManifest = zip.getEntry('manifest.json');
-    if (!entreeDb) return { erreur: 'Ce zip ne contient pas utilisateur.db — ce n’est pas une sauvegarde Tuiles & Toiles.' };
+    if (!entreeDb) return { erreur: 'Ce zip ne contient pas utilisateur.db — ce n’est pas une sauvegarde Bristol.' };
     let manifest = null;
     if (entreeManifest) {
       try { manifest = JSON.parse(zip.readAsText(entreeManifest)); } catch { /* manifest illisible */ }
@@ -153,7 +153,7 @@ function importer(cheminZip) {
     fs.writeFileSync(path.join(cfg.imagesLocales, path.basename(m[1])), e.getData());
   }
 
-  // 5. Rouvrir : reconstruit oeuvres_effectives, recalcule les masques.
+  // 5. Rouvrir : reconstruit fiches_effectives, recalcule les masques.
   db.ouvrir(cfg.user, cfg.pack);
   db.reconstruireVue({ force: true });
   jeu.reinitialiserSac();
