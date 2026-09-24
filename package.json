@@ -1,6 +1,6 @@
 {
   "name": "bristol",
-  "version": "0.1.0-test.1",
+  "version": "0.1.0-test.2",
   "description": "Fiches de revision a masques auto-generes, tous sujets",
   "author": "Gregoire Pessiot",
   "main": "src/main/index.js",
