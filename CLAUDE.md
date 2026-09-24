@@ -163,6 +163,24 @@ du gabarit → n'ont de sens qu'avec ce gabarit (qui voyage dans `pack.db`).
 contenu vise `fiches_effectives` (reconstruite à l'ouverture et après chaque
 écriture user). `db.champs()` = les définitions triées par `ordre`.
 
+## Dépôt, releases et mise à jour de l'app
+
+- Dépôt **public** github.com/EryoGreg/bristol, fork à historique partagé de
+  github.com/EryoGreg/tuiles-et-toiles (base commune : tag `v0.1.0`). Correctifs T&T →
+  `git fetch tuiles-et-toiles && git cherry-pick <sha>` ; en conflit, garder les noms Bristol
+  (`NOM_DOSSIER`, LISEZMOI, fichiers temporaires `bristol-*`, `DEPOT` / `MOTIF_EXE` de maj.js).
+- Planches Netter : jamais en clair dans git, seulement `data/anatomie/planches-netter-ebook.7z`
+  (AES-256, en-têtes chiffrés ; mot de passe détenu par l'utilisateur, jamais écrit nulle part).
+- Publier : `npm version x.y.z[-test.N] --no-git-tag-version`, `npm run dist`, commit + tag, push,
+  `gh release create vx.y.z release/Bristol-x.y.z.exe`. **Pas de `--prerelease`** : l'updater lit
+  `releases/latest`, que GitHub calcule sans les pré-versions.
+- **Mise à jour intégrée** (`src/main/maj.js`, même mécanique que T&T) : `releases/latest` via
+  l'API GitHub anonyme, exe `Bristol-<version>.exe` (`MOTIF_EXE`) téléchargé à côté de l'exe courant,
+  taille + SHA-256 vérifiés contre le `digest` GitHub, lancement du nouvel exe, l'ancien supprimé au
+  démarrage suivant (marqueur `maj-en-cours.json`). Vérification 4 s après le lancement (réglage
+  `maj_auto`), silencieuse hors ligne ; rien n'est téléchargé sans clic. `versionSuperieure` gère
+  les pré-versions (`0.1.0-test.2` > `0.1.0-test.1`, `0.1.0` > `0.1.0-test.9`).
+
 ## Règles non négociables (héritées de T&T)
 
 1. **Le pack est du contenu, remplaçable en bloc.** `data/pack.db` est généré
