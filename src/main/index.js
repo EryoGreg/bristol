@@ -186,10 +186,16 @@ app.whenReady().then(() => {
     return new Response('', { status: 404 });
   });
 
-  // 1. Ouvre utilisateur.db seul, 2. resout le deck actif (reglage), 3. attache.
+  // 1. Ouvre utilisateur.db seul, 2. resout le deck actif, 3. attache.
+  // Dev : multi-decks (data/packs/), le reglage choisit. Empaquete : un seul
+  // pack a plat, sans data/packs/ ni deck-actif.json — c'est lui qui dit quel
+  // deck il contient (pack_meta.deck). Sinon un vieux reglage (ou le repli
+  // 'art') etiquetterait le pack livre avec le mauvais deck.
   db.ouvrir(USER);
   decks.configurer(DOSSIER_PACKS);
-  const deck = decks.actifOuDefaut()
+  const deckDuPack = () => (db.packMetaDe(cheminPack(null)) || {}).deck || null;
+  const deck = (DEV && decks.actifOuDefaut())
+    || deckDuPack()
     || (() => { try { return JSON.parse(fs.readFileSync(path.join(DATA_LIVRE, 'deck-actif.json'), 'utf8')).deck; } catch (_) { return null; } })()
     || 'art';
   majDossierImages(deck);
