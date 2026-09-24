@@ -1200,3 +1200,27 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .csv-table th { color: var(--discret); font-weight: 500; background: var(--surface-2); }
 .csv-table select, .csv-table input[type="checkbox"] { font-size: 12px; }
 .csv-table select { background: var(--surface); color: var(--encre-vive); border: 1px solid var(--trait-fort); border-radius: 5px; padding: 2px 4px; }
+
+/* --- mise a jour ------------------------------------------------------------ */
+
+.maj-bandeau {
+  position: fixed; right: 22px; bottom: 22px; z-index: 50;
+  width: min(380px, calc(100vw - 44px));
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 18px 20px; border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--valide) 45%, var(--trait-fort));
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.8);
+}
+.maj-bandeau-titre { font-family: var(--serif); font-size: 18px; color: var(--encre-vive); }
+.maj-bandeau-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 6px; }
+
+.maj-progression {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 12.5px; color: var(--attenue); font-variant-numeric: tabular-nums;
+}
+.maj-jauge {
+  width: 180px; height: 6px; border-radius: 3px; overflow: hidden;
+  background: var(--trait);
+}
+.maj-jauge span { display: block; height: 100%; background: var(--valide); transition: width 0.2s; }
