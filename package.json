@@ -1,0 +1,78 @@
+{
+  "name": "tuiles-et-toiles",
+  "version": "0.1.0",
+  "description": "Entrainement memoriel en histoire de l'art",
+  "main": "src/main/index.js",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "build": "node node_modules/vite/bin/vite.js build",
+    "start": "node scripts/dev.js",
+    "dist": "node scripts/faire-icone.js && node node_modules/vite/bin/vite.js build && node node_modules/electron-builder/out/cli/cli.js --win portable",
+    "polices": "node scripts/polices.js",
+    "import": "node scripts/lancer-node.js src/main/import.js",
+    "postinstall": "node scripts/binaire-sqlite.js"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.18",
+    "better-sqlite3": "^11.7.0",
+    "google-auth-library": "^9.15.0",
+    "jimp": "^0.22.12"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^33.3.1",
+    "electron-builder": "^25.1.8",
+    "png-to-ico": "^3.0.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^6.0.7"
+  },
+  "build": {
+    "appId": "fr.tuilesettoiles.app",
+    "productName": "Tuiles et Toiles",
+    "npmRebuild": false,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/main/**",
+      "dist/**",
+      "package.json",
+      "node_modules/**"
+    ],
+    "asarUnpack": [
+      "**/*.node"
+    ],
+    "extraResources": [
+      {
+        "from": "data/pack.db",
+        "to": "data/pack.db"
+      },
+      {
+        "from": "data/registre.json",
+        "to": "data/registre.json"
+      },
+      {
+        "from": "data/images",
+        "to": "data/images"
+      }
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "Tuiles-et-Toiles-${version}.${ext}"
+    },
+    "portable": {
+      "unpackDirName": "TuilesEtToiles-${version}",
+      "requestExecutionLevel": "user"
+    }
+  }
+}

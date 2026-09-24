@@ -1,0 +1,37 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html",         "x": 0,    "y": 0,    "w": 1440, "h": 900, "title": "Menu principal" },
+    { "file": "Categories.dc.html",   "x": 1560, "y": 0,    "w": 1440, "h": 900, "title": "Categories — choix du mode" },
+    { "file": "Jeu.dc.html",          "x": 3120, "y": 0,    "w": 1440, "h": 900, "title": "Jeu — tuile censuree" },
+    { "file": "Bibliotheque.dc.html", "x": 0,    "y": 1160, "w": 1440, "h": 900, "title": "page_bibliotheque" },
+    { "file": "TuileDetail.dc.html",  "x": 1560, "y": 1160, "w": 1440, "h": 900, "title": "Tuile agrandie" },
+    { "file": "Livre.dc.html",        "x": 3120, "y": 1160, "w": 1440, "h": 900, "title": "page_livre" },
+    { "file": "Etoile.dc.html",       "x": 0,    "y": 2320, "w": 1440, "h": 900, "title": "page_etoile" },
+    { "file": "BadSmiley.dc.html",    "x": 1560, "y": 2320, "w": 1440, "h": 900, "title": "page_bad_smiley" },
+    { "file": "Options.dc.html",      "x": 3120, "y": 2320, "w": 1440, "h": 900, "title": "page_options" }
+  ],
+  "annotations": [
+    {
+      "id": "regle-censure",
+      "x": 3120,
+      "y": -170,
+      "w": 400,
+      "text": "Regle de censure figee ici : 5 champs censurables (image, titre, artiste, conservation, tags), 1 a 4 masques, donc toujours au moins 1 visible. L'annee est toujours masquee et hors decompte.\n\nAjouter Artiste et Conservation aux champs censurables regle le probleme des 8 tuiles sans description."
+    },
+    {
+      "id": "recherche-permissive",
+      "x": 0,
+      "y": 990,
+      "w": 400,
+      "text": "Recherche permissive : champ search_blob pre-calcule (NFD, sans diacritiques, minuscules, sans ponctuation). \"Simone teSt.\" trouve \"Simone, test\".\n\nLe selecteur de tags est ouvert ici pour montrer la saisie libre + les cases a cocher."
+    },
+    {
+      "id": "corrections-gdoc",
+      "x": 1560,
+      "y": 990,
+      "w": 400,
+      "text": "Les demandes de correction ne touchent jamais le GDoc : elles vivent dans la table user_data et ressortent en corrections.csv depuis les Options. La demande en attente reste visible pendant le jeu."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

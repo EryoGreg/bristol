@@ -1,0 +1,22 @@
+node_modules/
+dist/
+release/
+*.log
+
+# Base locale et images : regenerees par l'import, inutile de les versionner
+data/tuiles.db
+data/tuiles.db-wal
+data/tuiles.db-shm
+
+# Jetons OAuth : ne doivent jamais partir dans un depot
+.credentials/
+*.token.json
+client_secret*.json
+
+# Client OAuth Google (embarque dans l exe, pas dans le depot)
+src/main/oauth-client.json
+
+# Fichiers temporaires SQLite et journaux d'execution
+*.db-wal
+*.db-shm
+data/logs/

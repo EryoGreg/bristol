@@ -1,0 +1,1067 @@
+/* Jetons issus des maquettes : cabinet nocturne, charbon chaud et laiton. */
+
+:root {
+  --fond: #14110f;
+  --surface: #1d1917;
+  --surface-2: #262120;
+  --barre: #1a1614;
+  --trait: #2e2724;
+  --trait-fort: #3a322c;
+  --carte-bord: #322b27;
+
+  --encre: #f0e9df;
+  --encre-vive: #f7f1e7;
+  --tuile-ink: #d9cdbd;      /* valeurs de tuile + description : plus doux que --encre */
+  --attenue: #9c9088;
+  --discret: #7a6e64;
+  --efface: #4e453d;
+
+  --laiton: #d2a24c;
+  --valide: #c3d64a;
+  --livre: #5b8def;
+  --etoile: #e8c34a;
+  --revoir: #e0655a;
+
+  --serif: 'Bodoni Moda', Didot, Georgia, serif;
+  --sans: 'Instrument Sans', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'Space Mono', ui-monospace, monospace;
+
+  --hero-fond: linear-gradient(180deg, #2b2218 0%, #1e1913 100%);   /* carte « Jouer » */
+  --halo: #241d18;                                                  /* centre du degrade du menu */
+  --hachure: repeating-linear-gradient(135deg, #221d1a 0 10px, #1b1715 10px 20px);
+}
+
+/* :root nu = theme "sombre" (defaut). Les autres themes redefinissent les
+   memes jetons via [data-theme], pose par App.jsx sur <html>.
+   Themes clairs : --encre quasi noir (contraste >= 11:1), --attenue >= 6:1,
+   --discret >= 4.5:1 (labels petits). Aucune couleur de texte codee en dur
+   ailleurs : tout passe par ces jetons. */
+
+:root[data-theme="clair"] {
+  --fond: #ebe2d1;
+  --surface: #f6f0e4;
+  --surface-2: #e0d4bd;
+  --barre: #e5dbc4;
+  --trait: #cfc0a2;
+  --trait-fort: #b09c78;
+  --carte-bord: #d3c4a5;
+
+  --encre: #241e16;
+  --encre-vive: #130f0b;
+  --tuile-ink: #2f2820;
+  --attenue: #584c3b;
+  --discret: #736550;
+  --efface: #948365;
+
+  --laiton: #8a5a16;
+  --valide: #5c7416;
+  --livre: #33589f;
+  --etoile: #8f6a0f;
+  --revoir: #b23e2c;
+
+  --hero-fond: linear-gradient(180deg, #efe2c6 0%, #e6d6b4 100%);
+  --halo: #ded0b2;
+  --hachure: repeating-linear-gradient(135deg, #e2d6bd 0 10px, #ece1cb 10px 20px);
+}
+
+:root[data-theme="parchemin"] {
+  --fond: #dccfb1;
+  --surface: #e7dcc2;
+  --surface-2: #cdbd99;
+  --barre: #d5c7a6;
+  --trait: #bdab83;
+  --trait-fort: #a28c64;
+  --carte-bord: #c1af86;
+
+  --encre: #302617;
+  --encre-vive: #1d1508;
+  --tuile-ink: #372c1a;
+  --attenue: #554730;
+  --discret: #695839;
+  --efface: #877251;
+
+  --laiton: #7a5113;
+  --valide: #596d12;
+  --livre: #33578e;
+  --etoile: #8a6509;
+  --revoir: #9c3823;
+
+  --hero-fond: linear-gradient(180deg, #d3c29e 0%, #c8b68d 100%);
+  --halo: #d0c19d;
+  --hachure: repeating-linear-gradient(135deg, #d1c39f 0 10px, #dbcda9 10px 20px);
+}
+
+:root[data-theme="lin"] {
+  --fond: #e7e5db;
+  --surface: #f2f0e8;
+  --surface-2: #dbd8c9;
+  --barre: #e1ded1;
+  --trait: #c9c5b4;
+  --trait-fort: #aca894;
+  --carte-bord: #cfcbba;
+
+  --encre: #272620;
+  --encre-vive: #14130d;
+  --tuile-ink: #2e2c25;
+  --attenue: #514d43;
+  --discret: #655f54;
+  --efface: #847e6f;
+
+  --laiton: #74601f;
+  --valide: #57701b;
+  --livre: #375a98;
+  --etoile: #7e6817;
+  --revoir: #a83d2d;
+
+  --hero-fond: linear-gradient(180deg, #e5e1d2 0%, #dbd6c4 100%);
+  --halo: #dcd8ce;
+  --hachure: repeating-linear-gradient(135deg, #ddd9c8 0 10px, #e7e3d6 10px 20px);
+}
+
+:root[data-theme="sepia"] {
+  --fond: #e5d4b4;
+  --surface: #efe0c2;
+  --surface-2: #d8c199;
+  --barre: #ddcaa2;
+  --trait: #c6ae7f;
+  --trait-fort: #a98d5f;
+  --carte-bord: #c9b083;
+
+  --encre: #2f2410;
+  --encre-vive: #1d1406;
+  --tuile-ink: #372a13;
+  --attenue: #574627;
+  --discret: #6d5734;
+  --efface: #8a7048;
+
+  --laiton: #79500f;
+  --valide: #586c12;
+  --livre: #31548b;
+  --etoile: #8a6209;
+  --revoir: #9d3822;
+
+  --hero-fond: linear-gradient(180deg, #ddc99f 0%, #d1bb8b 100%);
+  --halo: #d6c297;
+  --hachure: repeating-linear-gradient(135deg, #d9c8a0 0 10px, #e3d4b3 10px 20px);
+}
+
+:root[data-theme="sepia-profond"] {
+  --fond: #d6bf97;
+  --surface: #e0cda5;
+  --surface-2: #c3a97a;
+  --barre: #ceb78d;
+  --trait: #b6996b;
+  --trait-fort: #9c8052;
+  --carte-bord: #bda374;
+
+  --encre: #31230d;
+  --encre-vive: #1f1303;
+  --tuile-ink: #382810;
+  --attenue: #554228;
+  --discret: #685131;
+  --efface: #836843;
+
+  --laiton: #70470d;
+  --valide: #53670f;
+  --livre: #2f5087;
+  --etoile: #856008;
+  --revoir: #95331c;
+
+  --hero-fond: linear-gradient(180deg, #cbb383 0%, #bfa471 100%);
+  --halo: #cab285;
+  --hachure: repeating-linear-gradient(135deg, #cab381 0 10px, #d4bf90 10px 20px);
+}
+
+:root[data-theme="taupe"] {
+  --fond: #cec7b8;
+  --surface: #d9d1c0;
+  --surface-2: #bcb29c;
+  --barre: #c7bfad;
+  --trait: #ab9d85;
+  --trait-fort: #8f816a;
+  --carte-bord: #b2a48a;
+
+  --encre: #2a261e;
+  --encre-vive: #18150f;
+  --tuile-ink: #2f2b21;
+  --attenue: #4d4636;
+  --discret: #5f5746;
+  --efface: #7c725c;
+
+  --laiton: #755213;
+  --valide: #546a15;
+  --livre: #34558e;
+  --etoile: #7f6110;
+  --revoir: #983824;
+
+  --hero-fond: linear-gradient(180deg, #c5ba9f 0%, #b9ad90 100%);
+  --halo: #c3b79f;
+  --hachure: repeating-linear-gradient(135deg, #c2b69c 0 10px, #ccc0a6 10px 20px);
+}
+
+:root[data-theme="ardoise"] {
+  --fond: #e1e2e4;
+  --surface: #ebecee;
+  --surface-2: #d3d5d9;
+  --barre: #d9dbdf;
+  --trait: #c1c4ca;
+  --trait-fort: #a3a7af;
+  --carte-bord: #cacdd3;
+
+  --encre: #20232a;
+  --encre-vive: #111318;
+  --tuile-ink: #282c33;
+  --attenue: #4b505a;
+  --discret: #5d6470;
+  --efface: #7e8792;
+
+  --laiton: #6d5a24;
+  --valide: #536f1b;
+  --livre: #33609f;
+  --etoile: #7a6516;
+  --revoir: #ac3d2c;
+
+  --hero-fond: linear-gradient(180deg, #dbdde1 0%, #cfd2d8 100%);
+  --halo: #d7d9dd;
+  --hachure: repeating-linear-gradient(135deg, #d5d7db 0 10px, #dfe1e4 10px 20px);
+}
+
+:root[data-theme="dracula"] {
+  --fond: #282a36;
+  --surface: #2f3140;
+  --surface-2: #3b3d4d;
+  --barre: #21222c;
+  --trait: #44475a;
+  --trait-fort: #565973;
+  --carte-bord: #3b3d4d;
+
+  --encre: #f8f8f2;
+  --encre-vive: #ffffff;
+  --tuile-ink: #e4e4dc;
+  --attenue: #b6b8d1;
+  --discret: #8f92b5;
+  --efface: #565973;
+
+  --laiton: #ffb86c;
+  --valide: #50fa7b;
+  --livre: #8be9fd;
+  --etoile: #f1fa8c;
+  --revoir: #ff5555;
+
+  --hero-fond: linear-gradient(180deg, #3a3d52 0%, #2b2d3c 100%);
+  --halo: #343850;
+  --hachure: repeating-linear-gradient(135deg, #2f3140 0 10px, #262735 10px 20px);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #racine { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font-family: var(--sans);
+  overflow: hidden;
+  user-select: none;
+}
+
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+
+/* Barres de defilement aux tons de l'appli (Bibliotheque, galeries, options…)
+   au lieu de la barre Windows grise. Firefox : scrollbar-* ; Chromium/Electron :
+   ::-webkit-scrollbar. La description de tuile garde la sienne cachee (plus bas). */
+* { scrollbar-width: thin; scrollbar-color: var(--trait-fort) transparent; }
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--trait-fort);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--efface); background-clip: padding-box; }
+::-webkit-scrollbar-corner { background: transparent; }
+
+/* --- coquille ----------------------------------------------------------- */
+
+.appli { display: flex; height: 100%; }
+
+/* % de la fenetre entiere (.appli), pas de .contenu : depliee 15%, repliee
+   4% — .contenu (flex: 1 1 auto) recupere automatiquement le reste, donc
+   grandit exactement de ce que la barre perd. */
+.barre {
+  width: 15%;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 18px 12px;
+  background: var(--barre);
+  border-right: 1px solid var(--trait);
+  transition: width 180ms ease;
+}
+.barre.repliee { width: 4%; padding: 18px 0; align-items: center; }
+.barre.repliee .libelle, .barre.repliee .compte { display: none; }
+
+.entree {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 9px;
+  color: var(--attenue);
+  width: 100%;
+  text-align: left;
+}
+.barre.repliee .entree { width: 42px; height: 42px; padding: 0; justify-content: center; }
+.entree:hover { background: rgba(255, 255, 255, 0.03); color: var(--encre); }
+.entree.active { background: var(--surface-2); color: var(--encre-vive); box-shadow: inset 2px 0 0 var(--laiton); }
+.entree .libelle { font-size: 13.5px; }
+.entree .compte { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--efface); }
+
+.contenu { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; }
+
+/* --- menu --------------------------------------------------------------- */
+
+/* Tout en % / clamp() : le menu tient dans n'importe quelle fenetre (min
+   1024x700) et defile si vraiment trop petit (justify: safe center). */
+.menu {
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+  gap: clamp(14px, 3.6vh, 56px);
+  padding: clamp(22px, 4vh, 64px) clamp(16px, 3vw, 48px);
+  background: radial-gradient(1100px 640px at 50% 4%, var(--halo) 0%, var(--fond) 60%);
+}
+.menu h1 { margin: 0; font-family: var(--serif); font-size: clamp(40px, 8vw, 116px); font-weight: 400; line-height: 1; color: var(--encre-vive); }
+.menu h1 .amp { color: var(--laiton); }
+.surtitre { font-family: var(--mono); font-size: clamp(10px, 0.85vw, 14px); letter-spacing: 0.24em; text-transform: uppercase; color: var(--discret); }
+.soustitre { font-size: clamp(13px, 1.35vw, 21px); color: var(--attenue); }
+.filet { width: clamp(120px, 12vw, 220px); height: 1px; background: linear-gradient(90deg, transparent, var(--trait-fort), transparent); margin: 0; }
+
+/* Grille 3 colonnes qui grandit avec la fenetre. Hauteur des cartes calee
+   sur la hauteur de la fenetre (vh) -> elles remplissent l'espace en plein
+   ecran sans deborder. */
+.cartes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(10px, 1.6vw, 30px);
+  width: min(1520px, 86vw);
+}
+.carte {
+  min-height: clamp(146px, 25vh, 360px);
+  border-radius: 14px;
+  border: 1px solid var(--carte-bord);
+  background: var(--surface);
+  padding: clamp(13px, 1.7vw, 34px);
+  display: flex; flex-direction: column; justify-content: space-between; gap: clamp(8px, 1vh, 18px);
+  text-align: left;
+  transition: transform 140ms ease, border-color 140ms ease;
+}
+.carte:hover { transform: translateY(-3px); border-color: var(--trait-fort); }
+.carte.primaire {
+  border-color: var(--laiton);
+  background: var(--hero-fond);
+  box-shadow: 0 22px 46px -28px rgba(0, 0, 0, 0.4);
+}
+.carte .pastille {
+  width: clamp(38px, 4vw, 68px); height: clamp(38px, 4vw, 68px);
+  border-radius: 11px; background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+}
+.carte .pastille svg { width: 52%; height: 52%; }
+.carte.primaire .pastille { background: var(--laiton); color: var(--fond); }
+.carte .nom { font-family: var(--serif); font-size: clamp(19px, 2.4vw, 40px); line-height: 1.1; }
+.carte .desc { font-size: clamp(11px, 1.15vw, 17px); color: var(--attenue); line-height: 1.4; }
+.carte .nombre { font-family: var(--mono); font-size: clamp(15px, 1.4vw, 24px); color: var(--discret); }
+
+.menu-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.menu-lien {
+  display: flex; align-items: center; gap: 8px;
+  padding: clamp(8px, 0.8vw, 14px) clamp(14px, 1.5vw, 26px); border-radius: 9px;
+  border: 1px solid var(--trait);
+  color: var(--discret);
+  font-size: clamp(12px, 1vw, 16px);
+}
+.menu-lien:hover { border-color: var(--trait-fort); color: var(--encre); }
+.menu-quitter:hover { border-color: var(--revoir); color: var(--revoir); }
+
+/* --- jeu ---------------------------------------------------------------- */
+
+/* .jeu n'a plus qu'UNE colonne. Le rail (livre/etoile/a-revoir) reste a
+   gauche de la tuile, cale en haut ; les boutons d'action (precedente/tout
+   reveler/suivante), eux, vivent sous la tuile, dans leur propre ligne de
+   grille. La tuile suivante n'est pas une colonne separee mais vit DANS la
+   meme ligne que la tuile centrale (.rangee-tuiles), donc forcement meme
+   taille et meme alignement haut/bas — les deux se valent par construction.
+     row1  marge haute, vide            4%
+     row2  rangee des tuiles            (le reste)
+     row3  ecart tuile -> boutons       2%
+     row4  ligne d'actions              (auto, hauteur de son contenu — pas fixee)
+     row5  marge basse, vide            4%
+   --entrefer : ecart horizontal tuile <-> suivante, et marge gauche de
+   .jeu. --rail-ecart : ecart horizontal rail <-> tuile (distinct, plus
+   petit). --tete-part / --image-h / --image-ratio : partage vertical de la
+   tuile ; --image-ratio sert a caler le rail sur le milieu de l'image
+   (voir .rail). Chacun un seul endroit ou le changer. */
+.jeu {
+  flex-grow: 1;
+  overflow: hidden;
+  display: grid;
+  /* marges haut/bas fluides : ~4% sur grand ecran, minces sur fenetre courte */
+  grid-template-rows: clamp(6px, 4%, 40px) minmax(0, 1fr) clamp(6px, 2%, 18px) auto clamp(6px, 4%, 40px);
+  padding-left: var(--entrefer);
+  --entrefer: 7.5%;
+  --rail-ecart: 2%;
+  /* 15% de moins que 88px, mais fluide : plafonne a cette valeur, retrecit
+     avec la fenetre (6vw) jusqu'a un plancher de 50px. */
+  --rail-largeur: clamp(50px, 6vw, calc(88px * 0.85));
+  --rail-gap: 8px;
+  --tete-part: 8%;
+  /* hauteur d'image dans la tuile : fluide, bornee (voir .cadre-image).
+     Volontairement modeste en hauteur pour que titre/artiste/…/tags tiennent
+     sans defiler sur une fenetre 1280x720. */
+  --image-h: clamp(110px, 30vh, 400px);
+  --image-ratio: 0.55;   /* sert au calage vertical du rail */
+}
+
+.rangee-tuiles {
+  grid-row: 2;
+  display: flex;
+  align-items: stretch;
+  min-height: 0;
+}
+
+/* Meme hauteur pour les deux (partagee ici). Largeurs : la suivante est un
+   sliver fixe (7.5%) COLLE au bord droit du main div ; la tuile centrale
+   prend tout le reste (flex: 1, pas de largeur fixe) — ce qui colle bien la
+   suivante a droite tout en gardant exactement --entrefer (7.5%) comme
+   ecart entre les deux (marge sur .suivante, pas de gap partage avec le
+   rail qui a son propre ecart plus petit). */
+.tuile, .suivante {
+  height: 100%;
+  border-radius: 16px;
+}
+.tuile { flex: 1 1 0; min-width: 0; }
+.suivante { flex: none; width: 7.5%; margin-left: var(--entrefer); }
+
+.tuile {
+  background: var(--surface);
+  border: 1px solid var(--carte-bord);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  box-shadow: 0 40px 80px -48px rgba(0, 0, 0, 0.55);
+}
+/* Bande fixe (8% de la tuile), plus jamais dependante du contenu — sert
+   aussi de reference au calcul de position du rail (voir .rail). */
+.tuile .tete { flex: 0 0 var(--tete-part); padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--surface-2); }
+.tuile .numero { font-family: var(--mono); font-size: 12.5px; color: var(--laiton); letter-spacing: 0.06em; }
+
+/* Colonne a deux blocs : l'image (hauteur fluide bornee, pareille pour toutes
+   les tuiles) et .corps-reste (les champs). Chaque champ garde une hauteur
+   FIXE (.valeur) sauf la description (case bornee, texte qui defile dedans) :
+   reveler un champ ne deplace jamais les autres. Sur une fenetre courte,
+   .corps defile plutot que de rogner les tags (.tuile a overflow:hidden). */
+.tuile .corps { flex: 1 1 0; min-height: 0; padding: clamp(10px, 1.8vh, 18px) 20px clamp(12px, 2vh, 20px); display: flex; flex-direction: column; gap: clamp(8px, 1.5vh, 14px); overflow-y: auto; scrollbar-width: thin; }
+.corps-reste { flex: 0 0 auto; display: flex; flex-direction: column; gap: clamp(8px, 1.5vh, 14px); }
+
+.etiquette { flex: none; font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--discret); }
+.champ { flex: none; display: flex; flex-direction: column; gap: 5px; }
+.grille2 { flex: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(6px, 1.4vh, 14px) 14px; }
+
+/* Case fixe autour de chaque valeur (masquee ou revelee) : le contenu peut
+   changer, la case non — c'est ce qui empechait le reste de la carte de
+   bouger a chaque clic. .masque a l'interieur en prend toute la place. */
+.valeur { height: 40px; overflow: hidden; display: flex; align-items: center; }
+.valeur .masque { height: 100%; width: 100%; }
+.valeur-titre { height: 54px; }
+
+/* Description : case a hauteur bornee (clamp), texte qui defile a l'interieur
+   sans montrer la scrollbar. */
+.champ-description { flex: 0 0 auto; }
+.valeur-description {
+  flex: 0 0 auto;
+  min-height: clamp(42px, 8vh, 116px);
+  max-height: 34vh;
+  overflow-y: auto;
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* vieux Edge */
+}
+.valeur-description::-webkit-scrollbar { display: none; }  /* Chromium/Electron */
+.valeur-description .masque { min-height: 40px; }
+
+.masque {
+  border-radius: 8px;
+  border: 1px dashed var(--trait-fort);
+  background: var(--hachure);
+  color: var(--discret);
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 12px;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  cursor: pointer;
+}
+.masque:hover { border-color: var(--laiton); color: var(--attenue); }
+/* Hauteur d'image fluide : ~40vh sur grand ecran, plancher 140px pour tenir
+   sur une fenetre courte, plafond pour ne pas ecraser les champs. Meme regle
+   pour le cadre (image revelee) et le placeholder (image masquee). */
+.masque.image { flex: 0 0 auto; height: var(--image-h); width: 100%; flex-direction: column; justify-content: center; border-radius: 11px; }
+.cadre-image { flex: 0 0 auto; height: var(--image-h); width: 100%; border-radius: 11px; overflow: hidden; background: var(--surface-2); }
+.tuile img.visuel { width: 100%; height: 100%; display: block; object-fit: contain; cursor: zoom-in; }
+
+/* Vue plein cadre : 85% de la fenetre, 7.5% d'espace vide de chaque cote
+   (largeur et hauteur) puisque le cadre est centre par le flex. backdrop-
+   filter floute tout ce qu'il y a derriere sans qu'on ait besoin de flouter
+   .appli lui-meme. */
+.recouvrement-image {
+  position: fixed; inset: 0;
+  background: rgba(10, 8, 6, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 60;
+  cursor: zoom-out;
+}
+.cadre-image-agrandie { width: 85%; height: 85%; }
+.image-agrandie {
+  width: 100%; height: 100%; display: block;
+  object-fit: contain; border-radius: 12px;
+  box-shadow: 0 60px 120px -40px rgba(0, 0, 0, 0.9);
+}
+
+.annee {
+  flex: none;
+  height: 34px; border-radius: 8px; border: 1px solid var(--trait-fort);
+  background: color-mix(in srgb, var(--laiton) 8%, transparent);
+  display: flex; align-items: center; padding: 0 12px; gap: 9px; color: var(--attenue);
+}
+.annee .points { font-family: var(--mono); font-size: 15px; letter-spacing: 0.28em; }
+.annee .note { font-size: 10.5px; color: var(--discret); margin-left: auto; }
+
+/* Texte integral, jamais tronque : .valeur-description (le parent) gere le
+   defilement si ca ne tient pas. */
+.texte-description { font-size: 13.5px; color: var(--tuile-ink); line-height: 1.55; }
+
+/* Livre, puis etoile, puis a-revoir, dans cet ordre, une colonne a gauche
+   de la tuile. Decalee vers le bas (position:relative + top) pour que le
+   bouton du MILIEU (etoile) tombe au milieu de l'image, pas au milieu de
+   la tuile entiere :
+     top = ou tombe le milieu de l'image (--tete-part + --image-ratio *
+           (100% - --tete-part) / 2, en % de la hauteur de .rangee-tuiles,
+           que .rail partage avec .tuile)
+           moins la distance entre le haut du rail et le centre d'etoile
+           (1.5 bouton + 1 ecart, puisque livre est avant).
+   "top" (contrairement a margin-top) resout ses % contre la HAUTEUR du
+   bloc englobant : c'est le seul moyen fiable de viser un point vertical
+   precis ici. margin-right (pas gap sur .rangee-tuiles) pour l'ecart
+   horizontal : plus petit (--rail-ecart) que celui entre les deux tuiles
+   (--entrefer). */
+.rail {
+  flex: none;
+  width: var(--rail-largeur);
+  align-self: flex-start;
+  position: relative;
+  top: calc(
+    var(--tete-part)
+    + (var(--image-ratio) * (100% - var(--tete-part)) / 2)
+    - (1.5 * var(--rail-largeur))
+    - var(--rail-gap)
+  );
+  margin-right: var(--rail-ecart);
+  display: flex; flex-direction: column; gap: var(--rail-gap);
+}
+
+.marque {
+  width: var(--rail-largeur); height: var(--rail-largeur); border-radius: 10px;
+  background: var(--surface); border: 1px solid var(--trait);
+  color: var(--discret);
+  display: flex; align-items: center; justify-content: center;
+}
+/* L'icone suit la taille du bouton (--rail-largeur est fluide) plutot que
+   de garder le pixel fixe pose par le composant React. */
+.marque svg { width: 36%; height: 36%; }
+.marque.livre { background: color-mix(in srgb, var(--livre) 8%, transparent); border-color: color-mix(in srgb, var(--livre) 30%, var(--trait)); }
+.marque.etoile { background: color-mix(in srgb, var(--etoile) 8%, transparent); border-color: color-mix(in srgb, var(--etoile) 30%, var(--trait)); }
+.marque.revoir { background: color-mix(in srgb, var(--revoir) 8%, transparent); border-color: color-mix(in srgb, var(--revoir) 30%, var(--trait)); }
+.marque.on.livre { background: color-mix(in srgb, var(--livre) 18%, transparent); border-color: var(--livre); color: var(--livre); }
+.marque.on.etoile { background: color-mix(in srgb, var(--etoile) 18%, transparent); border-color: var(--etoile); color: var(--etoile); }
+.marque.on.revoir { background: color-mix(in srgb, var(--revoir) 18%, transparent); border-color: var(--revoir); color: var(--revoir); }
+
+/* Toujours sous la tuile (jamais a cote), et alignee sur elle plutot que
+   sur le rail : meme bord gauche, meme largeur. La tuile occupe
+   (100% - rail - rail-ecart - entrefer - sliver) dans .rangee-tuiles
+   (flex: 1) — cette ligne reprend exactement le meme calcul pour tomber au
+   meme endroit. Rangee 4 (pas 3) : une rangee 2% s'intercale desormais
+   entre la tuile et cette ligne de boutons. */
+.ligne-actions {
+  grid-row: 4;
+  margin-left: calc(var(--rail-largeur) + var(--rail-ecart));
+  width: calc(100% - var(--rail-largeur) - var(--rail-ecart) - var(--entrefer) - 7.5%);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: clamp(8px, 1.2vw, 16px); row-gap: 10px; flex-wrap: wrap;
+}
+/* Deux groupes : gauche (Mode + compteur) et droite (Precedente / Tout
+   reveler / Suivante). Si la largeur manque, le groupe droit passe a la
+   ligne ENTIER — jamais un seul bouton isole ailleurs. */
+.actions-gauche,
+.actions-droite {
+  display: flex; align-items: center;
+  gap: clamp(8px, 1.2vw, 16px); flex-wrap: wrap;
+}
+.actions-droite { margin-left: auto; justify-content: flex-end; }
+.compteur-sac { font-size: 11.5px; color: var(--discret); }
+
+/* padding et police en clamp() : les boutons retrecissent avec la fenetre
+   au lieu de deborder ou de forcer un defilement horizontal. */
+.bouton-valide {
+  display: flex; align-items: center; gap: 9px;
+  padding: clamp(9px, 1vw, 12px) clamp(16px, 2.2vw, 24px); border-radius: 10px;
+  background: var(--valide); color: var(--fond);
+  font-size: clamp(12.5px, 0.9vw + 8px, 14px); font-weight: 600;
+  box-shadow: 0 14px 30px -22px color-mix(in srgb, var(--valide) 80%, transparent);
+}
+.bouton-neutre {
+  padding: clamp(9px, 1vw, 12px) clamp(14px, 1.8vw, 20px); border-radius: 10px;
+  border: 1px solid var(--trait-fort); color: var(--attenue);
+  font-size: clamp(12.5px, 0.9vw + 8px, 14px);
+}
+
+.suivante {
+  background: var(--surface-2); border: 1px solid var(--trait);
+  cursor: pointer;
+}
+.suivante:hover { border-color: var(--trait-fort); }
+
+.chargement { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--discret); font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; }
+
+/* L'annee est masquee au tirage mais cliquable, comme les autres champs. */
+.annee.cachee { width: 100%; cursor: pointer; }
+.annee.cachee:hover { border-color: var(--laiton); color: var(--laiton); }
+
+/* --- options -------------------------------------------------------------- */
+
+.options { max-width: 620px; padding: 42px; overflow-y: auto; }
+.options h2 { margin: 0 0 28px; font-family: var(--serif); font-weight: 400; font-size: 30px; color: var(--encre-vive); }
+.options section { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.options .filet { width: 100%; margin: 30px 0; }
+
+.choix-themes { display: flex; flex-wrap: wrap; gap: 10px; }
+.theme-bouton {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px; border-radius: 10px;
+  border: 1px solid var(--trait); color: var(--attenue);
+  font-size: 13.5px;
+}
+.theme-bouton:hover { border-color: var(--trait-fort); color: var(--encre); }
+.theme-bouton.actif { border-color: var(--laiton); color: var(--encre-vive); background: var(--surface-2); }
+
+.choix-raccourcis { display: flex; flex-wrap: wrap; gap: 10px; }
+.raccourci-bouton {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 15px; border-radius: 10px;
+  border: 1px solid var(--trait); color: var(--attenue);
+  font-size: 13px;
+}
+.raccourci-bouton:hover { border-color: var(--trait-fort); color: var(--encre); }
+.raccourci-bouton:disabled { opacity: 0.5; cursor: default; }
+.raccourci-bouton.pose {
+  border-color: var(--laiton);
+  color: var(--encre-vive);
+  background: color-mix(in srgb, var(--laiton) 12%, var(--surface));
+}
+.raccourci-plus { font-family: var(--mono); font-size: 15px; line-height: 1; color: var(--discret); }
+
+.echantillon { width: 16px; height: 16px; border-radius: 5px; border: 1px solid rgba(128, 128, 128, 0.35); }
+.echantillon-auto { background: linear-gradient(135deg, #14110f 50%, #ebe2d1 50%); }
+.echantillon-clair { background: #ebe2d1; box-shadow: inset 0 0 0 2px #8a5a16; }
+.echantillon-parchemin { background: #dccfb1; box-shadow: inset 0 0 0 2px #7a5113; }
+.echantillon-lin { background: #e7e5db; box-shadow: inset 0 0 0 2px #74601f; }
+.echantillon-sepia { background: #e5d4b4; box-shadow: inset 0 0 0 2px #79500f; }
+.echantillon-sepia-profond { background: #d6bf97; box-shadow: inset 0 0 0 2px #70470d; }
+.echantillon-taupe { background: #cec7b8; box-shadow: inset 0 0 0 2px #755213; }
+.echantillon-ardoise { background: #e1e2e4; box-shadow: inset 0 0 0 2px #6d5a24; }
+.echantillon-sombre { background: #14110f; }
+.echantillon-dracula { background: #282a36; box-shadow: inset 0 0 0 2px #ff79c6; }
+
+.options-confirmation { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--valide); }
+.options-note { font-size: 12px; color: var(--discret); line-height: 1.5; max-width: 440px; }
+
+.drive-encours {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 12.5px; color: var(--laiton);
+  padding: 9px 12px; border-radius: 9px;
+  background: color-mix(in srgb, var(--laiton) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--laiton) 32%, transparent);
+  max-width: 440px;
+}
+.drive-pastille {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--laiton); flex: none;
+  animation: drive-battement 1s ease-in-out infinite;
+}
+@keyframes drive-battement { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+
+/* --- confirmation de fermeture --------------------------------------------- */
+
+.recouvrement {
+  position: fixed; inset: 0;
+  background: rgba(10, 8, 6, 0.6);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 50;
+}
+.boite-dialogue {
+  width: 380px;
+  padding: 26px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--trait-fort);
+  box-shadow: 0 44px 88px -30px rgba(0, 0, 0, 0.85);
+}
+.boite-dialogue h3 { margin: 0 0 10px; font-family: var(--serif); font-weight: 400; font-size: 21px; color: var(--encre-vive); }
+.boite-dialogue p { margin: 0 0 22px; font-size: 13px; color: var(--attenue); line-height: 1.5; }
+.boite-dialogue .actions { display: flex; justify-content: flex-end; gap: 10px; }
+
+.bouton-danger {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 20px; border-radius: 10px;
+  background: color-mix(in srgb, var(--revoir) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--revoir) 50%, transparent);
+  color: var(--revoir);
+  font-size: 14px;
+}
+.bouton-danger:hover { background: color-mix(in srgb, var(--revoir) 24%, transparent); border-color: var(--revoir); }
+
+/* --- galeries : gabarit commun a livre / etoile / a revoir ----------------- */
+
+.galerie {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 34px 42px 42px;
+  background: radial-gradient(1200px 620px at 12% -8%, color-mix(in srgb, var(--accent, var(--laiton)) 14%, transparent) 0%, transparent 62%);
+}
+
+.galerie-tete { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+.galerie-icone {
+  flex: none;
+  width: 46px; height: 46px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  background: color-mix(in srgb, var(--accent, var(--laiton)) 18%, var(--surface));
+  color: var(--accent, var(--laiton));
+}
+.galerie-tete h2 { margin: 0 0 3px; font-family: var(--serif); font-weight: 400; font-size: 26px; color: var(--encre-vive); }
+.galerie-tete .soustitre { font-size: 12.5px; color: var(--attenue); }
+.galerie-compte { margin-left: auto; font-family: var(--mono); font-size: 20px; color: var(--discret); }
+
+.galerie-vide {
+  padding: 60px 0; text-align: center;
+  color: var(--discret); font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+}
+
+.galerie-grille {
+  display: grid;
+  grid-template-columns: repeat(var(--grille-cols, 5), minmax(0, 1fr));
+  gap: clamp(10px, 1vw, 16px);
+}
+
+.carte-galerie {
+  position: relative;
+  border-radius: 13px; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--trait);
+  transition: border-color 140ms ease, transform 140ms ease;
+  cursor: pointer;
+}
+.carte-galerie:hover { border-color: var(--accent, var(--trait-fort)); transform: translateY(-2px); }
+
+/* aspect-ratio plutot qu'une hauteur fixe : l'image reste proportionnee quand
+   la densite de grille change (5 / 7 / 9 par ligne). */
+.carte-galerie-image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; background: var(--surface-2); }
+.carte-galerie-image-vide { background: var(--hachure); }
+
+.carte-galerie-corps { padding: clamp(9px, 0.7vw, 13px); display: flex; flex-direction: column; gap: 3px; }
+.carte-galerie-corps .numero { font-family: var(--mono); font-size: 10px; color: var(--accent, var(--laiton)); letter-spacing: 0.06em; }
+.carte-galerie-titre { font-family: var(--serif); font-size: clamp(12.5px, 0.95vw, 15.5px); line-height: 1.22; color: var(--encre-vive); }
+.carte-galerie-artiste { font-size: clamp(10px, 0.75vw, 11.5px); color: var(--attenue); }
+
+.carte-galerie-retirer {
+  position: absolute; top: 8px; right: 8px; z-index: 1;
+  width: 24px; height: 24px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(20, 17, 15, 0.55); color: #e8ddd0;
+  opacity: 0; transition: opacity 120ms ease;
+}
+.carte-galerie:hover .carte-galerie-retirer { opacity: 1; }
+.carte-galerie-retirer:hover { background: var(--revoir); color: #fff; }
+
+/* Pastilles de tag sur la carte : etat de marquage visible sans ouvrir. */
+.carte-galerie-pips {
+  position: absolute; top: 8px; left: 8px; z-index: 1;
+  display: flex; gap: 4px;
+}
+.carte-galerie-pips .pip {
+  width: 8px; height: 8px; border-radius: 50%;
+  box-shadow: 0 0 0 1.5px var(--surface);
+}
+
+/* --- tri des galeries + recherche bibliotheque ---------------------------- */
+
+.galerie-tri {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin-bottom: 22px;
+}
+.tri-bouton {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 8px;
+  border: 1px solid var(--trait); color: var(--attenue);
+  font-size: 12px;
+}
+.tri-bouton:hover { border-color: var(--trait-fort); color: var(--encre); }
+.tri-bouton.actif { border-color: var(--accent, var(--laiton)); color: var(--encre-vive); background: var(--surface-2); }
+/* Sens du tri : carre, juste la fleche verticale (haut = croissant). */
+.tri-sens { padding: 6px; }
+.tri-sens svg { display: block; }
+/* Densite de grille : 5 / 7 / 9 tuiles par ligne. */
+.tri-cols { font-family: var(--mono); font-size: 11px; letter-spacing: 0.02em; }
+
+.biblio-recherche {
+  width: 340px; max-width: 100%;
+  padding: 8px 12px; border-radius: 8px;
+  border: 1px solid var(--trait); background: var(--surface); color: var(--encre);
+  font: inherit; font-size: 13px; outline: none;
+  user-select: text;
+}
+.biblio-recherche:focus { border-color: var(--laiton); }
+.biblio-recherche::placeholder { color: var(--discret); }
+
+/* Selecteur de tags (Bibliotheque), a droite de la recherche. */
+.sel-tags { position: relative; display: flex; align-items: center; gap: 6px; }
+.sel-tags .np-combi { padding: 5px 8px; }
+.sel-tags-pop {
+  position: absolute; top: calc(100% + 6px); right: 0; z-index: 30;
+  width: min(360px, 90vw);
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 12px; border-radius: 10px;
+  background: var(--surface); border: 1px solid var(--trait-fort);
+  box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.7);
+}
+.sel-tags-haut { display: flex; align-items: center; gap: 6px; }
+.sel-tags-haut .biblio-recherche { width: auto; flex: 1 1 auto; min-width: 0; }
+.sel-tags-liste {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  align-content: flex-start;
+  max-height: min(300px, 40vh); overflow-y: auto;
+}
+
+/* --- edition ---------------------------------------------------------- */
+
+.edition-choix { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 8px; }
+.edition-choix .carte { width: clamp(210px, 30vw, 360px); }
+
+.edition-retour {
+  position: fixed; bottom: 24px; right: 28px; z-index: 20;
+  display: flex; align-items: center; gap: 7px;
+  padding: 9px 16px; border-radius: 10px;
+  border: 1px solid var(--trait-fort); background: var(--surface); color: var(--attenue);
+  font-size: 13px;
+  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.45);
+}
+.edition-retour:hover { border-color: var(--laiton); color: var(--encre); }
+.carte:disabled { opacity: 0.45; cursor: default; }
+.carte:disabled:hover { transform: none; border-color: var(--carte-bord); }
+
+/* L'editeur reprend le gabarit de la tuile de jeu, sans le cadre de panneau
+   de l'apercu. */
+.editeur-jeu.apercu-jeu {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0 clamp(16px, 3vw, 40px);
+}
+
+/* L'editeur est un FORMULAIRE : image un peu plus courte pour laisser de la
+   place aux champs, zone de description un vrai champ de saisie borne. Le
+   defilement du corps et les hauteurs fluides viennent du gabarit .tuile. */
+.editeur-jeu { --image-h: clamp(140px, 30vh, 300px); }
+.editeur-jeu .editeur-textarea {
+  flex: 0 0 auto;
+  min-height: clamp(64px, 11vh, 150px);
+}
+
+.editeur-input,
+.editeur-textarea {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--trait);
+  border-radius: 7px;
+  padding: 7px 10px;
+  color: var(--encre);
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  user-select: text;
+}
+.editeur-input:focus,
+.editeur-textarea:focus { border-color: var(--laiton); }
+.editeur-input::placeholder,
+.editeur-textarea::placeholder { color: var(--discret); }
+.editeur-input.e-serif { font-family: var(--serif); font-size: 20px; }
+.editeur-input.e-mono { font-family: var(--mono); font-size: 13.5px; }
+.valeur .editeur-input { height: 34px; }
+.valeur-titre .editeur-input { height: 44px; }
+
+.editeur-textarea {
+  flex: 1 1 auto;
+  min-height: 0;
+  resize: none;
+  line-height: 1.5;
+}
+
+.editeur-image {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px dashed var(--trait-fort);
+}
+.editeur-image:not(:has(img)) { cursor: pointer; }
+.editeur-image.survol { border-color: var(--laiton); background: color-mix(in srgb, var(--laiton) 8%, transparent); }
+.editeur-image-vide {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--discret); text-align: center; padding: 12px;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.editeur-image-x {
+  position: absolute; top: 8px; right: 8px; z-index: 1;
+  width: 24px; height: 24px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(20, 17, 15, 0.6); color: #e8ddd0;
+}
+.editeur-image-x:hover { background: var(--revoir); color: #fff; }
+.editeur-image-info {
+  position: absolute; left: 8px; bottom: 8px;
+  padding: 3px 8px; border-radius: 6px;
+  background: rgba(20, 17, 15, 0.6); color: #e8ddd0;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em;
+}
+
+/* --- apercu : tuile agrandie a la taille du jeu ------------------------- */
+
+.recouvrement-apercu {
+  position: fixed; inset: 0;
+  background: rgba(10, 8, 6, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  padding: clamp(10px, 3vw, 48px);
+  z-index: 55;
+}
+/* Reprend .jeu tel quel ; ne change que ce qui supposait le sliver
+   « suivante » a droite et la marge --entrefer a gauche. */
+.apercu-jeu {
+  flex-grow: 1;
+  background: var(--fond);
+  border: 1px solid var(--trait-fort);
+  border-radius: 16px;
+  padding-left: clamp(16px, 3vw, 40px);
+  padding-right: clamp(16px, 3vw, 40px);
+  box-shadow: 0 60px 120px -40px rgba(0, 0, 0, 0.9);
+}
+.apercu-jeu .ligne-actions {
+  width: calc(100% - var(--rail-largeur) - var(--rail-ecart));
+}
+
+/* --- nouvelle partie : choix du mode --------------------------------- */
+
+.nouvelle-partie {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: clamp(20px, 3.5vh, 44px) clamp(20px, 3.5vw, 56px);
+  display: flex; flex-direction: column; gap: clamp(16px, 2.4vh, 28px);
+}
+.np-tete h2 { margin: 0 0 5px; font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 2.6vw, 38px); color: var(--encre-vive); }
+
+/* Aleatoire | Par categorie | Lancer  — 3 colonnes egales, tout en % ;
+   se replient (Lancer sous les cartes) quand la fenetre est etroite. */
+.np-modes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(224px, 100%), 1fr));
+  gap: clamp(10px, 1.2vw, 18px);
+  width: min(1180px, 100%);
+  align-items: stretch;
+}
+.np-mode {
+  display: flex; gap: clamp(10px, 1vw, 15px); align-items: flex-start;
+  padding: clamp(14px, 1.4vw, 20px); border-radius: 13px;
+  border: 1px solid var(--trait); background: var(--surface);
+  text-align: left;
+}
+.np-mode:hover { border-color: var(--trait-fort); }
+.np-mode.actif {
+  border-color: var(--laiton);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--laiton) 12%, var(--surface)) 0%, var(--surface) 100%);
+}
+.np-radio {
+  flex: none; width: 18px; height: 18px; margin-top: 2px;
+  border-radius: 50%; border: 2px solid var(--efface);
+}
+.np-mode.actif .np-radio { border-color: var(--laiton); box-shadow: inset 0 0 0 3px var(--laiton); }
+.np-mode-nom { font-size: clamp(14px, 1.1vw, 16px); font-weight: 600; color: var(--encre-vive); margin-bottom: 5px; }
+.np-mode-desc { font-size: clamp(11.5px, 0.9vw, 13px); color: var(--attenue); line-height: 1.5; }
+
+/* Lancer : meme case qu'une carte de mode, toujours vert. */
+.np-lancer {
+  border-radius: 13px; border: none;
+  background: var(--valide); color: var(--fond);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  padding: 14px;
+  font-size: clamp(15px, 1.3vw, 19px); font-weight: 600;
+  box-shadow: 0 16px 34px -18px color-mix(in srgb, var(--valide) 65%, transparent);
+}
+.np-lancer span { display: flex; align-items: center; gap: 8px; }
+.np-lancer .np-lancer-sub { font-size: 11.5px; font-weight: 400; opacity: 0.85; }
+.np-lancer.off { opacity: 0.4; box-shadow: none; cursor: default; }
+
+.np-cats { display: flex; flex-direction: column; gap: 14px; flex: 1 1 auto; min-height: 0; }
+
+.np-cats-barre { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+/* Bascule additif (+) / soustractif (-), a droite du champ de filtre. Deux
+   faces : le signe dit le mode actif, le mot rappelle la regle. */
+.np-combi {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 12px 7px 9px; border-radius: 8px;
+  border: 1px solid var(--trait); background: var(--surface); color: var(--encre);
+  font-size: 12.5px;
+}
+.np-combi:hover { border-color: var(--trait-fort); }
+.np-combi-signe {
+  width: 20px; height: 20px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 15px; font-weight: 700; line-height: 1;
+}
+.np-combi.addit .np-combi-signe { background: color-mix(in srgb, var(--valide) 22%, transparent); color: var(--valide); }
+.np-combi.soustr .np-combi-signe { background: color-mix(in srgb, var(--laiton) 22%, transparent); color: var(--laiton); }
+.np-combi-mot { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--discret); }
+
+.np-chip.bloquee {
+  opacity: 0.32;
+  cursor: default;
+  text-decoration: line-through;
+}
+.np-chip.bloquee:hover { border-color: var(--trait); }
+
+.np-chips {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  width: min(1180px, 100%);
+  flex: 1 1 auto; min-height: 0;
+  align-content: flex-start;
+  overflow-y: auto;
+}
+.np-chip {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 9px;
+  border: 1px solid var(--trait); background: var(--surface); color: var(--encre);
+  font-size: 13px;
+}
+.np-chip:hover { border-color: var(--trait-fort); }
+.np-chip.actif { border-color: var(--laiton); background: color-mix(in srgb, var(--laiton) 15%, var(--surface)); color: var(--encre-vive); }
+.np-chip-n { font-family: var(--mono); font-size: 11px; color: var(--discret); }
